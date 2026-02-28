@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../admin.css";
+import "../styles/AdminLayout.css";
 import { toast } from "react-toastify";
 export default function AdminLogin() {
   const [username, setUsername] = useState("");

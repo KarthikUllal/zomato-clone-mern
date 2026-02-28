@@ -1,0 +1,96 @@
+.admin-add-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
+/* Title */
+.admin-title {
+  /* margin-bottom: 25px; */
+  font-weight: 600;
+}
+
+/* Tabs */
+.tab-buttons {
+  display: flex;
+  margin-bottom: 25px;
+}
+
+.tab-buttons button {
+  padding: 15px 20px;
+  margin-right: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.tab-buttons button:hover {
+  background-color: #cfcfcf;
+}
+
+.tab-buttons .active {
+  background-color: black;
+  color: white;
+}
+
+/* Form Container */
+.form-box {
+  background: white;
+  padding: 20px;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* Headings inside form */
+.form-box h2 {
+  margin-bottom: 10px;
+}
+
+/* Inputs */
+.form-box input,
+.form-box select,
+.form-box textarea {
+  padding: 15px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+
+}
+
+.form-box input:focus,
+.form-box select:focus,
+.form-box textarea:focus {
+  border-color: black;
+}
+
+/* Textarea */
+.form-box textarea {
+  resize: none;
+  min-height: 90px;
+}
+
+/* Submit Button */
+.submit-btn {
+  padding: 12px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #333;
+}

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import "../styles/AdminLayout.css"
 
 export default function AdminSidebar() {
   const navigate = useNavigate();
