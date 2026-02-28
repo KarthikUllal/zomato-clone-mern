@@ -1,0 +1,14 @@
+.nightlife-page {
+    background: #f8f8f8;
+}
+
+.nightlife-heading {
+    max-width: 1400px;
+    margin: 60px auto 30px auto;
+    padding: 0 20px;
+}
+
+.nightlife-heading h2 {
+    font-size: 24px;
+    font-weight: 600;
+}

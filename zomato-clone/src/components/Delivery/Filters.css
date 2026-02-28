@@ -1,0 +1,32 @@
+.filter-section {
+    max-width: 1400px;
+    margin: 40px auto 20px auto;
+    margin: 40px auto 20px auto;
+    display: flex;
+    gap: 15px;
+}
+
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #696969;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: fit-content;
+}
+
+.filter-btn i {
+    font-size: 14px;
+}
+
+.filter-btn:hover {
+    background: #f8f8f8;
+    border-color: #d0d0d0;
+}

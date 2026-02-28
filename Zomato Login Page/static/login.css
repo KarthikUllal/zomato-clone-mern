@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(79, 79, 79);
+
+}
+
+.container {
+    width: 350px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0px 0px 10px 10px rgb(88, 88, 88);
+}
+
+.login-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.cancel {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.form-controls {
+    margin-bottom: 25px;
+}
+
+input[type="text"] {
+    width: 93%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-otp{
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.btn-otp:hover{
+    background-color: #f54b4b;
+}
+
+.btn-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-login:hover {
+    background-color: rgb(195, 198, 230);
+    transition: 0.5s ease-in-out;
+}
+
+.break {
+    margin: 15px 0;
+    display: flex;
+}
+
+.break>.left-hr {
+    width: 50%;
+    margin: auto 0;
+}
+
+.break>.right-hr {
+    width: 50%;
+    margin: auto 0;
+}
+
+.break>span {
+    margin: 0 10px;
+}
+
+.login-footer {
+    text-align: left;
+}
+
+.login-footer a {
+    color: rgb(163, 37, 37);
+    text-decoration: none;
+}
+
+.btn-login i {
+    font-size: 18px;
+    color: #ef4f5f;
+}
+
+
+.phone-field {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 5px;
+}
+
+.phone-field input {
+    border: none;
+    outline: none;
+    padding: 10px;
+    flex: 1;
+}
+
+.country-code {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    border-right: 1px solid #ccc;
+    cursor: pointer;
+    font-weight: 500;
+}
+

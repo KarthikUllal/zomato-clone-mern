@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zomato Signup Page</title>
+    <link rel="stylesheet" href="../static/signup.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="login-header">
+            <h2>Sign Up</h2>
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+
+        <form>
+            <div class="form-controls">
+                <input type="text" placeholder="Full Name" />
+            </div>
+
+            <div class="form-controls">
+                <input type="text" placeholder="Phone" />
+            </div>
+
+            <div class="check-terms">
+                <input type="checkbox" name="terms">
+                <span>
+                    I agree to Zomato's
+                    <a href="#">Terms of Service</a>,
+                    <a href="#">Privacy Policy</a>
+                    and
+                    <a href="#">Content Policy</a>
+                </span>
+            </div>
+
+            <div class="form-controls">
+                <button type="submit" class="btn-create-account">
+                    Create Account
+                </button>
+            </div>
+
+            <div class="break">
+                <hr>
+                <span>or</span>
+                <hr>
+            </div>
+
+            <div class="form-controls">
+                <button type="button" class="btn-login">
+                    <i class="fa-brands fa-google"></i> Sign In with Google
+                </button>
+            </div>
+
+            <div class="break">
+                <hr>
+            </div>
+
+            <div class="login-footer">
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

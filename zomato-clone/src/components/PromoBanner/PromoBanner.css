@@ -1,0 +1,63 @@
+.promo-section {
+  max-width: 1400px;
+  padding: 0 20px;
+  margin: 60px auto;
+  height: 260px;
+  border-radius: 20px;
+  background-image: url("https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1200&h=400&fit=crop");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 60px;
+  color: white;
+  overflow: hidden;
+}
+
+
+/* Dark overlay */
+.promo-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.promo-content {
+  position: relative;
+  z-index: 2;
+}
+
+.promo-content h2 {
+  font-weight: 400;
+  font-size: 22px;
+}
+
+.promo-content h1 {
+  font-size: 48px;
+  margin: 5px 0;
+}
+
+.promo-content h1 span {
+  font-size: 28px;
+}
+
+.promo-content p {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.promo-btn {
+  padding: 10px 20px;
+  border: none;
+  background-color: #ef4f5f;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.promo-btn:hover {
+  background-color: #d63c4c;
+}

@@ -1,0 +1,32 @@
+.tabs-wrapper {
+  position: sticky;
+  top: 0;
+  background: white;
+  border-bottom: 1px solid #eee;
+}
+
+
+.tabs {
+  max-width: 1400px;
+  margin: auto;
+  display: flex;
+  gap: 40px;
+  padding: 20px;
+  font-weight: 500;
+}
+
+.tabs span {
+  cursor: pointer;
+  padding-bottom: 12px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.tabs span:hover {
+  color: #ef4f5f;
+}
+
+.tabs .active {
+  color: #ef4f5f;
+  border-bottom: 3px solid #ef4f5f;
+}

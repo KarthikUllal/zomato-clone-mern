@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Zomato Clone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="../static/index.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+
+        <div class="upper">
+            <div class="logo">
+                <img src="../images/logo.jpg" alt="Zomato Logo">
+            </div>
+
+            <div class="nav-middle">
+                <div class="location">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Udupi</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+
+                <div class="search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search for restaurant, cuisine or a dish">
+                </div>
+            </div>
+
+            <div class="nav-right">
+                <a href="login.html">Log in</a>
+                <a href="signup.html">Sign up</a>
+            </div>
+        </div>
+
+        <div class="middle">
+            <span>Home</span>
+            <span>/</span>
+            <span>India</span>
+            <span>/</span>
+            <span id="specific-city">Mangalore Restaurant</span>
+        </div>
+
+        <div class="lower">
+            <div class="link-container">
+                <div class="nav-item active">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Dining Out</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fa-solid fa-motorcycle"></i>
+                    <span>Delivery</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fa-solid fa-martini-glass"></i>
+                    <span>Nightlife</span>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <!-- ================= COLLECTION SECTION ================= -->
+    <section class="collections">
+
+        <div class="collection-heading">
+            <h1>Collections</h1>
+        </div>
+
+        <div class="collection-middle">
+            <div class="left">
+                <h6>
+                    Explore curated lists of top restaurants, cafes, pubs,
+                    and bars in Mangalore, based on trends
+                </h6>
+            </div>
+            <div class="right">
+                <a href="#">All Collections in Mangalore ></a>
+            </div>
+        </div>
+
+        <!-- Carousel -->
+        <div class="collection-cards">
+
+            <button class="carousel-btn left">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <div class="cards-wrapper">
+
+                <div class="cards">
+                    <img src="https://plus.unsplash.com/premium_photo-1661609628958-e1fda53a87eb?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Seafood">
+                    <div class="contents">
+                        <h3>Superb seafood places</h3>
+                        <p>17 places ></p>
+                    </div>
+                </div>
+
+                <div class="cards">
+                    <img src="https://plus.unsplash.com/premium_photo-1692728813474-78971f64e877?q=80&w=701&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="">
+                    <div class="contents">
+                        <h3>Blissful Breakfast Places</h3>
+                        <p>7 places ></p>
+                    </div>
+                </div>
+
+                <div class="cards">
+                    <img src="https://images.unsplash.com/photo-1564758565618-2a4706629d66?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bG9jYWwlMjByZXN0YXVyYW50fGVufDB8fDB8fHww"
+                        alt="">
+                    <div class="contents">
+                        <h3>Local Favourite Places</h3>
+                        <p>48 places ></p>
+                    </div>
+                </div>
+
+                <div class="cards">
+                    <img src="https://media.istockphoto.com/id/1148223648/photo/interior-of-a-pub.jpg?s=2048x2048&w=is&k=20&c=IfkyJXQEWJwM1sQ8OehAdvo2VGZqsoUXYQ7CwOFANNA="
+                        alt="">
+                    <div class="contents">
+                        <h3>Best Bars & Pubs</h3>
+                        <p>13 places ></p>
+                    </div>
+                </div>
+
+                <div class="cards">
+                    <img src="https://images.unsplash.com/photo-1569929233287-f0565228c4d4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHJvbWFudGljJTIwZGlubmVyfGVufDB8fDB8fHww"
+                        alt="">
+                    <div class="contents">
+                        <h3>Romantic Dining</h3>
+                        <p>9 places ></p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-btn right">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- ================= FILTER BUTTONS ================= -->
+    <section class="button-sections">
+        <div class="buttons"><button>Filter</button></div>
+        <div class="buttons"><button>Offers</button></div>
+        <div class="buttons"><button>Ratings 4.5+</button></div>
+        <div class="buttons"><button>Pet Friendly</button></div>
+        <div class="buttons"><button>Outdoor seatings</button></div>
+        <div class="buttons"><button>Serves alcohol</button></div>
+        <div class="buttons"><button>Open Now</button></div>
+    </section>
+
+    <!-- PROMO SECTION -->
+    <section class="promo-section">
+
+        <div class="promo-content">
+            <h2>Get up to</h2>
+            <h1>50% <span>OFF</span></h1>
+            <p>on your dining bills with Zomato</p>
+
+            <button class="promo-btn">Check out all the restaurants</button>
+        </div>
+
+    </section>
+
+
+    <!-- Restaurant Section -->
+    <section class="restaurent-section">
+
+        <div class="restaurent-section-heading">
+            <h1>Restaurants in Mangalore</h1>
+        </div>
+
+        <div class="restaurent-cards">
+
+            <div class="restaurent-card">
+                <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=400&fit=crop" alt="">
+
+                <div class="restaurent-content">
+                    <div class="top">
+                        <h3>Seafood Palace</h3>
+                        <span class="rating">4.5 ★</span>
+                    </div>
+
+                    <p>Seafood, North Indian</p>
+                    <p class="location">Mangalore Central</p>
+                </div>
+            </div>
+
+            <div class="restaurent-card">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop" alt="">
+
+                <div class="restaurent-content">
+                    <div class="top">
+                        <h3>Morning Cafe</h3>
+                        <span class="rating">4.3 ★</span>
+                    </div>
+
+                    <p>Breakfast, Cafe</p>
+                    <p class="location">Balmatta</p>
+                </div>
+            </div>
+
+            <div class="restaurent-card">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop" alt="">
+
+                <div class="restaurent-content">
+                    <div class="top">
+                        <h3>Morning Cafe</h3>
+                        <span class="rating">4.3 ★</span>
+                    </div>
+
+                    <p>Breakfast, Cafe</p>
+                    <p class="location">Balmatta</p>
+                </div>
+            </div>
+
+            <div class="restaurent-card">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop" alt="">
+
+                <div class="restaurent-content">
+                    <div class="top">
+                        <h3>Morning Cafe</h3>
+                        <span class="rating">4.3 ★</span>
+                    </div>
+
+                    <p>Breakfast, Cafe</p>
+                    <p class="location">Balmatta</p>
+                </div>
+            </div>
+
+            <div class="restaurent-card">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop" alt="">
+
+                <div class="restaurent-content">
+                    <div class="top">
+                        <h3>Morning Cafe</h3>
+                        <span class="rating">4.3 ★</span>
+                    </div>
+
+                    <p>Breakfast, Cafe</p>
+                    <p class="location">Balmatta</p>
+                </div>
+            </div>
+
+            <div class="restaurent-card">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop" alt="">
+
+                <div class="restaurent-content">
+                    <div class="top">
+                        <h3>Morning Cafe</h3>
+                        <span class="rating">4.3 ★</span>
+                    </div>
+
+                    <p>Breakfast, Cafe</p>
+                    <p class="location">Balmatta</p>
+                </div>
+            </div>
+
+            <div class="restaurent-card">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop" alt="">
+
+                <div class="restaurent-content">
+                    <div class="top">
+                        <h3>Morning Cafe</h3>
+                        <span class="rating">4.3 ★</span>
+                    </div>
+
+                    <p>Breakfast, Cafe</p>
+                    <p class="location">Balmatta</p>
+                </div>
+            </div>
+
+
+            <div class="restaurent-card">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop" alt="">
+
+                <div class="restaurent-content">
+                    <div class="top">
+                        <h3>Morning Cafe</h3>
+                        <span class="rating">4.3 ★</span>
+                    </div>
+
+                    <p>Breakfast, Cafe</p>
+                    <p class="location">Balmatta</p>
+                </div>
+            </div>
+
+
+            <div class="restaurent-card">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop" alt="">
+
+                <div class="restaurent-content">
+                    <div class="top">
+                        <h3>Morning Cafe</h3>
+                        <span class="rating">4.3 ★</span>
+                    </div>
+
+                    <p>Breakfast, Cafe</p>
+                    <p class="location">Balmatta</p>
+                </div>
+            </div>
+
+            <div class="restaurent-card">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop" alt="">
+
+                <div class="restaurent-content">
+                    <div class="top">
+                        <h3>Morning Cafe</h3>
+                        <span class="rating">4.3 ★</span>
+                    </div>
+
+                    <p>Breakfast, Cafe</p>
+                    <p class="location">Balmatta</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="footer-section">
+        <footer class="footer">
+
+            <!-- Top Logo & Dropdown -->
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <h1>zomato</h1>
+                </div>
+
+                <div class="footer-dropdowns">
+                    <select>
+                        <option>India</option>
+                        <option>UAE</option>
+                    </select>
+
+                    <select>
+                        <option>English</option>
+                        <option>Kannada</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Middle Links -->
+            <div class="footer-links">
+
+                <div class="footer-column">
+                    <h3>ABOUT ZOMATO</h3>
+                    <a href="#">Who We Are</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Work With Us</a>
+                    <a href="#">Investor Relations</a>
+                    <a href="#">Report Fraud</a>
+                    <a href="#">Contact Us</a>
+                </div>
+
+                <div class="footer-column">
+                    <h3>ZOMAVERSE</h3>
+                    <a href="#">Zomato</a>
+                    <a href="#">Blinkit</a>
+                    <a href="#">Feeding India</a>
+                    <a href="#">Zomato Live</a>
+                </div>
+
+                <div class="footer-column">
+                    <h3>FOR RESTAURANTS</h3>
+                    <a href="#">Partner With Us</a>
+                    <a href="#">Apps For You</a>
+                </div>
+
+                <div class="footer-column">
+                    <h3>LEARN MORE</h3>
+                    <a href="#">Privacy</a>
+                    <a href="#">Security</a>
+                    <a href="#">Terms</a>
+                </div>
+
+                <div class="footer-column">
+                    <h3>SOCIAL LINKS</h3>
+
+                    <div class="social-icons">
+                        <i class="fa-brands fa-linkedin"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                        <i class="fa-brands fa-x-twitter"></i>
+                        <i class="fa-brands fa-youtube"></i>
+                        <i class="fa-brands fa-facebook"></i>
+                    </div>
+
+                    <div class="app-buttons">
+                        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                            alt="">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                            alt="">
+                    </div>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <!-- Bottom Text -->
+            <div class="footer-bottom">
+                <p>
+                    By continuing past this page, you agree to our Terms of Service,
+                    Cookie Policy, Privacy Policy and Content Policies.
+                    2008–2026 © Zomato™ Ltd. All rights reserved.
+                </p>
+            </div>
+
+        </footer>
+    </section>
+
+
+    <script>
+        const wrapper = document.querySelector(".cards-wrapper");
+        const leftBtn = document.querySelector(".carousel-btn.left");
+        const rightBtn = document.querySelector(".carousel-btn.right");
+
+        rightBtn.onclick = () => {
+            wrapper.scrollLeft += wrapper.clientWidth;
+        };
+
+        leftBtn.onclick = () => {
+            wrapper.scrollLeft -= wrapper.clientWidth;
+        };
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,166 @@
+* {
+    box-sizing: border-box;
+}
+
+.navbar {
+    padding: 20px 0;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar .upper,
+.navbar .middle,
+.lower .link-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Top section */
+.upper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.logo img {
+    width: 150px;
+    background-blend-mode: luminosity;
+}
+
+/* Search container */
+.nav-middle {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 14px;
+    padding: 12px 18px;
+    width: 750px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eee;
+}
+
+/* Location section */
+.location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.location i {
+    color: #ef4f5f;
+    font-size: 18px;
+}
+
+.location select {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Divider */
+.bar {
+    width: 1px;
+    height: 24px;
+    background-color: #ddd;
+    margin: 0 18px;
+}
+
+/* Search section */
+.search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.search i {
+    color: #888;
+    font-size: 16px;
+}
+
+.search input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+}
+
+/* Right links */
+.nav-right {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-right a {
+    text-decoration: none;
+    color: #555;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.nav-right a:hover {
+    color: #ef4f5f;
+}
+
+/* Middle breadcrumb */
+.middle {
+    margin: 15px 0;
+    font-size: 14px;
+    color: #696969;
+}
+
+.middle span {
+    margin-right: 5px;
+}
+
+/* Lower section */
+/* Nav items */
+
+.lower {
+    margin-top: 40px;
+}
+
+.link-container {
+    max-width: 1400px;
+    margin: auto;
+    display: flex;
+    gap: 50px;
+    /* spacing between tabs */
+    align-items: center;
+    padding: 15px 0;
+}
+
+/* Tab Item */
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #696969;
+    font-size: 16px;
+    font-weight: 500;
+    padding-bottom: 12px;
+    position: relative;
+    transition: 0.2s ease;
+}
+
+/* Icon styling */
+.nav-item i {
+    font-size: 18px;
+}
+
+/* Hover effect */
+.nav-item:hover {
+    color: #ef4f5f;
+}
+
+/* Active tab */
+.nav-item.active {
+    color: #ef4f5f;
+    font-weight: 600;
+}

@@ -1,0 +1,420 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui;
+}
+
+/* NAVBAR */
+.navbar {
+    padding: 20px 60px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.upper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo img {
+    width: 120px;
+}
+
+.nav-middle {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 15px;
+    gap: 15px;
+    width: 50%;
+}
+
+.location {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-right: 1px solid #ddd;
+    padding-right: 15px;
+    color: #ef4f5f;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+
+}
+
+.search input {
+    border: none;
+    outline: none;
+    width: 100%;
+    
+}
+
+
+.nav-right {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-right a {
+    text-decoration: none;
+    color: #555;
+    font-size: larger;
+}
+
+.nav-right a:hover {
+    color: #ef4f5f;
+}
+
+.middle {
+    margin: 15px 0;
+    font-size: 14px;
+    color: #777;
+}
+
+.lower {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.link-container {
+    display: flex;
+    gap: 40px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.nav-item.active {
+    color: #ef4f5f;
+}
+
+/* COLLECTION SECTION */
+.collections {
+    padding: 40px 60px;
+    background: #f8f8f8;
+}
+
+.collection-middle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.collection-middle a {
+    color: #ef4f5f;
+    text-decoration: none;
+}
+
+/* CAROUSEL */
+
+.collection-cards {
+    position: relative;
+    margin-top: 30px;
+}
+
+/* wrapper */
+.cards-wrapper {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    /* allow scroll */
+    scroll-behavior: smooth;
+}
+
+/* hide scrollbar */
+.cards-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.cards {
+    flex: 0 0 25%;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.cards:hover {
+    transform: scale(1.05);
+}
+
+.cards img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.contents {
+    padding: 15px;
+}
+
+/* arrows */
+.carousel-btn {
+    position: absolute;
+    top: 40%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.carousel-btn.left {
+    left: -20px;
+}
+
+.carousel-btn.right {
+    right: -20px;
+}
+
+
+
+/* FILTER BUTTONS */
+.button-sections {
+    display: flex;
+    gap: 12px;
+    padding: 20px 60px;
+    flex-wrap: wrap;
+}
+
+.buttons button {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+}
+
+.buttons button:hover {
+    background: #f3f3f3;
+}
+
+
+/* ================= PROMO SECTION ================= */
+
+.promo-section {
+    margin: 40px 60px;
+    height: 250px;
+    border-radius: 20px;
+    background-image: url("https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1200&h=400&fit=crop");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 60px;
+    color: white;
+}
+
+/* dark overlay */
+.promo-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+}
+
+.promo-content {
+    position: relative;
+    z-index: 2;
+}
+
+.promo-content h2 {
+    font-weight: 400;
+    font-size: 24px;
+}
+
+.promo-content h1 {
+    font-size: 48px;
+    margin: 5px 0;
+}
+
+.promo-content h1 span {
+    font-size: 28px;
+}
+
+.promo-content p {
+    margin-bottom: 15px;
+}
+
+.promo-btn {
+    padding: 10px 20px;
+    border: none;
+    background-color: #ef4f5f;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.promo-btn:hover {
+    background-color: #d63c4c;
+}
+
+
+
+/* ================= Restaurant Section ================= */
+
+.restaurent-section {
+    padding: 40px 60px;
+    background: #f8f8f8;
+}
+
+.restaurent-section-heading h1 {
+    margin-bottom: 20px;
+}
+
+/* Grid Layout */
+.restaurent-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Individual Card */
+.restaurent-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.restaurent-card:hover {
+    transform: scale(1.02);
+}
+
+.restaurent-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.restaurent-content {
+    padding: 15px;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rating {
+    background: green;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.location {
+    color: gray;
+    font-size: 14px;
+}
+
+
+/* ================= FOOTER ================= */
+
+.footer {
+    background: #d5d5d5;
+    padding: 50px 60px;
+    font-family: system-ui;
+}
+
+/* Top Section */
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.footer-logo h1 {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.footer-dropdowns {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-dropdowns select {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* Middle Section */
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-column h3 {
+    font-size: 14px;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.footer-column a {
+    display: block;
+    text-decoration: none;
+    color: #555;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.footer-column a:hover {
+    color: #ef4f5f;
+}
+
+/* Social Icons */
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.social-icons i {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* App Buttons */
+.app-buttons img {
+    width: 130px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Bottom Section */
+.footer hr {
+    margin: 30px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+.footer-bottom p {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.6;
+}

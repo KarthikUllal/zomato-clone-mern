@@ -1,0 +1,23 @@
+.restaurent-section {
+    padding: 60px 0;
+    background: #f5f4f4;
+    margin-bottom: 10px;
+}
+
+
+.restaurent-section-heading,
+.restaurent-cards {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.restaurent-section-heading h1 {
+    margin-bottom: 20px;
+}
+
+.restaurent-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}

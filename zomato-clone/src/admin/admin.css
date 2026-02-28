@@ -1,0 +1,69 @@
+/* Login Page */
+.admin-login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #cecece;
+}
+
+.admin-login-box {
+  width: 450px;
+  height: 400px;
+  padding: 50px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.admin-login-box input {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 7px;
+}
+
+.admin-login-box button {
+  padding: 15px;
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Layout */
+.admin-layout {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.admin-sidebar {
+  width: 220px;
+  background: #111;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.admin-sidebar button {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.logout-btn {
+  background: crimson;
+  color: white;
+}
+
+/* Content */
+.admin-content {
+  flex: 1;
+  padding: 40px;
+  background: #f9f9f9;
+}

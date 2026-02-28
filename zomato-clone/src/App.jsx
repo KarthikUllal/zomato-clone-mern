@@ -1,0 +1,76 @@
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Dining from "./pages/Dining";
+import Delivery from "./pages/Delivery";
+import Nightlife from "./pages/Nightlife";
+import Cart from "./pages/Cart";
+import RestaurentDetails from "./pages/RestaurentDetails";
+import VerifyOtp from "./pages/VerifyOtp";
+
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
+
+import AdminLayout from "./admin/components/AdminLayout";
+import AdminAdd from "./admin/pages/AdminAdd";
+import AdminView from "./admin/pages/AdminView";
+import AdminLogin from "./admin/pages/adminLogin";
+import AdminDashboard from "./admin/pages/AdminDashboard";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+function App() {
+  const [cart, setCart] = useState({});
+
+  const location = useLocation();
+
+  // Check if current route is admin route
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
+  return (
+    <>
+      <ToastContainer />
+
+      {/* Hide Navbar for Admin pages */}
+      {!isAdminRoute && <Navbar />}
+
+      <Routes>
+        {/* Default Route */}
+        <Route path="/" element={<Navigate to="/dining" />} />
+
+        {/* User Routes */}
+        <Route path="/dining" element={<Dining />} />
+        <Route path="/delivery" element={<Delivery />} />
+        <Route path="/nightlife" element={<Nightlife />} />
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/verify-otp" element={<VerifyOtp />} />
+        <Route path="/signup" element={<Signup />} />
+
+        <Route
+          path="/restaurent/:id"
+          element={<RestaurentDetails cart={cart} setCart={setCart} />}
+        />
+
+        <Route path="/cart" element={<Cart cart={cart} />} />
+
+        {/* Admin Routes */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="add" element={<AdminAdd />} />
+          <Route path="view" element={<AdminView />} />
+        </Route>
+      </Routes>
+
+      {/* Hide Footer for Admin pages */}
+      {!isAdminRoute && <Footer />}
+    </>
+  );
+}
+
+export default App;

@@ -1,0 +1,27 @@
+.delivery-page {
+    background: white;
+}
+
+/* Delivery Restaurants Section */
+.delivery-restaurants {
+    padding: 60px 0;
+}
+
+.delivery-restaurants h2,
+.delivery-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.delivery-restaurants h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.delivery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}

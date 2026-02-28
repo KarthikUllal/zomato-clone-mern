@@ -1,0 +1,173 @@
+.signup-page {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-container {
+    width: 500px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.signup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.signup-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+}
+
+.close-btn i {
+    font-size: 20px;
+    color: #777;
+    transition: 0.2s ease;
+}
+
+.close-btn:hover i {
+    color: black;
+}
+
+.form-controls {
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 13px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+input[type="email"] {
+    width: 100%;
+    padding: 13px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #ef4f5f;
+    box-shadow: 0 0 5px rgba(239, 79, 95, 0.3);
+}
+
+.check-terms {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.check-terms a {
+    text-decoration: none;
+    color: #ef4f5f;
+}
+
+.check-terms a:hover {
+    text-decoration: underline;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-create-account {
+    background-color: #ef4f5f;
+    color: white;
+}
+
+.btn-create-account:hover {
+    background-color: #d93f4e;
+}
+
+.btn-create-account:disabled{
+    cursor: not-allowed;
+    background: #ccc;
+}
+
+.btn-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: white;
+    border: 1px solid #ddd;
+    font-weight: 500;
+}
+
+.btn-login:hover {
+    background-color: #f5f5f5;
+}
+
+.btn-login i {
+    color: #ef4f5f;
+}
+
+.break {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.break hr {
+    flex: 1;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+.break span {
+    margin: 0 10px;
+    font-size: 13px;
+    color: #777;
+}
+
+.signup-footer {
+    text-align: center;
+    font-size: 18px;
+}
+
+.signup-footer a {
+    text-decoration: none;
+    color: #ef4f5f;
+    font-weight: 500;
+}
+
+.signup-footer a:hover {
+    text-decoration: underline;
+}
