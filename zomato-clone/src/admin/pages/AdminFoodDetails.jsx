@@ -16,7 +16,7 @@ export default function AdminFoodDetails() {
     <div className="admin-food-details-wrapper">
       <div className="back-btn-section">
         <button className="back-btn" onClick={() => navigate("/admin/view")}>
-          Back
+          <i className="fi fi-ss-left" style={{ marginRight: "20px" }}></i>Back
         </button>
       </div>
 

@@ -3,29 +3,20 @@ import { dummyRestaurants, dummyFoods } from "../data/dummyData";
 import "../styles/AdminDetails.css";
 
 export default function AdminRestaurantDetails() {
-
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const restaurant = dummyRestaurants.find(
-    r => r._id === id
-  );
+  const restaurant = dummyRestaurants.find((r) => r._id === id);
 
-  const foods = dummyFoods.filter(
-    f => f.restaurantId === id
-  );
+  const foods = dummyFoods.filter((f) => f.restaurantId === id);
 
   if (!restaurant) return <h2>Restaurant Not Found</h2>;
 
   return (
     <div className="admin-restaurant-details-wrapper">
-
       <div className="back-btn-section">
-        <button
-          className="back-btn"
-          onClick={() => navigate("/admin/view")}
-        >
-          Back
+        <button className="back-btn" onClick={() => navigate("/admin/view")}>
+          <i className="fi fi-ss-left" style={{ marginRight: "20px" }}></i>Back
         </button>
       </div>
 
@@ -36,26 +27,38 @@ export default function AdminRestaurantDetails() {
 
       {/* Restaurant Info */}
       <div className="restaurant-card">
-
         <h1>{restaurant.name}</h1>
 
         <div className="restaurant-info">
-
-          <p><strong>Category:</strong> {restaurant.category}</p>
-          <p><strong>Cuisine:</strong> {restaurant.cuisine}</p>
-          <p><strong>Location:</strong> {restaurant.location}</p>
-          <p><strong>Cost:</strong> {restaurant.averageCostForTwo}</p>
-          <p><strong>Rating:</strong> {restaurant.rating}</p>
-          <p><strong>Reviews:</strong> {restaurant.reviewCount}</p>
-          <p><strong>Hours:</strong> {restaurant.hours}</p>
-          <p><strong>Contact:</strong> {restaurant.contact}</p>
-
+          <p>
+            <strong>Category:</strong> {restaurant.category}
+          </p>
+          <p>
+            <strong>Cuisine:</strong> {restaurant.cuisine}
+          </p>
+          <p>
+            <strong>Location:</strong> {restaurant.location}
+          </p>
+          <p>
+            <strong>Cost:</strong> {restaurant.averageCostForTwo}
+          </p>
+          <p>
+            <strong>Rating:</strong> {restaurant.rating}
+          </p>
+          <p>
+            <strong>Reviews:</strong> {restaurant.reviewCount}
+          </p>
+          <p>
+            <strong>Hours:</strong> {restaurant.hours}
+          </p>
+          <p>
+            <strong>Contact:</strong> {restaurant.contact}
+          </p>
         </div>
 
         <p style={{ marginTop: "10px" }}>
           <strong>Description:</strong> {restaurant.description}
         </p>
-
       </div>
 
       {/* Gallery */}
@@ -63,23 +66,16 @@ export default function AdminRestaurantDetails() {
       <h2 className="section-title">Gallery</h2>
 
       <div className="gallery-grid">
-
         {restaurant.gallery?.map((img, index) => (
-          <img
-            key={index}
-            src={img}
-            alt="gallery"
-          />
+          <img key={index} src={img} alt="gallery" />
         ))}
-
       </div>
 
       {/* Foods */}
 
       <h2 className="section-title">Foods</h2>
 
-      <table className="admin-table">
-
+      <table className="admin-restaurant-food-table">
         <thead>
           <tr>
             <th>Image</th>
@@ -90,17 +86,10 @@ export default function AdminRestaurantDetails() {
         </thead>
 
         <tbody>
-
-          {foods.map(food => (
-
+          {foods.map((food) => (
             <tr key={food._id}>
-
               <td onClick={() => navigate(`/admin/food/${food._id}`)}>
-                <img
-                  src={food.img}
-                  alt={food.name}
-                  className="food-image"
-                />
+                <img src={food.img} alt={food.name} className="food-image" />
               </td>
 
               <td>{food.name}</td>
@@ -108,15 +97,10 @@ export default function AdminRestaurantDetails() {
               <td>₹{food.price}</td>
 
               <td>{food.type}</td>
-
             </tr>
-
           ))}
-
         </tbody>
-
       </table>
-
     </div>
   );
 }
