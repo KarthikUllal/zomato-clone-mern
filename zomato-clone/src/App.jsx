@@ -21,6 +21,8 @@ import AdminDashboard from "./admin/pages/AdminDashboard";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AdminRestaurantDetails from "./admin/pages/AdminRestaurantDetails";
+import AdminFoodDetails from "./admin/pages/AdminFoodDetails";
 
 function App() {
   const [cart, setCart] = useState({});
@@ -64,6 +66,8 @@ function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="add" element={<AdminAdd />} />
           <Route path="view" element={<AdminView />} />
+          <Route path="restaurant/:id" element={<AdminRestaurantDetails />} />
+          <Route path="food/:id" element={<AdminFoodDetails />} />
         </Route>
       </Routes>
 

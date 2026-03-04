@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "../styles/AdminView.css";
 import { dummyRestaurants, dummyFoods } from "../data/dummyData";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminView() {
   const [activeTab, setActiveTab] = useState("restaurant");
+  const navigate = useNavigate()
 
   return (
     <div className="admin-view-wrapper">
@@ -49,7 +51,7 @@ export default function AdminView() {
                 <td>{restaurant.rating}</td>
                 <td>
                   <div className="action-btn">
-                    <button className="view-btn">View</button>
+                    <button className="view-btn" onClick={() => navigate(`/admin/restaurant/${restaurant._id}`)}>View</button>
                     <button className="delete-btn">Delete</button>
                   </div>
                 </td>
@@ -87,7 +89,7 @@ export default function AdminView() {
                   <td>{restaurant ? restaurant.name : "Unknown"}</td>
                   <td>
                     <div className="action-btn">
-                      <button className="view-btn">View</button>
+                      <button className="view-btn" onClick={() => navigate(`/admin/food/${food._id}`)}>View</button>
                       <button className="delete-btn">Delete</button>
                     </div>
                   </td>

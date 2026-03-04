@@ -1,4 +1,4 @@
-/* Login Page */
+/* Login page */
 .admin-login-container {
   height: 100vh;
   display: flex;
@@ -36,7 +36,7 @@
 /* Layout */
 .admin-layout {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 /* Sidebar */
@@ -48,6 +48,8 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  position : sticky;
+  top : 0;
 }
 
 .admin-sidebar button {
