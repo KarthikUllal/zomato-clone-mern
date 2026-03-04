@@ -107,6 +107,35 @@
     color: #ef4f5f;
 }
 
+/*profile part*/
+.profile-section{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.profile-circle{
+  width:90px;
+  height:50px;
+  border-radius:50%;
+  background:#ebeaea;
+  color:rgb(37, 36, 36);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.logout-btn{
+  border:none;
+  background:#111;
+  color:white;
+  padding:10px 10px;
+  border-radius:4px;
+  cursor:pointer;
+}
+
 /* Middle breadcrumb */
 .middle {
     margin: 15px 0;

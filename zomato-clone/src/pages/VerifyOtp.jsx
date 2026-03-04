@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./VerifyOtp.css";
+import { toast } from "react-toastify";
 
 export default function VerifyOtp() {
   const navigate = useNavigate();
@@ -20,20 +21,23 @@ export default function VerifyOtp() {
   const handleVerify = async () => {
     const response = await axios.post(
       "http://localhost:8000/api/user/verify-otp",
-      { email, otp, fullname }
+      { email, otp, fullname },
     );
 
     if (response.data.status === "SUCCESS") {
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("userName", fullname);
+      toast.success("Login Successful!");
+      console.log(fullname);
       navigate("/");
     }
   };
 
   const handleResend = async () => {
-    await axios.post(
-      "http://localhost:8000/api/user/send-otp",
-      { email, fullname }
-    );
+    await axios.post("http://localhost:8000/api/user/send-otp", {
+      email,
+      fullname,
+    });
     alert("OTP Resent Successfully");
   };
 
@@ -70,8 +74,7 @@ export default function VerifyOtp() {
         </button>
 
         <div className="otp-resend">
-          Not received OTP?{" "}
-          <span onClick={handleResend}>Resend Now</span>
+          Not received OTP? <span onClick={handleResend}>Resend Now</span>
         </div>
       </div>
     </div>

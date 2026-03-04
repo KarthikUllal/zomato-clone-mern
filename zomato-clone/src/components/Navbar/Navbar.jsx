@@ -1,12 +1,27 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import SearchBar from "../SearchBar/SearchBar";
 import CategoryTabs from "../CategoryTabs/CategoryTabs";
 
 export default function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isDetailsPage = location.pathname.startsWith("/restaurent/");
+
+  const token = localStorage.getItem("token");
+   const userName = localStorage.getItem("userName");
+  const isLoggedIn = !!token;
+ 
+  const profileLetter = userName ? userName.charAt(0).toUpperCase() : "";
+
+
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userName");
+    navigate("/login");
+  };
 
   return (
     <header className="navbar">
@@ -21,8 +36,20 @@ export default function Navbar() {
         <SearchBar />
 
         <div className="nav-right">
-          <Link to="/login">Log in</Link>
-          <Link to="/signup">Sign up</Link>
+          {isLoggedIn ? (
+            <div className="profile-section">
+              <div className="profile-circle">{profileLetter}</div>
+
+              <button className="logout-btn" onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
+          ) : (
+            <>
+              <Link to="/login">Log in</Link>
+              <Link to="/signup">Sign up</Link>
+            </>
+          )}
         </div>
       </div>
 
