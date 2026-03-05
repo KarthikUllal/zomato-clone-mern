@@ -39,8 +39,9 @@ export default function AdminAdd() {
           <input placeholder="Cuisine" />
           <input placeholder="Location" />
           <input placeholder="Average Cost For Two (₹1200 for two)" />
-          <input placeholder="Banner Image URL" />
-          <textarea placeholder="Gallery Image URLs (one per line)" rows={6}></textarea>
+          {/* <input placeholder="Banner Image URL" type="" /> */}
+          <input type="file" id="image" name="image" value=""  />
+          <textarea placeholder="Gallery Image URLs (one per line)"  rows={6}></textarea>
           <input placeholder="Opening Hours (10 AM - 11 PM)" />
           <input placeholder="Contact Number" />
           <textarea placeholder="Description" rows={6}></textarea>
@@ -55,7 +56,7 @@ export default function AdminAdd() {
 
           <input placeholder="Food Name" />
           <input type="number" placeholder="Price" />
-          <input placeholder="Food Image URL" />
+          <input type="file" placeholder="Food Image URL" />
           <input placeholder="Food Category (Biryani, Pizza etc.)" />
 
           <select>

@@ -23,6 +23,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminRestaurantDetails from "./admin/pages/AdminRestaurantDetails";
 import AdminFoodDetails from "./admin/pages/AdminFoodDetails";
+import AdminOrders from "./admin/pages/AdminOrders";
+import AdminUsers from "./admin/pages/AdminUsers";
 
 function App() {
   const [cart, setCart] = useState({});
@@ -68,6 +70,8 @@ function App() {
           <Route path="view" element={<AdminView />} />
           <Route path="restaurant/:id" element={<AdminRestaurantDetails />} />
           <Route path="food/:id" element={<AdminFoodDetails />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="users" element={<AdminUsers />} />
         </Route>
       </Routes>
 

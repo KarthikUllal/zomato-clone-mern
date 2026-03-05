@@ -18,11 +18,19 @@ export default function AdminSidebar() {
       </button>
 
       <button onClick={() => navigate("/admin/add")}>
-        Add
+        Add Restaurant And Food
       </button>
 
       <button onClick={() => navigate("/admin/view")}>
-        View
+        Manage Restaurant And Food
+      </button>
+
+      <button onClick={() => navigate("/admin/orders")}>
+        Manage Orders
+      </button>
+
+      <button onClick={() => navigate("/admin/users")}>
+        Manage Users
       </button>
 
       <button onClick={logout} className="logout-btn">

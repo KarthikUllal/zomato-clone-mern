@@ -41,7 +41,7 @@
 
 /* Sidebar */
 .admin-sidebar {
-  width: 220px;
+  width:400px;
   background: #111;
   color: white;
   padding: 20px;
@@ -53,9 +53,11 @@
 }
 
 .admin-sidebar button {
-  padding: 10px;
+  width: 100%;
+  padding: 20px;
   border: none;
   cursor: pointer;
+  font-size: 17px;
 }
 
 .logout-btn {
