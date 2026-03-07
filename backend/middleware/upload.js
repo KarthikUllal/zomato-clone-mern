@@ -1,19 +1,51 @@
 const multer = require("multer");
 const path = require("path");
 
-const storage = multer.diskStorage({
+
+// FOOD STORAGE
+const foodStorage = multer.diskStorage({
 
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, "uploads/foods/");
   },
 
   filename: function (req, file, cb) {
-    const uniqueName = Date.now() + path.extname(file.originalname);
-    cb(null, uniqueName);
+
+    const fileName =
+      Date.now() + "-" + file.originalname;
+
+    cb(null, fileName);
   }
 
 });
 
-const upload = multer({ storage });
 
-module.exports = upload;
+// RESTAURANT STORAGE
+const restaurantStorage = multer.diskStorage({
+
+  destination: function (req, file, cb) {
+    cb(null, "uploads/restaurants/");
+  },
+
+  filename: function (req, file, cb) {
+
+    const fileName =
+      Date.now() + "-" + file.originalname;
+
+    cb(null, fileName);
+  }
+
+});
+
+
+// UPLOAD INSTANCES
+const foodUpload = multer({ storage: foodStorage });
+
+const restaurantUpload = multer({ storage: restaurantStorage });
+
+
+// EXPORT
+module.exports = {
+  foodUpload,
+  restaurantUpload
+};
