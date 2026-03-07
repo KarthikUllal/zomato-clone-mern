@@ -1,89 +1,128 @@
 .admin-view-wrapper {
   width: 100%;
+  padding: 30px;
+  background: #f6f7fb;
+  min-height: 100vh;
 }
 
 .admin-view-title {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 /* Tabs */
 .view-tabs {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   display: flex;
-  width: 20%;
+  gap: 12px;
+  width: fit-content;
 }
 
 .view-tabs button {
-  padding: 15px;
-  margin-right: 10px;
+  padding: 14px 26px;
   border: none;
   cursor: pointer;
-  background: #ddd;
-  border-radius: 4px;
-  width: 50%;
-
+  background: #e4e4e4;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .view-tabs button:hover {
-  background: #ccc;
+  background: #d4d4d4;
 }
 
 .view-tabs .active {
-  background: black;
+  background: #111;
   color: white;
 }
 
 /* Table */
 .admin-table {
   width: 100%;
-  margin-top: 30px;
- border: 2px solid #eee;
-  background: rgb(236, 236, 236);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.07);
 }
 
-.admin-table th,
-.admin-table td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-
+.admin-table thead {
+  background: #f2f4f7;
 }
 
 .admin-table th {
-  background: #f4f4f4;
+  text-align: left;
+  padding: 18px 22px;
+  font-size: 18px;
   font-weight: 600;
-  font-size: 20px;
-  font-style: bold;
+  color: #333;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.admin-table td {
+  padding: 18px 22px;
+  font-size: 17px;
+  color: #444;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .admin-table tr:hover {
   background: #fafafa;
 }
 
+/* Image */
+.food-image {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
 
 /* Buttons */
 .action-btn {
   display: flex;
-  margin: 0 auto;
-  width: 50%;
+  gap: 10px;
+}
+
+.view-btn,
+.edit-btn,
+.delete-btn {
+  padding: 10px 18px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }
 
 .view-btn {
-  width: 50%;
-  margin-right: 5px;
-  border: none;
-  background: #007bff;
+  background: #3b82f6;
   color: white;
-  cursor: pointer;
-  border-radius: 4px;
+}
+
+.view-btn:hover {
+  background: #2563eb;
+}
+
+.edit-btn {
+  background: #10b981;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #059669;
 }
 
 .delete-btn {
-  width: 50%;
-  border: none;
-  background: crimson;
+  background: #ef4444;
   color: white;
-  cursor: pointer;
-  border-radius: 4px;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
 }

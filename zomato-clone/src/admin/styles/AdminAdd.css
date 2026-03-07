@@ -2,34 +2,39 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 20px;
+  padding: 40px 20px;
+  background: #f7f7f7;
+  min-height: 100vh;
 }
 
 /* Title */
 .admin-title {
-  /* margin-bottom: 25px; */
+  margin-bottom: 25px;
   font-weight: 600;
+  font-size: 28px;
+  letter-spacing: 0.5px;
 }
 
 /* Tabs */
 .tab-buttons {
   display: flex;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 }
 
 .tab-buttons button {
-  padding: 15px 20px;
+  padding: 12px 22px;
   margin-right: 10px;
   border: none;
   cursor: pointer;
-  background-color: #e0e0e0;
-  border-radius: 5px;
+  background-color: #e4e4e4;
+  border-radius: 6px;
   font-weight: 500;
-  transition: 0.2s;
+  transition: all 0.2s ease;
 }
 
 .tab-buttons button:hover {
-  background-color: #cfcfcf;
+  background-color: #d3d3d3;
+  transform: translateY(-1px);
 }
 
 .tab-buttons .active {
@@ -40,37 +45,64 @@
 /* Form Container */
 .form-box {
   background: white;
-  padding: 20px;
+  padding: 30px;
   width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  gap: 18px;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  transition: 0.2s;
 }
 
-/* Headings inside form */
+/* Heading */
 .form-box h2 {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  font-size: 20px;
+  font-weight: 600;
 }
 
-/* Inputs */
 .form-box input,
 .form-box select,
 .form-box textarea {
-  padding: 15px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
+  padding: 16px 18px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
   outline: none;
-  transition: 0.2s;
-
+  transition: all 0.2s ease;
+  background: #fafafa;
+  width: 100%;
 }
 
+/* input focus */
 .form-box input:focus,
 .form-box select:focus,
 .form-box textarea:focus {
   border-color: black;
+  background: white;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+}
+
+/* textarea */
+.form-box textarea {
+  resize: none;
+  min-height: 120px;
+}
+
+/* file input */
+.form-box input[type="file"] {
+  font-size: 15px;
+  padding: 10px;
+  background: transparent;
+  border: none;
+}
+
+/* Labels */
+.form-box label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 5px;
 }
 
 /* Textarea */
@@ -88,9 +120,12 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  transition: 0.2s;
+  font-size: 15px;
+  transition: all 0.2s ease;
 }
 
 .submit-btn:hover {
   background-color: #333;
+  transform: translateY(-1px);
 }
+
