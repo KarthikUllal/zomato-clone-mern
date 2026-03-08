@@ -1,0 +1,57 @@
+.admin-manage-user-wrapper {
+    width: 100%;
+    padding: 30px;
+    background: #f6f7fb;
+    min-height: 100vh;
+}
+
+
+.admin-manage-user-table {
+    width: max-content;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+}
+
+.admin-manage-user-table thead {
+    background: #f2f4f7;
+}
+
+.admin-manage-user-table th {
+    text-align: left;
+    padding: 18px 22px;
+    font-size: 18px;
+}
+
+.admin-manage-user-table td {
+    padding: 14px 22px;
+    font-size: 18px;
+    color: #444;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.admin-manage-user-table tr:hover {
+    background: #fafafa;
+}
+
+/* Action Buttons */
+.admin-manage-user-table .action-btn {
+    display: flex;
+    gap: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.admin-manage-user-table .action-btn.delete {
+    background: #ff4d4f;
+    color: white;
+}
+
+.admin-manage-user-table .action-btn.delete:hover {
+    background: #e83739;
+}

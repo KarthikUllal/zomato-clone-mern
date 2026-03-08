@@ -7,6 +7,8 @@ const {foodUpload, restaurantUpload} = require("../middleware/upload");
 const {addRestaurant,getRestaurants, deleteRestaurant} = require("../Controller/adminRestaurantController");
 const {addFood, getFoods, deleteFoods} = require("../Controller/adminFoodController");
 
+const {getAllUsers, deleteUser, getUserById} = require("../Controller/adminUserController")
+
 
 //Restaurant routes
 adminRouter.post(
@@ -31,3 +33,10 @@ adminRouter.get("/foods", getFoods)
 adminRouter.delete("/foods/:id", deleteFoods)
 
 module.exports = adminRouter;
+
+
+
+//Admin User manage routes
+adminRouter.get("/users", getAllUsers)
+adminRouter.get("/users/:id", getUserById)
+adminRouter.delete("/users/:id", deleteUser)
