@@ -68,6 +68,10 @@ function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="add" element={<AdminAdd />} />
+
+          <Route path="restaurant/:id" element={<AdminAdd />} />
+          <Route path="food/:id" element={<AdminAdd />} />
+
           <Route path="view" element={<AdminView />} />
           <Route path="restaurant/:id" element={<AdminRestaurantDetails />} />
           <Route path="food/:id" element={<AdminFoodDetails />} />

@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import "../styles/AdminAdd.css";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function AdminAdd() {
 
@@ -32,6 +34,8 @@ export default function AdminAdd() {
     image: null,
   });
 
+  const { id } = useParams();
+  const location = useLocation();
 
   const handleRestaurantChange = (e) => {
 
@@ -44,7 +48,6 @@ export default function AdminAdd() {
 
   };
 
-
   const handleBanner = (e) => {
 
     setRestaurantData({
@@ -53,7 +56,6 @@ export default function AdminAdd() {
     });
 
   };
-
 
   const handleGallery = (e) => {
 
@@ -64,8 +66,7 @@ export default function AdminAdd() {
 
   };
 
-
-  // fetch restaurants for dropdown
+  //to fetch restaurant so that it can show dropdown with restuarant name in food add form
   useEffect(() => {
 
     const fetchRestaurants = async () => {
@@ -90,7 +91,92 @@ export default function AdminAdd() {
 
   }, []);
 
+  //fetch restaurant when editing
+  useEffect(() => {
 
+    if (!id) return;
+    if (!location.pathname.includes("restaurant")) return;
+
+    const fetchRestaurant = async () => {
+
+      try {
+
+        const res = await axios.get(
+          `http://localhost:8000/api/admin/restaurants/${id}`
+        );
+
+        if (res.data.restaurant) {
+
+          const data = res.data.restaurant;
+
+          setRestaurantData({
+            name: data.name || "",
+            category: data.category || "dining",
+            cuisine: data.cuisine || "",
+            location: data.location || "",
+            averageCostForTwo: data.averageCostForTwo || "",
+            description: data.description || "",
+            hours: data.hours || "",
+            contact: data.contact || "",
+            banner: null,
+            gallery: [],
+          });
+
+          setActiveTab("restaurant");
+
+        }
+
+      } catch (err) {
+        toast.error("Error loading restaurant data", err);
+      }
+
+    };
+
+    fetchRestaurant();
+
+  }, [id, location.pathname]);
+
+  //fetch food when editing
+  useEffect(() => {
+
+    if (!id) return;
+    if (!location.pathname.includes("food")) return;
+
+    const fetchFood = async () => {
+
+      try {
+
+        const res = await axios.get(
+          `http://localhost:8000/api/admin/foods/${id}`
+        );
+
+        if (res.data.food) {
+
+          const data = res.data.food;
+
+          setFoodData({
+            name: data.name || "",
+            price: data.price || "",
+            description: data.description || "",
+            foodCategory: data.foodCategory || "",
+            isVeg: data.isVeg,
+            restaurant: data.restaurant?._id || "",
+            image: null,
+          });
+
+          setActiveTab("food");
+
+        }
+
+      } catch (err) {
+        toast.error("Error loading food data", err);
+      }
+
+    };
+
+    fetchFood();
+
+  }, [id, location.pathname]);
 
   const submitRestaurant = async () => {
 
@@ -112,12 +198,24 @@ export default function AdminAdd() {
 
     try {
 
-      const res = await axios.post(
-        "http://localhost:8000/api/admin/restaurant",
-        formData
-      );
+      let res;
 
-      // if restaurant is added successfully then add it to restaurant state so that it can be used in dropdown while adding food without refreshing the page
+      if (id) {
+
+        res = await axios.put(
+          `http://localhost:8000/api/admin/restaurants/${id}`,
+          formData
+        );
+
+      } else {
+
+        res = await axios.post(
+          "http://localhost:8000/api/admin/restaurant",
+          formData
+        );
+
+      }
+
       if (res.data.restaurant) {
         setRestaurants((prev) => [...prev, res.data.restaurant]);
       }
@@ -135,7 +233,7 @@ export default function AdminAdd() {
         gallery: [],
       });
 
-      toast.success(res.data.message || "Restaurant added");
+      toast.success(res.data.message || (id ? "Restaurant edited" : "Restaurant added"));
 
     }
 
@@ -148,8 +246,6 @@ export default function AdminAdd() {
 
   };
 
-
-
   const handleFoodChange = (e) => {
 
     const { name, value } = e.target;
@@ -160,8 +256,6 @@ export default function AdminAdd() {
     });
 
   };
-
-
 
   const handleFoodImage = (e) => {
 
@@ -176,8 +270,6 @@ export default function AdminAdd() {
 
   };
 
-
-
   const submitFood = async () => {
 
     const formData = new FormData();
@@ -188,10 +280,25 @@ export default function AdminAdd() {
 
     try {
 
-      const res = await axios.post(
-        "http://localhost:8000/api/admin/food",
-        formData
-      );
+      if (id) {
+
+        await axios.put(
+          `http://localhost:8000/api/admin/foods/${id}`,
+          formData
+        );
+
+        toast.success("Food edited successfully");
+
+      } else {
+
+        await axios.post(
+          "http://localhost:8000/api/admin/food",
+          formData
+        );
+
+        toast.success("Food added");
+
+      }
 
       setFoodData({
         name: "",
@@ -203,8 +310,6 @@ export default function AdminAdd() {
         image: null,
       });
 
-      toast.success(res.data.message || "Food added");
-
     }
 
     catch (error) {
@@ -215,8 +320,6 @@ export default function AdminAdd() {
     }
 
   };
-
-
 
   return (
 
@@ -242,13 +345,11 @@ export default function AdminAdd() {
 
       </div>
 
-
-
       {activeTab === "restaurant" && (
 
         <div className="form-box">
 
-          <h2>Add Restaurant</h2>
+          <h2>{id ? "Edit Restaurant" : "Add Restaurant"}</h2>
 
           <input
             name="name"
@@ -322,20 +423,18 @@ export default function AdminAdd() {
             className="submit-btn"
             onClick={submitRestaurant}
           >
-            Add Restaurant
+            {id ? "Edit Restaurant" : "Add Restaurant"}
           </button>
 
         </div>
 
       )}
 
-
-
       {activeTab === "food" && (
 
         <div className="form-box">
 
-          <h2>Add Food</h2>
+          <h2>{id ? "Edit Food" : "Add Food"}</h2>
 
           <input
             name="name"
@@ -405,7 +504,7 @@ export default function AdminAdd() {
             className="submit-btn"
             onClick={submitFood}
           >
-            Add Food
+            {id ? "Edit Food" : "Add Food"}
           </button>
 
         </div>

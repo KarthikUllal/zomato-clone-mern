@@ -66,6 +66,7 @@ export default function AdminView() {
     }
   };
 
+
   return (
     <div className="admin-view-wrapper">
       <h1 className="admin-view-title">Admin View</h1>
@@ -124,6 +125,7 @@ export default function AdminView() {
                       className="edit-btn"
                       onClick={() =>
                         navigate(`/admin/restaurant/${restaurant._id}`)
+              
                       }
                     >
                       Edit
@@ -187,7 +189,9 @@ export default function AdminView() {
                   <td>{food.restaurant?.name}</td>
                   <td>
                     <div className="action-btn">
-                      <button className="edit-btn">Edit</button>
+                      <button className="edit-btn" onClick={() => navigate(`/admin/food/${food._id}`)} >
+                        Edit
+                      </button>
                       <button
                         className="view-btn"
                         onClick={() => navigate(`/admin/food/${food._id}`)}
