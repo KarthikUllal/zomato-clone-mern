@@ -3,8 +3,8 @@ const fs = require("fs")
 
 exports.addFood = async (req, res) => {
 
-     console.log(req.body);
-  console.log(req.files);
+    console.log(req.body);
+    console.log(req.files);
     try {
         const {
             name,
@@ -47,52 +47,118 @@ exports.addFood = async (req, res) => {
 
 //get all foods 
 
-exports.getFoods = async (req, res) =>{
-    try{
+exports.getFoods = async (req, res) => {
+    try {
         const foods = await foodModel.find().populate("restaurant", "name")
         res.json({
-            status : "SUCCESS",
-            message : "Food Data Retrieved Successfully",
+            status: "SUCCESS",
+            message: "Food Data Retrieved Successfully",
             foods: foods
         })
     }
-    catch(err){
+    catch (err) {
         res.json({
-            status : "FAILED",
-            message : "Error While Fetching Food Data",
-            error : err.message
+            status: "FAILED",
+            message: "Error While Fetching Food Data",
+            error: err.message
         })
     }
 }
 
-//deleting food and it images.
-exports.deleteFoods = async (req, res) =>{
-    try{
-        const food = await foodModel.findById(req.params.id)
-        if(!food){
+//get food by id
+exports.getFoodById = async (req, res) => {
+    try {
+        const food = await foodModel.findById(req.params.id).populate("restaurant", "name")
+        if (!food) {
             return res.json({
-                status : "FAILED",
-                message : "Food not found"
+                status: "FAILED",
+                message: "Food not found"
+            })
+        }
+        res.json({
+            status: "SUCCESS",
+            message: "Food Data Retrieved Successfully",
+            food: food
+        })
+    }
+    catch (err) {
+        res.json({
+
+            status: "FAILED",
+            message: "Error While Fetching Food Data",
+            error: err.message
+        })
+    }
+}
+
+
+//deleting food and it images.
+exports.deleteFoods = async (req, res) => {
+    try {
+        const food = await foodModel.findById(req.params.id)
+        if (!food) {
+            return res.json({
+                status: "FAILED",
+                message: "Food not found"
             })
         }
         //delete image from local storage 
-        if(food.image && fs.existsSync(food.image)){
+        if (food.image && fs.existsSync(food.image)) {
             fs.unlinkSync(food.image)
         }
 
         //deleting food from db.
         await foodModel.findByIdAndDelete(req.params.id)
         res.json({
-            status : "SUCCESS",
-            message : "Food Deleted Successfully"
+            status: "SUCCESS",
+            message: "Food Deleted Successfully"
         })
 
     }
-    catch(err){
+    catch (err) {
         res.json({
-            status : "FAILED",
-            message : "Error While Deleting Food Data",
-            error : err.message
+            status: "FAILED",
+            message: "Error While Deleting Food Data",
+            error: err.message
+        })
+    }
+}
+
+
+//updating food data 
+
+exports.updateFood = async (req, res) => {
+    try {
+        const food = await foodModel.findById(req.params.id)
+        if (!food) {
+            return res.json({
+                status: "FAILED",
+                message: "Food not found"
+            })
+        }
+        //handle food image
+        if (req.file && req.file["image"]) {
+            req.body.image = req.file.path
+        }
+        else {
+            req.body.image = food.image
+        }
+        const updatedFood = await foodModel.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true, runValidators: true }
+        )
+        res.json({
+            status: "SUCCESS",
+            message: "Food updated successfully",
+            data: updatedFood
+        })
+    }
+    catch (err) {
+        res.json({
+            status: "FAILED",
+            message: "Error While Updating Food Data",
+            error: err.message
         })
     }
 }

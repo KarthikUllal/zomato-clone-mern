@@ -82,6 +82,33 @@ exports.getRestaurants = async (req, res) => {
     }
 }
 
+//get restaurant by id
+exports.getRestaurantById = async (req, res) => {
+    try {
+
+        const restaurant = await restaurantModel.findById(req.params.id)       
+        if (!restaurant) {
+            return res.json({
+                status: "FAILED",
+                message: "Restaurant not found"
+            })
+        }   
+        res.json({
+            status: "SUCCESS",
+            restaurant: restaurant
+        })      
+
+    }
+    catch (err) {
+        res.json({
+            status: "FAILED",
+            message: "Error fetching restaurant",
+            error: err.message
+            
+        })  
+    }
+}
+
 //delete individual restaurant data
 exports.deleteRestaurant = async (req, res) => {
     try {
@@ -95,14 +122,14 @@ exports.deleteRestaurant = async (req, res) => {
         }
 
         //delete banner image
-        if(restaurant.banner && fs.existsSync(restaurant.banner)){
+        if (restaurant.banner && fs.existsSync(restaurant.banner)) {
             fs.unlinkSync(restaurant.banner)
         }
 
         //delete list of gallery images
-        if(restaurant.gallery && restaurant.gallery.length > 0){
+        if (restaurant.gallery && restaurant.gallery.length > 0) {
             restaurant.gallery.forEach(galleryImage => {
-                if(fs.existsSync(galleryImage)){
+                if (fs.existsSync(galleryImage)) {
                     fs.unlinkSync(galleryImage)
                 }
             })
@@ -125,6 +152,60 @@ exports.deleteRestaurant = async (req, res) => {
         res.json({
             status: "FAILED",
             message: "Error deleting restaurant data",
+            error: err.message
+        })
+    }
+}
+
+
+//Editing or updating restaurant data
+
+exports.updateRestaurant = async (req, res) => {
+    try {
+
+        const restaurant = await restaurantModel.findById(req.params.id)
+
+        if (!restaurant) {
+            return res.json({
+                status: "FAILED",
+                message: "No Restaurant Found",
+            })
+        }
+
+        //handling banner image separately since it is a file 
+        if (req.files && req.files["banner"]) {
+            req.body.banner = req.files["banner"][0].path
+
+        } else {
+            req.body.banner = restaurant.banner
+        }
+
+        //handling gallery images separately ..
+        if (req.files && req.files["gallery"]) {
+            req.body.gallery = req.files["gallery"].map((file) => file.path)
+
+        }
+        else {
+            req.body.gallery = restaurant.gallery
+        }
+
+        //update the database 
+        const updatedRestaurant = await restaurantModel.findByIdAndUpdate(
+            req.params.id,
+            {$set : req.body},
+            { new: true, runValidators: true }
+        )
+        res.json({
+            status: "SUCCESS",
+            message: "Restaurant updated successfully",
+            data: updatedRestaurant
+        });
+
+    }
+    catch (err) {
+        res.json({
+            status: "FAILED",
+            message: "Error updating restaurant",
             error: err.message
         })
     }

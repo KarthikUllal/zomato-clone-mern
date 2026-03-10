@@ -4,8 +4,8 @@ const adminRouter = express.Router();
 
 const {foodUpload, restaurantUpload} = require("../middleware/upload");
 
-const {addRestaurant,getRestaurants, deleteRestaurant} = require("../Controller/adminRestaurantController");
-const {addFood, getFoods, deleteFoods} = require("../Controller/adminFoodController");
+const {addRestaurant,getRestaurants, deleteRestaurant, updateRestaurant, getRestaurantById} = require("../Controller/adminRestaurantController");
+const {addFood, getFoods, deleteFoods, updateFood, getFoodById} = require("../Controller/adminFoodController");
 
 const {getAllUsers, deleteUser, getUserById} = require("../Controller/adminUserController")
 
@@ -20,7 +20,18 @@ adminRouter.post(
   addRestaurant
 );
 adminRouter.get("/restaurants", getRestaurants)
+adminRouter.get("/restaurants/:id", getRestaurantById)
+
 adminRouter.delete("/restaurants/:id", deleteRestaurant)
+
+adminRouter.put("/restaurants/:id",
+    restaurantUpload.fields([
+        {name : "banner", maxCount : 1},
+        {name : "gallery" , maxCount : 10}
+    ]
+),updateRestaurant)
+
+
 
 
 //Food routes
@@ -30,9 +41,10 @@ adminRouter.post(
   addFood
 );
 adminRouter.get("/foods", getFoods)
+adminRouter.get("/foods/:id", getFoodById)
 adminRouter.delete("/foods/:id", deleteFoods)
+adminRouter.put("/foods/:id",foodUpload.single("image"), updateFood)
 
-module.exports = adminRouter;
 
 
 
@@ -40,3 +52,7 @@ module.exports = adminRouter;
 adminRouter.get("/users", getAllUsers)
 adminRouter.get("/users/:id", getUserById)
 adminRouter.delete("/users/:id", deleteUser)
+
+
+
+module.exports = adminRouter;
