@@ -69,6 +69,8 @@ function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="add" element={<AdminAdd />} />
 
+
+          {/**Edit Routes */}
           <Route path="restaurant/:id" element={<AdminAdd />} />
           <Route path="food/:id" element={<AdminAdd />} />
 

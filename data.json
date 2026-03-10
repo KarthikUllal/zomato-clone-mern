@@ -1,0 +1,159 @@
+{
+  "restaurants": [
+    {
+      "name": "Hotel Tanu",
+      "category": "dining",
+      "cuisine": "South Indian",
+      "location": "Mangalore",
+      "averageCostForTwo": "₹1200",
+      "description": "Authentic South Indian meals and breakfast specials",
+      "hours": "10AM - 11PM",
+      "contact": "9876543210",
+      "rating": 4.3,
+      "reviewCount": 215
+    },
+    {
+      "name": "Domino's Pizza",
+      "category": "delivery",
+      "cuisine": "Italian",
+      "location": "Bangalore",
+      "averageCostForTwo": "₹800",
+      "description": "Popular pizza chain with quick delivery",
+      "hours": "11AM - 12AM",
+      "contact": "9988776655",
+      "rating": 4.1,
+      "reviewCount": 450
+    },
+    {
+      "name": "Barbeque Nation",
+      "category": "dining",
+      "cuisine": "North Indian BBQ",
+      "location": "Bangalore",
+      "averageCostForTwo": "₹1800",
+      "description": "Buffet restaurant famous for grilled starters",
+      "hours": "12PM - 11PM",
+      "contact": "9123456789",
+      "rating": 4.5,
+      "reviewCount": 600
+    },
+    {
+      "name": "KFC",
+      "category": "delivery",
+      "cuisine": "American Fast Food",
+      "location": "Mysore",
+      "averageCostForTwo": "₹900",
+      "description": "Famous fried chicken fast food chain",
+      "hours": "10AM - 11PM",
+      "contact": "9871234567",
+      "rating": 4.0,
+      "reviewCount": 320
+    },
+    {
+      "name": "Empire Restaurant",
+      "category": "dining",
+      "cuisine": "Mughlai",
+      "location": "Bangalore",
+      "averageCostForTwo": "₹1000",
+      "description": "Known for late night biryani and kebabs",
+      "hours": "11AM - 2AM",
+      "contact": "9001122334",
+      "rating": 4.2,
+      "reviewCount": 530
+    },
+    {
+      "name": "Meghana Foods",
+      "category": "dining",
+      "cuisine": "Andhra",
+      "location": "Bangalore",
+      "averageCostForTwo": "₹1100",
+      "description": "Famous for spicy Andhra style biryani",
+      "hours": "11AM - 11PM",
+      "contact": "9887766554",
+      "rating": 4.6,
+      "reviewCount": 700
+    }
+  ],
+
+  "foods": [
+    {
+      "name": "Masala Dosa",
+      "price": 120,
+      "description": "Crispy dosa stuffed with potato masala",
+      "foodCategory": "Breakfast",
+      "isVeg": true,
+      "restaurant": "Hotel Tanu"
+    },
+    {
+      "name": "Chicken Biryani",
+      "price": 260,
+      "description": "Aromatic chicken biryani cooked with spices",
+      "foodCategory": "Main Course",
+      "isVeg": false,
+      "restaurant": "Empire Restaurant"
+    },
+    {
+      "name": "Margherita Pizza",
+      "price": 299,
+      "description": "Classic cheese pizza",
+      "foodCategory": "Pizza",
+      "isVeg": true,
+      "restaurant": "Domino's Pizza"
+    },
+    {
+      "name": "Pepper BBQ Chicken Pizza",
+      "price": 399,
+      "description": "BBQ chicken pizza topped with cheese",
+      "foodCategory": "Pizza",
+      "isVeg": false,
+      "restaurant": "Domino's Pizza"
+    },
+    {
+      "name": "Paneer Tikka",
+      "price": 240,
+      "description": "Grilled paneer cubes marinated with spices",
+      "foodCategory": "Starter",
+      "isVeg": true,
+      "restaurant": "Barbeque Nation"
+    },
+    {
+      "name": "Crispy Fried Chicken",
+      "price": 220,
+      "description": "Spicy crispy fried chicken",
+      "foodCategory": "Fast Food",
+      "isVeg": false,
+      "restaurant": "KFC"
+    },
+    {
+      "name": "Veg Burger",
+      "price": 130,
+      "description": "Vegetable patty burger",
+      "foodCategory": "Burger",
+      "isVeg": true,
+      "restaurant": "McDonald's"
+    },
+    {
+      "name": "Chicken Burger",
+      "price": 160,
+      "description": "Juicy chicken burger",
+      "foodCategory": "Burger",
+      "isVeg": false,
+      "restaurant": "McDonald's"
+    },
+    {
+      "name": "Cappuccino",
+      "price": 180,
+      "description": "Freshly brewed coffee",
+      "foodCategory": "Beverage",
+      "isVeg": true,
+      "restaurant": "Cafe Coffee Day"
+    },
+    {
+      "name": "Chocolate Waffle",
+      "price": 210,
+      "description": "Belgian waffle topped with chocolate syrup",
+      "foodCategory": "Dessert",
+      "isVeg": true,
+      "restaurant": "The Belgian Waffle Co."
+    }
+  ]
+}
