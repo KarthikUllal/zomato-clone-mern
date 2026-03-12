@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 import DetailsHeader from "../components/RestaurentDetails/Header/DetailsHeader";
 import DetailsBanner from "../components/RestaurentDetails/Header/DetailsBanner";
@@ -11,25 +13,57 @@ import Photos from "../components/RestaurentDetails/Sections/Photos";
 import Menu from "../components/RestaurentDetails/Sections/Menu";
 import BookTable from "../components/RestaurentDetails/Sections/BookTable";
 
-export default function RestaurentDetails({cart, setCart}) {
+export default function RestaurentDetails({ cart, setCart }) {
+  const { id } = useParams();
+
+  const [restaurent, setRestaurent] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
+
+  useEffect(() => {
+    const fetchRestaurant = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8000/api/admin/restaurants/${id}`
+        );
+
+        setRestaurent(res.data.restaurant);
+      } catch (err) {
+        console.error("Error fetching restaurant", err);
+      }
+    };
+
+    fetchRestaurant();
+  }, [id]);
+
+  if (!restaurent) {
+    return <p>Loading restaurant...</p>;
+  }
 
   return (
     <div>
-
-      <DetailsHeader setActiveTab={setActiveTab} />
-      <DetailsBanner />
+      <DetailsHeader setActiveTab={setActiveTab} restaurent={restaurent} />
+      <DetailsBanner restaurent={restaurent} />
       <DetailsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <div>
-        {activeTab === "overview" && <Overview />}
-        {activeTab === "order" && <OrderOnline cart = {cart} setCart = {setCart} />}
+        {activeTab === "overview" && <Overview restaurent={restaurent} />}
+
+        {activeTab === "order" && (
+          <OrderOnline
+            cart={cart}
+            setCart={setCart}
+            restaurent={restaurent}
+          />
+        )}
+
         {activeTab === "reviews" && <Reviews />}
-        {activeTab === "photos" && <Photos />}
+
+        {activeTab === "photos" && <Photos restaurent={restaurent} />}
+
         {activeTab === "menu" && <Menu />}
+
         {activeTab === "book" && <BookTable />}
       </div>
-
     </div>
   );
 }

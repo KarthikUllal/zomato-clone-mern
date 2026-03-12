@@ -1,15 +1,13 @@
 import "./Sections.css";
 
-export default function Overview() {
+export default function Overview({restaurent}) {
   return (
     <div className="section-container">
       <h2>About this place</h2>
 
       <div className="card">
         <p>
-          Pickle And Grains offers authentic Mangalorean cuisine with a
-          comfortable dining experience. Perfect for family dinners,
-          casual outings, and celebrations.
+         {restaurent.description}.
         </p>
       </div>
 

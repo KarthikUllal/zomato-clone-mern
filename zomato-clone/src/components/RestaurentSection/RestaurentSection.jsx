@@ -13,7 +13,7 @@ export default function RestaurentSection({ title, data }) {
 
       <div className="restaurent-cards">
         {data.map((item) => (
-          <RestaurentCard key={item.id} restaurent={item} />
+          <RestaurentCard key={item._id} restaurent={item} />
         ))}
       </div>
 

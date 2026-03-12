@@ -1,6 +1,6 @@
 import "./Sections.css";
 
-export default function Photos() {
+export default function Photos({restaurent}) {
   return (
     <div className="section-container photos-container">
 
@@ -12,14 +12,9 @@ export default function Photos() {
       </div>
 
       <div className="photo-grid">
-        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600" />
-        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600" />
-        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600" />
-        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600" />
-        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600" />
-        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600" />
-        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600" />
-        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600" />
+        {restaurent.gallery.map((gallery, index) =>(
+          <img src={`http://localhost:8000/${gallery}`} key={index} />
+        ))}
       </div>
 
     </div>

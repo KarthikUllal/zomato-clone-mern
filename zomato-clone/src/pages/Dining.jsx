@@ -2,13 +2,37 @@ import Carousel from "../components/Carousel/Carousel";
 import FilterButtons from "../components/FilterButtons/FilterButtons";
 import PromoBanner from "../components/PromoBanner/PromoBanner";
 import RestaurentSection from "../components/RestaurentSection/RestaurentSection";
-import { restaurents } from "../data/restaurentData";
+// import { restaurents } from "../data/restaurentData";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+
 
 export default function Dining() {
 
-  const diningRestaurents = restaurents.filter(
+  //Managing state for restuarant data coming from backend
+  const [restaurants, setRestaurants] = useState([]);
+
+  //fetching restaurant data when page loads
+  useEffect(() =>{
+    const fetchDinningRestaurant =async () =>{
+      try{
+        const res = await axios.get("http://localhost:8000/api/admin/restaurants")
+        setRestaurants(res.data.restaurants)
+
+      }
+      catch(err){
+        toast.error("Error fetching restaurant data", err)
+      }
+    } 
+    fetchDinningRestaurant()
+  },[])
+
+  const diningRestaurants = restaurants.filter(
     (item) => item.category === "dining"
   );
+
+  console.log(diningRestaurants)
 
   return (
     <>
@@ -18,7 +42,7 @@ export default function Dining() {
 
       <RestaurentSection
         title="Restaurants in Mangalore"
-        data={diningRestaurents}
+        data={diningRestaurants}
       />
     </>
   );

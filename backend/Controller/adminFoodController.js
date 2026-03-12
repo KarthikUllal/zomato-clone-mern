@@ -162,3 +162,22 @@ exports.updateFood = async (req, res) => {
         })
     }
 }
+
+
+exports.getFoodsByRestaurant = async (req, res) => {
+  try {
+    const foods = await foodModel.find({
+      restaurant: req.params.restaurantId
+    });
+
+    res.json({
+      status: "SUCCESS",
+      foods
+    });
+  } catch (err) {
+    res.json({
+      status: "FAILED",
+      message: err.message
+    });
+  }
+};

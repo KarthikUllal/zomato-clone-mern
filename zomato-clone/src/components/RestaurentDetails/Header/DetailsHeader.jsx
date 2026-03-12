@@ -1,6 +1,6 @@
 import "./Header.css";
 
-export default function DetailsHeader({ setActiveTab }) {
+export default function DetailsHeader({ setActiveTab, restaurent }) {
   return (
     <div className="header-sticky-wrapper">
 
@@ -8,18 +8,18 @@ export default function DetailsHeader({ setActiveTab }) {
 
         <div className="header-top">
           <div>
-            <h1 className="rest-name">Pickle And Grains</h1>
+            <h1 className="rest-name">{restaurent.name}</h1>
             <p className="cuisine">
-              Mangalorean, South Indian, Fast Food, Shake
+              {restaurent.cuisine}
             </p>
             <p className="address">
-              Level 2, The Avatar Hotel, Attavar, Mangalore
+              {restaurent.location}
             </p>
           </div>
 
           <div className="rating-section">
             <div className="rating-box">
-              <span>3.8 ★</span>
+              <span>{restaurent.rating} ★</span>
               <small>Dining</small>
             </div>
 
@@ -31,9 +31,9 @@ export default function DetailsHeader({ setActiveTab }) {
         </div>
 
         <div className="header-info">
-          <span>Open now - 11 AM - 11 PM</span>
-          <span>₹1000 for two</span>
-          <span>+91 7865432112</span>
+          <span>Open now - {restaurent.hours}</span>
+          <span>₹{restaurent.averageCostForTwo} for two</span>
+          <span>+91 {restaurent.contact}</span>
         </div>
 
         <div className="header-buttons">

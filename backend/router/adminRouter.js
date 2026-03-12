@@ -5,7 +5,7 @@ const adminRouter = express.Router();
 const {foodUpload, restaurantUpload} = require("../middleware/upload");
 
 const {addRestaurant,getRestaurants, deleteRestaurant, updateRestaurant, getRestaurantById} = require("../Controller/adminRestaurantController");
-const {addFood, getFoods, deleteFoods, updateFood, getFoodById} = require("../Controller/adminFoodController");
+const {addFood, getFoods, deleteFoods, updateFood, getFoodById, getFoodsByRestaurant} = require("../Controller/adminFoodController");
 
 const {getAllUsers, deleteUser, getUserById} = require("../Controller/adminUserController")
 
@@ -44,6 +44,7 @@ adminRouter.get("/foods", getFoods)
 adminRouter.get("/foods/:id", getFoodById)
 adminRouter.delete("/foods/:id", deleteFoods)
 adminRouter.put("/foods/:id",foodUpload.single("image"), updateFood)
+adminRouter.get("/foods/restaurant/:restaurantId", getFoodsByRestaurant)
 
 
 
