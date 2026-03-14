@@ -1,7 +1,7 @@
 import "./DeliveryCarousel.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-
+import { useNavigate } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -27,16 +27,21 @@ const categories = [
     name: "Burger",
   },
   {
-    img :"https://images.unsplash.com/photo-1742281257687-092746ad6021?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dmVnJTIwbWVhbHN8ZW58MHx8MHx8fDA%3D",
-    name : "Veg Meals"
+    img: "https://images.unsplash.com/photo-1742281257687-092746ad6021?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dmVnJTIwbWVhbHN8ZW58MHx8MHx8fDA%3D",
+    name: "Veg Meals",
   },
   {
-    img:"https://plus.unsplash.com/premium_photo-1694141252774-c937d97641da?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZnJpZWQlMjByaWNlfGVufDB8fDB8fHww",
-    name : "Fried Rice"
-  }
+    img: "https://plus.unsplash.com/premium_photo-1694141252774-c937d97641da?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZnJpZWQlMjByaWNlfGVufDB8fDB8fHww",
+    name: "Fried Rice",
+  },
 ];
 
 export default function CategorySlider() {
+  const navigate = useNavigate();
+
+  const handleCategory = (category) => {
+    navigate(`/delivery/${category}`);
+  };
   return (
     <div className="delivery-slider category-slider">
       <h2>Inspiration for your first order</h2>
@@ -53,7 +58,7 @@ export default function CategorySlider() {
         }}
       >
         {categories.map((item, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={index} onClick={() => handleCategory(item.name.toLowerCase())}>
             <div className="circle-card">
               <img src={item.img} alt={item.name} />
               <p>{item.name}</p>

@@ -49,6 +49,7 @@ function App() {
         {/* User Routes */}
         <Route path="/dining" element={<Dining />} />
         <Route path="/delivery" element={<Delivery />} />
+        <Route path="/delivery/:category" element={<Delivery />} /> {/**food category based delivery */}
         <Route path="/nightlife" element={<Nightlife />} />
 
         <Route path="/login" element={<Login />} />

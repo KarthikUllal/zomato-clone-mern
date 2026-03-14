@@ -86,17 +86,17 @@ exports.getRestaurants = async (req, res) => {
 exports.getRestaurantById = async (req, res) => {
     try {
 
-        const restaurant = await restaurantModel.findById(req.params.id)       
+        const restaurant = await restaurantModel.findById(req.params.id)
         if (!restaurant) {
             return res.json({
                 status: "FAILED",
                 message: "Restaurant not found"
             })
-        }   
+        }
         res.json({
             status: "SUCCESS",
             restaurant: restaurant
-        })      
+        })
 
     }
     catch (err) {
@@ -104,8 +104,8 @@ exports.getRestaurantById = async (req, res) => {
             status: "FAILED",
             message: "Error fetching restaurant",
             error: err.message
-            
-        })  
+
+        })
     }
 }
 
@@ -192,7 +192,7 @@ exports.updateRestaurant = async (req, res) => {
         //update the database 
         const updatedRestaurant = await restaurantModel.findByIdAndUpdate(
             req.params.id,
-            {$set : req.body},
+            { $set: req.body },
             { new: true, runValidators: true }
         )
         res.json({
@@ -211,3 +211,35 @@ exports.updateRestaurant = async (req, res) => {
     }
 }
 
+
+//get restaurant by food category 
+
+exports.getRestaurantByFoodCategory = async (req, res) => {
+    try {
+        const category = req.params.category.toLowerCase().trim()
+
+        const restaurantIds = await foodModel.distinct("restaurant", {
+            foodCategory: category
+        });
+
+        // const foods = await foodModel.find({ foodCategory: category }).populate("restaurant")
+        // const restaurants = foods.map(food => food.restaurant)
+
+        const restaurants = await restaurantModel.find({
+            _id: { $in: restaurantIds }
+        });
+
+
+        res.json({
+            status: "SUCCESS",
+            restaurants: restaurants
+        })
+    }
+    catch (err) {
+        res.json({
+            status: "FAILED",
+            message: "Error fetching restaurants by food category",
+            error: err.message
+        })
+    }
+}

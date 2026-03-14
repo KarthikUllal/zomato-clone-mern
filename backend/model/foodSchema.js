@@ -24,7 +24,10 @@ const foodSchema = mongoose.Schema({
     },
 
     foodCategory: {
-        type: String
+        type: String,
+        required: true,
+        lowercase: true,
+        trim: true
     },
     restaurant: {
         type: mongoose.Schema.Types.ObjectId,

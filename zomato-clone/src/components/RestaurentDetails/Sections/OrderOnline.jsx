@@ -62,6 +62,12 @@ export default function OrderOnline({ cart, setCart, restaurent }) {
         <div className="simple-dish-card" key={food._id}>
           <div className="left">
             <span className={"veg-dot " + (food.isVeg ? "veg" : "non-veg")} />
+            {food.image && (
+              <img
+                src={`http://localhost:8000/${food.image}`} 
+                alt={food.name}
+              />
+            )}
 
             <div className="info">
               <h4>{food.name}</h4>
@@ -71,6 +77,7 @@ export default function OrderOnline({ cart, setCart, restaurent }) {
           </div>
 
           <div className="right">
+           
             {!cart[food._id] ? (
               <button onClick={() => add(food._id)}>ADD</button>
             ) : (
