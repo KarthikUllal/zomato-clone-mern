@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -28,7 +28,6 @@ import AdminOrders from "./admin/pages/AdminOrders";
 import AdminManageUser from "./admin/pages/AdminManageUser";
 
 function App() {
-  const [cart, setCart] = useState({});
 
   const location = useLocation();
 
@@ -57,11 +56,11 @@ function App() {
         <Route path="/signup" element={<Signup />} />
 
         <Route
-          path="/restaurent/:id"
-          element={<RestaurentDetails cart={cart} setCart={setCart} />}
-        />
-
-        <Route path="/cart" element={<Cart cart={cart} />} />
+  path="/restaurent/:id"
+  element={<RestaurentDetails />}
+/>          
+        
+        <Route path="/cart" element={<Cart />} />
 
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />

@@ -4,6 +4,9 @@ const cors = require("cors");
 const router = require("./router/userRouter");
 const adminRouter = require("./router/adminRouter");
 
+//food router to send list of foods to server
+const foodRouter = require("./router/foodRouter");
+
 //Restaurant by food category route
 const restaurantRouter = require("./router/restaurantRouter")
 
@@ -24,6 +27,11 @@ app.use("/api/admin", adminRouter);
 
 //restaurant by food category base url
 app.use("/api",restaurantRouter);  // example : http://localhost:8000/api/restaurants/food-category/chicken
+
+//food router
+app.use("/api", foodRouter); //example : http://localhost:8000/api/foods/by-ids
+
+
 
 app.listen(8000, () => {
   console.log("App listening on port 8000");

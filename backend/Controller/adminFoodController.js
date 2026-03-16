@@ -181,3 +181,26 @@ exports.getFoodsByRestaurant = async (req, res) => {
     });
   }
 };
+
+//get foods by multiple ids  - > this is will be used in cart page
+exports.getFoodByIds = async (req, res) => {
+    try{
+        const {ids} = req.body
+
+        const foods = await foodModel.find({
+            _id : {$in : ids}
+        })
+        res.json({
+            status : "SUCCESS",
+            message : "Succefully Retrieved Foods",
+            foods : foods
+        })
+
+    }
+    catch(err){
+        res.json({
+            status : "FAILED",
+            message : err.message,
+        })
+    }
+}

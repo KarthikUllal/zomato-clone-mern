@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Sections.css";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { CartContext } from "../../../context/CartContext";
 
-export default function OrderOnline({ cart, setCart, restaurent }) {
+export default function OrderOnline({ restaurent }) {
+  const { cart, setCart } = useContext(CartContext);
   const navigate = useNavigate();
   const [foods, setFoods] = useState([]);
 
@@ -14,7 +16,7 @@ export default function OrderOnline({ cart, setCart, restaurent }) {
     const fetchFoods = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/admin/foods/restaurant/${restaurantId}`
+          `http://localhost:8000/api/admin/foods/restaurant/${restaurantId}`,
         );
 
         setFoods(res.data.foods);
@@ -28,31 +30,35 @@ export default function OrderOnline({ cart, setCart, restaurent }) {
     }
   }, [restaurantId]);
 
-  function add(id) {
-    let newCart = { ...cart };
-
-    if (newCart[id]) {
-      newCart[id] += 1;
-    } else {
-      newCart[id] = 1;
+  function add(foodId) {
+    // prevent multiple restaurants
+    if (cart.restaurantId && cart.restaurantId !== restaurantId) {
+      alert("Please clear the cart first");
+      return;
     }
 
-    setCart(newCart);
+    let newItems = { ...cart.items };
+
+    newItems[foodId] = 1;
+
+    setCart({
+      restaurantId: restaurantId,
+      items: newItems,
+    });
   }
 
-  function remove(id) {
-    let newCart = { ...cart };
+  function remove(foodId) {
+    let newItems = { ...cart.items };
 
-    if (newCart[id]) {
-      newCart[id] -= 1;
-    }
+    delete newItems[foodId];
 
-    if (newCart[id] === 0) {
-      delete newCart[id];
-    }
-
-    setCart(newCart);
+    setCart({
+      restaurantId: cart.restaurantId,
+      items: newItems,
+    });
   }
+
+  const totalItems = Object.values(cart.items || {}).reduce((a, b) => a + b, 0);
 
   return (
     <div className="section-container">
@@ -62,9 +68,10 @@ export default function OrderOnline({ cart, setCart, restaurent }) {
         <div className="simple-dish-card" key={food._id}>
           <div className="left">
             <span className={"veg-dot " + (food.isVeg ? "veg" : "non-veg")} />
+
             {food.image && (
               <img
-                src={`http://localhost:8000/${food.image}`} 
+                src={`http://localhost:8000/${food.image}`}
                 alt={food.name}
               />
             )}
@@ -75,25 +82,30 @@ export default function OrderOnline({ cart, setCart, restaurent }) {
               <p className="price">₹{food.price}</p>
             </div>
           </div>
+            <div className="right">
 
-          <div className="right">
-           
-            {!cart[food._id] ? (
-              <button onClick={() => add(food._id)}>ADD</button>
+            {!cart.items?.[food._id] ? (
+
+              <button onClick={()=>add(food._id)}>ADD</button>
+
             ) : (
-              <div className="qty-box">
-                <button onClick={() => remove(food._id)}>-</button>
-                <span>{cart[food._id]}</span>
-                <button onClick={() => add(food._id)}>+</button>
-              </div>
+
+              <button
+                style={{background:"#eee", color:"#333"}}
+                onClick={()=>remove(food._id)}
+              >
+                Remove
+              </button>
+
             )}
-          </div>
+      </div>
+         
         </div>
       ))}
 
-      <h3>Total Items: {Object.values(cart).reduce((a, b) => a + b, 0)}</h3>
+      <h3>Total Items: {totalItems}</h3>
 
-      {Object.values(cart).length > 0 && (
+      {totalItems > 0 && (
         <button onClick={() => navigate("/cart")}>Go To Cart</button>
       )}
     </div>
