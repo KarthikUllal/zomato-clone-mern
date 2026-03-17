@@ -2,21 +2,22 @@ const userModel = require("../model/userSchema");
 const userOtpVerificationModel = require("../model/userOtpVerificationSchema");
 const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
+const transporter = require("../utils/mailer");
 
 require("dotenv").config();
 
-// nodemail object to use email
-const transporter = nodemailer.createTransport({
-  secure: true,
-  host: "smtp.gmail.com",
-  port: 465,
-  auth: {
-    user: process.env.USER_EMAIL,
-    pass: process.env.USER_PASSWORD,
-  },
-});
+// // nodemail object to use email
+// const transporter = nodemailer.createTransport({
+//   secure: true,
+//   host: "smtp.gmail.com",
+//   port: 465,
+//   auth: {
+//     user: process.env.USER_EMAIL,
+//     pass: process.env.USER_PASSWORD,
+//   },
+// });
 
 //send otp
 const sendOtp = async (req, res) => {

@@ -10,6 +10,10 @@ const foodRouter = require("./router/foodRouter");
 //Restaurant by food category route
 const restaurantRouter = require("./router/restaurantRouter")
 
+//order router
+
+const orderRouter = require("./router/orderRouter")
+
 const app = express();
 
 app.use(express.json());
@@ -30,6 +34,9 @@ app.use("/api",restaurantRouter);  // example : http://localhost:8000/api/restau
 
 //food router
 app.use("/api", foodRouter); //example : http://localhost:8000/api/foods/by-ids
+
+
+app.use("/api", orderRouter) //example : http://localhost:8000/api/order
 
 
 

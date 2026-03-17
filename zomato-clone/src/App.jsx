@@ -1,12 +1,12 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
-
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dining from "./pages/Dining";
 import Delivery from "./pages/Delivery";
 import Nightlife from "./pages/Nightlife";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 import RestaurentDetails from "./pages/RestaurentDetails";
 import VerifyOtp from "./pages/VerifyOtp";
 
@@ -26,9 +26,9 @@ import AdminFoodDetails from "./admin/pages/AdminFoodDetails";
 import AdminOrders from "./admin/pages/AdminOrders";
 
 import AdminManageUser from "./admin/pages/AdminManageUser";
+import OrderDetails from "./pages/OrderDetails";
 
 function App() {
-
   const location = useLocation();
 
   // Check if current route is admin route
@@ -44,31 +44,25 @@ function App() {
       <Routes>
         {/* Default Route */}
         <Route path="/" element={<Navigate to="/dining" />} />
-
         {/* User Routes */}
         <Route path="/dining" element={<Dining />} />
         <Route path="/delivery" element={<Delivery />} />
-        <Route path="/delivery/:category" element={<Delivery />} /> {/**food category based delivery */}
+        <Route path="/delivery/:category" element={<Delivery />} />{" "}
+        {/**food category based delivery */}
         <Route path="/nightlife" element={<Nightlife />} />
-
         <Route path="/login" element={<Login />} />
         <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/signup" element={<Signup />} />
-
-        <Route
-  path="/restaurent/:id"
-  element={<RestaurentDetails />}
-/>          
-        
+        <Route path="/restaurent/:id" element={<RestaurentDetails />} />
         <Route path="/cart" element={<Cart />} />
-
+        <Route path = "/checkout" element = {<Checkout />} />
+        <Route path ="/order/:id" element = {<OrderDetails /> }/>
+        
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
-
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="add" element={<AdminAdd />} />
-
 
           {/**Edit Routes */}
           <Route path="restaurant/:id" element={<AdminAdd />} />

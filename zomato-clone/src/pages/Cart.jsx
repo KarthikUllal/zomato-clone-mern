@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import axios from "axios";
 import "./Cart.css";
+import {useNavigate} from "react-router-dom"
 
 export default function Cart() {
 
@@ -9,6 +10,8 @@ export default function Cart() {
 
   const [foods, setFoods] = useState([]);
   const [restaurant, setRestaurant] = useState(null);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
 
@@ -177,8 +180,8 @@ export default function Cart() {
 
 
       {totalItems > 0  && (
-        <button className="place-order  ">
-          Place Order
+        <button className="place-order " onClick={() => navigate("/checkout")}>
+          Proceed to Checkout
         </button>
       )}
 
