@@ -78,7 +78,7 @@ const placeOrder = async (req, res) => {
 
 }
 
-//to get order details of a perticular user
+//to get specificorder details of a perticular user
 const getOrderById = async (req, res) => {
 
     try {
@@ -116,4 +116,25 @@ const getOrderById = async (req, res) => {
 
 };
 
-module.exports = { placeOrder, getOrderById }
+//to get all orders of a user 
+const getMyOrders = async (req, res) =>{
+    const userId = req.user.userId;
+    try{
+        const orders = await orderModel.find({user: userId}).populate("restaurant", "name").populate("items.food", "name price image").sort({ createdAt: -1 });
+        res.json({
+            status: "SUCCESS",
+            message: "Orders found",
+            orders
+        });
+    }
+    catch(err){
+        res.json({
+            status: "FAILED",
+            message: "Error fetching orders",
+            error: err.message
+        });
+    }
+}
+
+
+module.exports = { placeOrder, getOrderById, getMyOrders}

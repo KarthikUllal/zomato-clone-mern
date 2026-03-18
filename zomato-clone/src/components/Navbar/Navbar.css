@@ -127,6 +127,15 @@
   cursor:pointer;
 }
 
+.profile-section .my-order{
+    gap: 10px;
+    padding: 0px 15px;
+}
+.profile-section .my-order:hover{
+    color: #ef4f5f;
+}
+
+
 .logout-btn{
   border:none;
   background:#111;

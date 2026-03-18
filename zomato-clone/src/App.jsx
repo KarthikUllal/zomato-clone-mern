@@ -27,6 +27,7 @@ import AdminOrders from "./admin/pages/AdminOrders";
 
 import AdminManageUser from "./admin/pages/AdminManageUser";
 import OrderDetails from "./pages/OrderDetails";
+import MyOrders from "./pages/MyOrders";
 
 function App() {
   const location = useLocation();
@@ -57,6 +58,9 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path = "/checkout" element = {<Checkout />} />
         <Route path ="/order/:id" element = {<OrderDetails /> }/>
+
+        {/**My Orders Route */}
+        <Route path="/my-orders" element={<MyOrders/>} />
         
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
