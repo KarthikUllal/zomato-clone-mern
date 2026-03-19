@@ -1,10 +1,25 @@
+
 import "../../components/Navbar/Navbar.css";
+import { useState } from "react";
+import {useNavigate} from "react-router-dom"; 
+
+
 
 export default function SearchBar() {
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    if(e.key === "Enter" && query.trim() !== "") {
+      navigate(`/search?query=${query}`);
+    }
+  }
+
+     
   return (
     <div className="nav-middle">
       <div className="location">
-        <i className="fa-solid fa-location-dot"></i>
+        <i className="fa-solid fa-location-dot" ></i>
         <select>
           <option>Mangalore</option>
           <option>Udupi</option>
@@ -19,6 +34,9 @@ export default function SearchBar() {
         <input
           type="text"
           placeholder="Search for restaurant, cuisine or a dish"
+          onKeyDown={handleSearch}
+          onChange={(e) => setQuery(e.target.value)}
+          value={query}
         />
       </div>
     </div>

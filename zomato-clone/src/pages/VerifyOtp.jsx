@@ -62,8 +62,8 @@ export default function VerifyOtp() {
         <div className="otp-input-container">
           <input
             type="text"
-            maxLength="6"
-            placeholder="Enter 6 digit OTP"
+            maxLength="4"
+            placeholder="Enter 4 digit OTP"
             className="otp-input"
             onChange={(e) => setOtp(e.target.value)}
           />

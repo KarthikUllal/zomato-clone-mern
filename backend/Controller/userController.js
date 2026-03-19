@@ -5,7 +5,8 @@ const bcrypt = require("bcrypt");
 // const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const transporter = require("../utils/mailer");
-
+const restaurantModel = require("../model/restaurantSchema");
+const foodModel = require("../model/foodSchema");
 require("dotenv").config();
 
 // // nodemail object to use email
@@ -43,7 +44,7 @@ const sendOtp = async (req, res) => {
     }
 
     // To Generate otp
-    const otp = otpGenerator.generate(6, {
+    const otp = otpGenerator.generate(4, {
       lowerCaseAlphabets: false,
       upperCaseAlphabets: false,
       digits: true,
@@ -195,5 +196,42 @@ const verifyToken = async (req, res) => {
   }
 };
 
-module.exports = { sendOtp, verifyOtp, verifyToken };
+
+//Search Restaurant Api
+const searchRestaurantsAndFoods = async (req, res) => {
+  try {
+    const { query } = req.query || " "
+    const restaurant = await restaurantModel.find({
+      name: { $regex: query, $options: "i" }
+    })
+
+    const foods = await foodModel.find({
+      name: { $regex: query, $options: "i" }
+    }).populate("restaurant")
+
+    //extract restaurant from foods
+    const foodRestaurants = foods.map(food => food.restaurant)
+
+    const allRestaurants = [...restaurant, ...foodRestaurants];
+
+    //remove duplicates properly
+    const uniqueRestaurants = Array.from(
+      new Map(allRestaurants.map(r => [r._id.toString(), r])).values()
+    );
+
+    res.json({
+      status: "SUCCESS",
+      message: "Restaurant Found",
+      restaurants: uniqueRestaurants,
+    })
+  }
+  catch (err) {
+    res.json({
+      status: "FAILED",
+      message: err.message
+    })
+  }
+}
+
+module.exports = { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods };
 

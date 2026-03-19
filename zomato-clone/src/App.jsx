@@ -28,13 +28,15 @@ import AdminOrders from "./admin/pages/AdminOrders";
 import AdminManageUser from "./admin/pages/AdminManageUser";
 import OrderDetails from "./pages/OrderDetails";
 import MyOrders from "./pages/MyOrders";
+import SearchResults from "./pages/SearchResults";
+
+
 
 function App() {
   const location = useLocation();
 
   // Check if current route is admin route
   const isAdminRoute = location.pathname.startsWith("/admin");
-
   return (
     <>
       <ToastContainer />
@@ -58,6 +60,8 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path = "/checkout" element = {<Checkout />} />
         <Route path ="/order/:id" element = {<OrderDetails /> }/>
+
+        <Route path="/search" element={<SearchResults />} />
 
         {/**My Orders Route */}
         <Route path="/my-orders" element={<MyOrders/>} />
