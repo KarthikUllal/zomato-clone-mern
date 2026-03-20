@@ -25,6 +25,10 @@ mongoose
   .then(() => console.log("Connected to database"))
   .catch((err) => console.log(err));
 
+  app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
+
 app.use("/api/user", router);
 
 app.use("/api/admin", adminRouter);
