@@ -39,7 +39,7 @@ app.use("/api", foodRouter); //example : http://localhost:8000/api/foods/by-ids
 app.use("/api", orderRouter) //example : http://localhost:8000/api/order
 
 
-
-app.listen(8000, () => {
-  console.log("App listening on port 8000");
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
 });

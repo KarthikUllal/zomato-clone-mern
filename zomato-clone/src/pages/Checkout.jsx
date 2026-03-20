@@ -55,7 +55,11 @@ export default function Checkout() {
         restaurantId: null,
         items: {},
       });
+      
+      //after successfully placing order, remove cart from localStorage and navigate to order details page
+      localStorage.removeItem("cart");
 
+      //navigate to order details page
       const orderId = res.data.order._id
       Navigate(`/order/${orderId}`)
 

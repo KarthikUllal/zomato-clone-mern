@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-// ✅ import card + styles
 import RestaurentCard from "../components/RestaurentCards/RestaurentCards";
 import "../components/RestaurentCards/RestaurentCards.css";
 
@@ -18,7 +17,7 @@ export default function SearchResults() {
     const fetchSearchResults = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/user/search?query=${query}`
+          `http://localhost:8000/api/user/search?query=${query}`,
         );
 
         setRestaurants(res.data.restaurants || []);
@@ -32,7 +31,6 @@ export default function SearchResults() {
       fetchSearchResults();
     }
   }, [location.search]);
-
 
   return (
     <div style={{ padding: "20px" }}>
