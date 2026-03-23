@@ -71,7 +71,7 @@ const sendOtp = async (req, res) => {
     //   subject: "Your OTP for Login",
     //   text: `Your OTP is ${otp}. It expires in 10 minutes`,
     // });
-    alert("OTP:", otp);
+    console.log("OTP:", otp);
 
     res.json({
       status: "PENDING",
