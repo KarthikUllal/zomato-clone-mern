@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import "../styles/AdminOrders.css";
+import api from "../../api";
 
 function AdminOrders() {
   const [orders, setOrders] = useState([]);
   const fetchOrders = async () => {
-      const res = await axios.get("http://localhost:8000/api/admin/orders");
-      setOrders(res.data.orders);
-    };
+    const res = await api.get("/api/admin/orders");
+    setOrders(res.data.orders);
+  };
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -16,7 +16,7 @@ function AdminOrders() {
   //update status of order
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      await axios.put(`http://localhost:8000/api/admin/orders/${orderId}`, {
+      await api.put(`/api/admin/orders/${orderId}`, {
         status: newStatus,
       });
       // Update the orders state to reflect the changed status

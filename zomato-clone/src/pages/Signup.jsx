@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./Signup.css";
 import { useState } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
+import api from "../api";
+
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ export default function Signup() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8000/api/user", user);
+      const response = await api.post("/api/user", user);
 
       if (response.data.status === 1) {
         toast.success(response.data.message);

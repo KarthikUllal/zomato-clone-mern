@@ -1,7 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import "./OrderDetails.css";
+import api from "../api";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 
 export default function OrderDetails() {
 
@@ -16,8 +18,8 @@ export default function OrderDetails() {
 
         const token = localStorage.getItem("token");
 
-        const res = await axios.get(
-          `http://localhost:8000/api/orders/${id}`,
+        const res = await api.get(
+          `/api/orders/${id}`,
           {
             headers: {
               Authorization: token
@@ -62,7 +64,7 @@ export default function OrderDetails() {
             <div className="item" key={item._id}>
 
               <img
-                src={`http://localhost:8000/${item.food.image}`}
+                src={`${BASE_URL}/${item.food.image}`}
                 alt={item.food.name}
               />
 

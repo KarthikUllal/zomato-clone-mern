@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import "../styles/AdminAdd.css";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import api from "../../api";
+
 
 export default function AdminAdd() {
-
   const [activeTab, setActiveTab] = useState("restaurant");
 
   const [restaurants, setRestaurants] = useState([]);
@@ -38,75 +38,59 @@ export default function AdminAdd() {
   const location = useLocation();
 
   const handleRestaurantChange = (e) => {
-
     const { name, value } = e.target;
 
     setRestaurantData({
       ...restaurantData,
       [name]: value,
     });
-
   };
 
   const handleBanner = (e) => {
-
     setRestaurantData({
       ...restaurantData,
       banner: e.target.files[0],
     });
-
   };
 
   const handleGallery = (e) => {
-
     setRestaurantData({
       ...restaurantData,
       gallery: e.target.files,
     });
-
   };
 
   //to fetch restaurant so that it can show dropdown with restuarant name in food add form
   useEffect(() => {
-
     const fetchRestaurants = async () => {
-
       try {
-
-        const res = await axios.get(
-          "http://localhost:8000/api/admin/restaurants"
+        const res = await api.get(
+          "/api/admin/restaurants",
         );
 
         if (res.data.status === "SUCCESS") {
           setRestaurants(res.data.restaurants);
         }
-
       } catch (err) {
         console.log(err);
       }
-
     };
 
     fetchRestaurants();
-
   }, []);
 
   //fetch restaurant when editing
   useEffect(() => {
-
     if (!id) return;
     if (!location.pathname.includes("restaurant")) return;
 
     const fetchRestaurant = async () => {
-
       try {
-
-        const res = await axios.get(
-          `http://localhost:8000/api/admin/restaurants/${id}`
+        const res = await api.get(
+          `/api/admin/restaurants/${id}`,
         );
 
         if (res.data.restaurant) {
-
           const data = res.data.restaurant;
 
           setRestaurantData({
@@ -123,35 +107,27 @@ export default function AdminAdd() {
           });
 
           setActiveTab("restaurant");
-
         }
-
       } catch (err) {
         toast.error("Error loading restaurant data", err);
       }
-
     };
 
     fetchRestaurant();
-
   }, [id, location.pathname]);
 
   //fetch food when editing
   useEffect(() => {
-
     if (!id) return;
     if (!location.pathname.includes("food")) return;
 
     const fetchFood = async () => {
-
       try {
-
-        const res = await axios.get(
-          `http://localhost:8000/api/admin/foods/${id}`
+        const res = await api.get(
+          `/api/admin/foods/${id}`,
         );
 
         if (res.data.food) {
-
           const data = res.data.food;
 
           setFoodData({
@@ -165,55 +141,41 @@ export default function AdminAdd() {
           });
 
           setActiveTab("food");
-
         }
-
       } catch (err) {
         toast.error("Error loading food data", err);
       }
-
     };
 
     fetchFood();
-
   }, [id, location.pathname]);
 
   const submitRestaurant = async () => {
-
     const formData = new FormData();
 
     for (let key in restaurantData) {
-
       if (key === "gallery") {
-
         for (let i = 0; i < restaurantData.gallery.length; i++) {
           formData.append("gallery", restaurantData.gallery[i]);
         }
-
       } else {
         formData.append(key, restaurantData[key]);
       }
-
     }
 
     try {
-
       let res;
 
       if (id) {
-
-        res = await axios.put(
-          `http://localhost:8000/api/admin/restaurants/${id}`,
-          formData
+        res = await api.put(
+          `/api/admin/restaurants/${id}`,
+          formData,
         );
-
       } else {
-
-        res = await axios.post(
-          "http://localhost:8000/api/admin/restaurant",
-          formData
+        res = await api.post(
+          "/api/admin/restaurants",
+          formData,
         );
-
       }
 
       if (res.data.restaurant) {
@@ -233,45 +195,34 @@ export default function AdminAdd() {
         gallery: [],
       });
 
-      toast.success(res.data.message || (id ? "Restaurant edited" : "Restaurant added"));
-
-    }
-
-    catch (error) {
-
+      toast.success(
+        res.data.message || (id ? "Restaurant edited" : "Restaurant added"),
+      );
+    } catch (error) {
       console.log(error);
       toast.error("Error adding restaurant");
-
     }
-
   };
 
   const handleFoodChange = (e) => {
-
     const { name, value } = e.target;
 
     setFoodData({
       ...foodData,
-      [name]: name === "isVeg" ? value === "true" : value
+      [name]: name === "isVeg" ? value === "true" : value,
     });
-
   };
 
   const handleFoodImage = (e) => {
-
     if (e.target.files.length > 0) {
-
       setFoodData({
         ...foodData,
         image: e.target.files[0],
       });
-
     }
-
   };
 
   const submitFood = async () => {
-
     const formData = new FormData();
 
     for (let key in foodData) {
@@ -279,25 +230,17 @@ export default function AdminAdd() {
     }
 
     try {
-
       if (id) {
-
-        await axios.put(
-          `http://localhost:8000/api/admin/foods/${id}`,
-          formData
+        await api.put(
+          `/api/admin/foods/${id}`,
+          formData,
         );
 
         toast.success("Food edited successfully");
-
       } else {
-
-        await axios.post(
-          "http://localhost:8000/api/admin/food",
-          formData
-        );
+        await api.post("/api/admin/foods", formData);
 
         toast.success("Food added");
-
       }
 
       setFoodData({
@@ -309,26 +252,17 @@ export default function AdminAdd() {
         restaurant: "",
         image: null,
       });
-
-    }
-
-    catch (error) {
-
+    } catch (error) {
       console.log(error);
       toast.error("Error adding food");
-
     }
-
   };
 
   return (
-
     <div className="admin-add-wrapper">
-
       <h1 className="admin-title">Admin Add Panel</h1>
 
       <div className="tab-buttons">
-
         <button
           onClick={() => setActiveTab("restaurant")}
           className={activeTab === "restaurant" ? "active" : ""}
@@ -342,13 +276,10 @@ export default function AdminAdd() {
         >
           Add Food
         </button>
-
       </div>
 
       {activeTab === "restaurant" && (
-
         <div className="form-box">
-
           <h2>{id ? "Edit Restaurant" : "Add Restaurant"}</h2>
 
           <input
@@ -363,12 +294,10 @@ export default function AdminAdd() {
             value={restaurantData.category}
             onChange={handleRestaurantChange}
           >
-
             <option value="">Select Category</option>
             <option value="dining">Dining</option>
             <option value="delivery">Delivery</option>
             <option value="nightlife">Nightlife</option>
-
           </select>
 
           <input
@@ -419,21 +348,14 @@ export default function AdminAdd() {
             onChange={handleRestaurantChange}
           ></textarea>
 
-          <button
-            className="submit-btn"
-            onClick={submitRestaurant}
-          >
+          <button className="submit-btn" onClick={submitRestaurant}>
             {id ? "Edit Restaurant" : "Add Restaurant"}
           </button>
-
         </div>
-
       )}
 
       {activeTab === "food" && (
-
         <div className="form-box">
-
           <h2>{id ? "Edit Food" : "Add Food"}</h2>
 
           <input
@@ -451,10 +373,7 @@ export default function AdminAdd() {
             onChange={handleFoodChange}
           />
 
-          <input
-            type="file"
-            onChange={handleFoodImage}
-          />
+          <input type="file" onChange={handleFoodImage} />
 
           <input
             name="foodCategory"
@@ -468,11 +387,9 @@ export default function AdminAdd() {
             value={foodData.isVeg}
             onChange={handleFoodChange}
           >
-
             <option value="">Select Veg/Non-Veg</option>
             <option value="true">Veg</option>
             <option value="false">Non-Veg</option>
-
           </select>
 
           <select
@@ -480,17 +397,13 @@ export default function AdminAdd() {
             value={foodData.restaurant}
             onChange={handleFoodChange}
           >
-
             <option value="">Select Restaurant</option>
 
             {restaurants.map((restaurant) => (
-
               <option key={restaurant._id} value={restaurant._id}>
                 {restaurant.name}
               </option>
-
             ))}
-
           </select>
 
           <textarea
@@ -500,18 +413,11 @@ export default function AdminAdd() {
             onChange={handleFoodChange}
           ></textarea>
 
-          <button
-            className="submit-btn"
-            onClick={submitFood}
-          >
+          <button className="submit-btn" onClick={submitFood}>
             {id ? "Edit Food" : "Add Food"}
           </button>
-
         </div>
-
       )}
-
     </div>
-
   );
 }

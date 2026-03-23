@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
-import axios from "axios";
 import "./Cart.css";
 import {useNavigate} from "react-router-dom"
+import api from "../api";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 
 export default function Cart() {
 
@@ -27,8 +29,8 @@ export default function Cart() {
       try {
 
         // fetch food items
-        const res = await axios.post(
-          "http://localhost:8000/api/foods/by-ids",
+        const res = await api.post(
+          "/api/foods/by-ids",
           { ids }
         );
 
@@ -37,8 +39,8 @@ export default function Cart() {
         // fetch restaurant
         if (cart.restaurantId) {
 
-          const r = await axios.get(
-            `http://localhost:8000/api/admin/restaurants/${cart.restaurantId}`
+          const r = await api.get(
+            `/api/admin/restaurants/${cart.restaurantId}`
           );
 
           setRestaurant(r.data.restaurant);
@@ -131,7 +133,7 @@ export default function Cart() {
 
             {food.image && (
               <img
-                src={`http://localhost:8000/${food.image}`}
+                src={`${BASE_URL}/${food.image}`}
                 alt={food.name}
               />
             )}

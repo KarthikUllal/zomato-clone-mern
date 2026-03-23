@@ -1,8 +1,8 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import "./VerifyOtp.css";
 import { toast } from "react-toastify";
+import api from "../api";
 
 export default function VerifyOtp() {
   const navigate = useNavigate();
@@ -19,8 +19,8 @@ export default function VerifyOtp() {
   }, [email, navigate]);
 
   const handleVerify = async () => {
-    const response = await axios.post(
-      "http://localhost:8000/api/user/verify-otp",
+    const response = await api.post(
+      "/api/user/verify-otp",
       { email, otp, fullname },
     );
 
@@ -34,7 +34,7 @@ export default function VerifyOtp() {
   };
 
   const handleResend = async () => {
-    await axios.post("http://localhost:8000/api/user/send-otp", {
+    await api.post("/api/user/send-otp", {
       email,
       fullname,
     });

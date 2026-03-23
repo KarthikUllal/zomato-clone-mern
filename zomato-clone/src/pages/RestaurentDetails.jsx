@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 
 import DetailsHeader from "../components/RestaurentDetails/Header/DetailsHeader";
 import DetailsBanner from "../components/RestaurentDetails/Header/DetailsBanner";
@@ -22,8 +22,8 @@ export default function RestaurentDetails({ cart, setCart }) {
   useEffect(() => {
     const fetchRestaurant = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8000/api/admin/restaurants/${id}`
+        const res = await api.get(
+          `/api/admin/restaurants/${id}`
         );
 
         setRestaurent(res.data.restaurant);

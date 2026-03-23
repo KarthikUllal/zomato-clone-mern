@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import "../styles/AdminView.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
+import api from "../../api"
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export default function AdminView() {
   const [activeTab, setActiveTab] = useState("restaurant");
@@ -17,9 +18,7 @@ export default function AdminView() {
     if (activeTab === "restaurant") {
       const fetchRestaurants = async () => {
         try {
-          const res = await axios.get(
-            "http://localhost:8000/api/admin/restaurants",
-          );
+          const res = await api.get("/api/admin/restaurants");
           setRestaurants(res.data.restaurants);
         } catch (err) {
           toast.error(
@@ -34,7 +33,7 @@ export default function AdminView() {
     if (activeTab === "food") {
       const fetchFoods = async () => {
         try {
-          const res = await axios.get("http://localhost:8000/api/admin/foods");
+          const res = await api.get("/api/admin/foods");
           setFoods(res.data.foods);
         } catch (err) {
           toast.error(err.response?.data?.message || "Error fetching foods");
@@ -47,7 +46,7 @@ export default function AdminView() {
   //function to delete a restaurant
   const handleDeleteRestaurant = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/admin/restaurants/${id}`);
+      await api.delete(`/api/admin/restaurants/${id}`);
       setRestaurants((prev) => prev.filter((r) => r._id !== id));
       toast.success("Restaurant Deleted Successfully");
     } catch (err) {
@@ -58,7 +57,7 @@ export default function AdminView() {
   //function to delete food
   const handleDeleteFood = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/admin/foods/${id}`);
+      await api.delete(`/api/admin/foods/${id}`);
       setFoods((prev) => prev.filter((f) => f._id !== id));
       toast.success("Food Deleted Successfully");
     } catch (err) {
@@ -178,7 +177,7 @@ export default function AdminView() {
                   <td>
                     {food.image && (
                       <img
-                        src={`http://localhost:8000/${food.image}`}
+                        src={`${BASE_URL}/${food.image}`}
                         alt={food.name}
                         className="food-image"
                       />

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./MyOrders.css";
-
+import api from "../api";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 function MyOrders() {
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
@@ -13,8 +13,8 @@ function MyOrders() {
       if (!token) return;
 
       try {
-        const res = await axios.get(
-          "http://localhost:8000/api/orders/myorders",
+        const res = await api.get(
+          "/api/orders/myorders",
           {
             headers: { Authorization: token }
           }
@@ -63,7 +63,7 @@ function MyOrders() {
                     <img
                       src={
                         item.food?.image
-                          ? `http://localhost:8000/${item.food.image}`
+                          ? `${BASE_URL}/${item.food.image}`
                           : "/default-food.png"
                       }
                       alt={item.food?.name}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import { toast } from "react-toastify";
 
 import RestaurentCard from "../components/RestaurentCards/RestaurentCards";
@@ -16,8 +16,8 @@ export default function SearchResults() {
 
     const fetchSearchResults = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8000/api/user/search?query=${query}`,
+        const res = await api.get(
+          `/api/user/search?query=${query}`,
         );
 
         setRestaurants(res.data.restaurants || []);

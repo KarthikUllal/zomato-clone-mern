@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import "../styles/AdminManageUser.css";
-import axios from "axios";
+
 import { toast } from "react-toastify";
+import api from "../../api";
 
 export default function AdminManageUser() {
   const [users, setUsers] = useState([]);
@@ -9,7 +10,7 @@ export default function AdminManageUser() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/admin/users");
+        const res = await api.get("/api/admin/users");
         setUsers(res.data.data);
       } catch (error) {
         toast.error(error.response?.data?.message || "Error fetching users");
@@ -21,7 +22,7 @@ export default function AdminManageUser() {
 
   const deleteUser = async (userId) => {
     try {
-      await axios.delete(`http://localhost:8000/api/admin/users/${userId}`);
+      await api.delete(`/api/admin/users/${userId}`);
       toast.success("User deleted");
       //update the users state to remove the deleted user
       setUsers(users.filter((user) => user._id !== userId));

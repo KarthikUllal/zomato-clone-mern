@@ -1,5 +1,6 @@
 import "./RestaurentCards.css";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export default function RestaurentCard({ restaurent }) {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ export default function RestaurentCard({ restaurent }) {
       onClick={() => navigate(`/restaurent/${restaurent._id}`)}
     >
       <img
-        src={`http://localhost:8000/${restaurent.banner}`}
+        src={`${BASE_URL}/${restaurent.banner}`}
         alt={restaurent.name}
       />
 

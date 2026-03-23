@@ -3,8 +3,9 @@ import PromoBanner from "../components/PromoBanner/PromoBanner";
 import RestaurentSection from "../components/RestaurentSection/RestaurentSection";
 // import { restaurents } from "../data/restaurentData";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
+import api from "../api";
+
 
 import "./Nightlife.css";
 
@@ -14,7 +15,7 @@ export default function Nightlife() {
   useEffect(() =>{
     const fetchNightlifeRestaurant =async () =>{
       try{
-        const res = await axios.get("http://localhost:8000/api/admin/restaurants")
+        const res = await api.get("/api/admin/restaurants")
         setRestaurants(res.data.restaurants)
       }
       catch(err){

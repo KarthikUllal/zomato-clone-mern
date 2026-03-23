@@ -1,10 +1,9 @@
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
-
+import api from "../api.js";
 function Login() {
   const navigate = useNavigate();
 
@@ -21,8 +20,8 @@ function Login() {
 
     const checkToken = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/api/user/verify-token",
+        const response = await api.get(
+          "/api/user/verify-token",
           {
             headers: { Authorization: token },
           },
@@ -62,8 +61,8 @@ function Login() {
     }
     setLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/user/send-otp",
+      const response = await api.post(
+        "/api/user/send-otp",
         { email, fullname },
       );
 

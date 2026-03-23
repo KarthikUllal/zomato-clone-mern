@@ -5,3 +5,12 @@ cd my-react-app
 npm install
 
 npm run dev
+
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
+import api from "../../../api"
+
+
+
+mongodb atlas = zomato psw = zomato

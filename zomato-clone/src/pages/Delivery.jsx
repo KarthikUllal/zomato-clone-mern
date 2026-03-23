@@ -6,8 +6,8 @@ import RestaurentSection from "../components/RestaurentSection/RestaurentSection
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import axios from "axios";
 import { toast } from "react-toastify";
+import api from "../api";
 
 import "./Delivery.css";
 
@@ -20,13 +20,13 @@ export default function Delivery() {
   useEffect(() => {
     const fetchDeliveryRestaurant = async () => {
       try {
-        let url = "http://localhost:8000/api/admin/restaurants";
+        let url = "/api/admin/restaurants";
 
         if (category) {
-          url = `http://localhost:8000/api/restaurants/food-category/${category}`;
+          url = `/api/restaurants/food-category/${category}`;
         }
 
-        const res = await axios.get(url);
+        const res = await api.get(url);
 
         setRestaurants(res.data.restaurants);
       } catch (err) {
@@ -37,7 +37,7 @@ export default function Delivery() {
     fetchDeliveryRestaurant();
   }, [category]);
 
-  
+
   let deliveryRestaurents = restaurants;
   if (!category) {
     deliveryRestaurents = restaurants.filter(

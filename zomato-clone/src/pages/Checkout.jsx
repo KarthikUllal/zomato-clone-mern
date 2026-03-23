@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext.jsx";
-import axios from "axios";
 import { toast } from "react-toastify";
 import "./Checkout.css";
 import { useNavigate } from "react-router-dom";
+import api from "../api.js";
 
 export default function Checkout() {
   const { cart, setCart } = useContext(CartContext);
@@ -31,8 +31,8 @@ export default function Checkout() {
     try {
       const token = localStorage.getItem("token");
 
-    const res = await axios.post(
-        "http://localhost:8000/api/orders",
+    const res = await api.post(
+        "/api/orders",
         {
           restaurantId: cart.restaurantId,
           items,

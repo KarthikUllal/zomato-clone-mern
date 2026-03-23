@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Sections.css";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { CartContext } from "../../../context/CartContext";
+import api from "../../../api"
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 
 export default function OrderOnline({ restaurent }) {
   const { cart, setCart } = useContext(CartContext);
@@ -15,8 +17,8 @@ export default function OrderOnline({ restaurent }) {
   useEffect(() => {
     const fetchFoods = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8000/api/admin/foods/restaurant/${restaurantId}`,
+        const res = await api.get(
+          `/api/admin/foods/restaurant/${restaurantId}`,
         );
 
         setFoods(res.data.foods);
@@ -71,7 +73,7 @@ export default function OrderOnline({ restaurent }) {
 
             {food.image && (
               <img
-                src={`http://localhost:8000/${food.image}`}
+                src={`${BASE_URL}/${food.image}`}
                 alt={food.name}
               />
             )}
@@ -82,24 +84,18 @@ export default function OrderOnline({ restaurent }) {
               <p className="price">₹{food.price}</p>
             </div>
           </div>
-            <div className="right">
-
+          <div className="right">
             {!cart.items?.[food._id] ? (
-
-              <button onClick={()=>add(food._id)}>ADD</button>
-
+              <button onClick={() => add(food._id)}>ADD</button>
             ) : (
-
               <button
-                style={{background:"#eee", color:"#333"}}
-                onClick={()=>remove(food._id)}
+                style={{ background: "#eee", color: "#333" }}
+                onClick={() => remove(food._id)}
               >
                 Remove
               </button>
-
             )}
-      </div>
-         
+          </div>
         </div>
       ))}
 

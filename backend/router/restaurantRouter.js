@@ -1,3 +1,5 @@
+//restaurantRouter.js
+
 const express = require("express")
 const { getRestaurantByFoodCategory } = require("../Controller/adminRestaurantController")
 const restaurantRouter = express.Router()
