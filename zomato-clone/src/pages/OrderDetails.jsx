@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./OrderDetails.css";
 import api from "../api";
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+import { getImageUrl } from "../utils/imageHelper";
 
 
 export default function OrderDetails() {
@@ -64,7 +64,7 @@ export default function OrderDetails() {
             <div className="item" key={item._id}>
 
               <img
-                src={`${BASE_URL}/${item.food.image}`}
+                src={getImageUrl(item.food.image)}
                 alt={item.food.name}
               />
 

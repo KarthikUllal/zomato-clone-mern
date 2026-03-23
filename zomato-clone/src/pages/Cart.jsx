@@ -3,7 +3,7 @@ import { CartContext } from "../context/CartContext";
 import "./Cart.css";
 import {useNavigate} from "react-router-dom"
 import api from "../api";
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+import { getImageUrl } from "../utils/imageHelper";
 
 
 export default function Cart() {
@@ -133,7 +133,7 @@ export default function Cart() {
 
             {food.image && (
               <img
-                src={`${BASE_URL}/${food.image}`}
+                src={getImageUrl(food.image)}
                 alt={food.name}
               />
             )}

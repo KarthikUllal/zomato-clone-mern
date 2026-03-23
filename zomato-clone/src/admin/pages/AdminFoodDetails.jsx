@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { dummyFoods, dummyRestaurants } from "../data/dummyData";
 import "../styles/AdminDetails.css";
+import { getImageUrl } from "../../utils/imageHelper";
 
 export default function AdminFoodDetails() {
   const { id } = useParams();
@@ -32,7 +33,7 @@ export default function AdminFoodDetails() {
           <tr>
             <th>Image</th>
             <td>
-              <img src={food.img} alt={food.name} className="food-image" />
+              <img src={getImageUrl(food.img)} alt={food.name} className="food-image" />
             </td>
           </tr>
 

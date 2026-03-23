@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { dummyRestaurants, dummyFoods } from "../data/dummyData";
 import "../styles/AdminDetails.css";
+import { getImageUrl } from "../../utils/imageHelper";
 
 export default function AdminRestaurantDetails() {
   const { id } = useParams();
@@ -22,7 +23,7 @@ export default function AdminRestaurantDetails() {
 
       {/* Banner */}
       <div className="restaurant-banner">
-        <img src={restaurant.banner} alt={restaurant.name} />
+        <img src={getImageUrl(restaurant.banner)} alt={restaurant.name} />
       </div>
 
       {/* Restaurant Info */}
@@ -67,7 +68,7 @@ export default function AdminRestaurantDetails() {
 
       <div className="gallery-grid">
         {restaurant.gallery?.map((img, index) => (
-          <img key={index} src={img} alt="gallery" />
+          <img key={index} src={getImageUrl(img)} alt="gallery" />
         ))}
       </div>
 
@@ -89,7 +90,7 @@ export default function AdminRestaurantDetails() {
           {foods.map((food) => (
             <tr key={food._id}>
               <td onClick={() => navigate(`/admin/food/${food._id}`)}>
-                <img src={food.img} alt={food.name} className="food-image" />
+                <img src={getImageUrl(food.img)} alt={food.name} className="food-image" />
               </td>
 
               <td>{food.name}</td>

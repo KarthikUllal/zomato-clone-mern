@@ -4,7 +4,7 @@ import "./Sections.css";
 import { toast } from "react-toastify";
 import { CartContext } from "../../../context/CartContext";
 import api from "../../../api"
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+import { getImageUrl } from "../../../utils/imageHelper";
 
 
 export default function OrderOnline({ restaurent }) {
@@ -73,7 +73,7 @@ export default function OrderOnline({ restaurent }) {
 
             {food.image && (
               <img
-                src={`${BASE_URL}/${food.image}`}
+                src={getImageUrl(food.image)}
                 alt={food.name}
               />
             )}

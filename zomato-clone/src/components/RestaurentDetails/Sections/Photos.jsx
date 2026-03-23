@@ -1,5 +1,5 @@
+import { getImageUrl } from "../../../utils/imageHelper";
 import "./Sections.css";
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export default function Photos({restaurent}) {
   return (
@@ -14,7 +14,7 @@ export default function Photos({restaurent}) {
 
       <div className="photo-grid">
         {restaurent.gallery.map((gallery, index) =>(
-          <img src={`${BASE_URL}/${gallery}`} key={index} />
+          <img src={getImageUrl(gallery)} key={index} />
         ))}
       </div>
 
