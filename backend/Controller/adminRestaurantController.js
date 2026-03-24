@@ -47,8 +47,7 @@ exports.addRestaurant = async (req, res) => {
 
         await newRestaurant.save();
 
-        console.log("FILES:", req.files);
-
+        console.log("FILES:", JSON.stringify(req.files, null, 2));
         res.status(201).json({
             status: "SUCCESS",
             message: "Restaurant added successfully",
@@ -58,7 +57,10 @@ exports.addRestaurant = async (req, res) => {
 
     }
     catch (error) {
-        console.log(error);
+        console.error("ERROR FULL:", error);
+        console.error("ERROR MESSAGE:", error.message);
+        console.error("STACK:", error.stack);
+        
         res.status(500).json({
             status: "FAILED",
             message: "Error adding restaurant",
