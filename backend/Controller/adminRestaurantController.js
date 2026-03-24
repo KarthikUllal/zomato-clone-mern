@@ -6,6 +6,9 @@ const fs = require("fs")
 exports.addRestaurant = async (req, res) => {
 
     try {
+
+         console.log("BODY:", req.body);         
+    console.log("FILES RAW:", req.files);   
         const {
             name,
             category,
@@ -59,9 +62,11 @@ exports.addRestaurant = async (req, res) => {
 
     }
     catch (error) {
-        console.error("ERROR FULL:", error);
-        console.error("ERROR MESSAGE:", error.message);
-        console.error("STACK:", error.stack);
+        console.log("===== ERROR START =====");
+        console.log(error);
+        console.log("MESSAGE:", error.message);
+        console.log("STACK:", error.stack);
+        console.log("===== ERROR END =====");
 
         res.status(500).json({
             status: "FAILED",
@@ -206,8 +211,8 @@ exports.updateRestaurant = async (req, res) => {
 
         const files = req.files || [];
 
-const bannerFile = files.find(file => file.fieldname === "banner");
-const galleryFiles = files.filter(file => file.fieldname === "gallery");
+        const bannerFile = files.find(file => file.fieldname === "banner");
+        const galleryFiles = files.filter(file => file.fieldname === "gallery");
 
         if (bannerFile) {
             req.body.banner = bannerFile.path;
