@@ -7,8 +7,7 @@ exports.addRestaurant = async (req, res) => {
 
     try {
 
-         console.log("BODY:", req.body);         
-    console.log("FILES RAW:", req.files);   
+        
         const {
             name,
             category,
@@ -35,6 +34,9 @@ exports.addRestaurant = async (req, res) => {
 
         const banner = bannerFile ? bannerFile.path : "";
         const gallery = galleryFiles.map(file => file.path);
+
+        console.log("BODY:", req.body);
+        console.log("FILES RAW:", req.files);
 
 
         const newRestaurant = new restaurantModel({

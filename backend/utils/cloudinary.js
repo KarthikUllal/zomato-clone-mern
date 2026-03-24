@@ -6,10 +6,10 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
-console.log("CLOUD CHECK:",
-  process.env.CLOUD_NAME,
-  process.env.CLOUD_API_KEY,
-  process.env.CLOUD_API_SECRET
-);
+// console.log("CLOUD CHECK:",
+//   process.env.CLOUD_NAME,
+//   process.env.CLOUD_API_KEY,
+//   process.env.CLOUD_API_SECRET
+// );
 
 module.exports = cloudinary;
