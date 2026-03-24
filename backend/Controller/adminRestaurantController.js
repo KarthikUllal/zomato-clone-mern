@@ -47,6 +47,8 @@ exports.addRestaurant = async (req, res) => {
 
         await newRestaurant.save();
 
+        console.log("FILES:", req.files);
+
         res.status(201).json({
             status: "SUCCESS",
             message: "Restaurant added successfully",
@@ -56,6 +58,7 @@ exports.addRestaurant = async (req, res) => {
 
     }
     catch (error) {
+        console.log(error);
         res.status(500).json({
             status: "FAILED",
             message: "Error adding restaurant",
@@ -212,7 +215,7 @@ exports.updateRestaurant = async (req, res) => {
             req.body.gallery = restaurant.gallery;
         }
 
-        
+
 
         //update the database 
         const updatedRestaurant = await restaurantModel.findByIdAndUpdate(
