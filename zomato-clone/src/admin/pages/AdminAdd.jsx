@@ -173,7 +173,7 @@ export default function AdminAdd() {
         );
       } else {
         res = await api.post(
-          "/api/admin/restaurants",
+          "/api/admin/restaurant",
           formData,
         );
       }
@@ -238,7 +238,7 @@ export default function AdminAdd() {
 
         toast.success("Food edited successfully");
       } else {
-        await api.post("/api/admin/foods", formData);
+        await api.post("/api/admin/food", formData);
 
         toast.success("Food added");
       }
