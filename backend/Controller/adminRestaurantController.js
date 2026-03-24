@@ -25,8 +25,10 @@ exports.addRestaurant = async (req, res) => {
         //     ? req.files["gallery"].map(file => file.path)
         //     : [];
 
-        const bannerFile = req.files.find(file => file.fieldname === "banner");
-        const galleryFiles = req.files.filter(file => file.fieldname === "gallery");
+        const files = req.files || [];
+
+        const bannerFile = files.find(file => file.fieldname === "banner");
+        const galleryFiles = files.filter(file => file.fieldname === "gallery");
 
         const banner = bannerFile ? bannerFile.path : "";
         const gallery = galleryFiles.map(file => file.path);
@@ -60,7 +62,7 @@ exports.addRestaurant = async (req, res) => {
         console.error("ERROR FULL:", error);
         console.error("ERROR MESSAGE:", error.message);
         console.error("STACK:", error.stack);
-        
+
         res.status(500).json({
             status: "FAILED",
             message: "Error adding restaurant",
@@ -202,8 +204,10 @@ exports.updateRestaurant = async (req, res) => {
         // }
 
 
-        const bannerFile = req.files.find(file => file.fieldname === "banner");
-        const galleryFiles = req.files.filter(file => file.fieldname === "gallery");
+        const files = req.files || [];
+
+const bannerFile = files.find(file => file.fieldname === "banner");
+const galleryFiles = files.filter(file => file.fieldname === "gallery");
 
         if (bannerFile) {
             req.body.banner = bannerFile.path;
