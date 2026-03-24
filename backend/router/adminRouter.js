@@ -16,23 +16,20 @@ const { updateOrderStatus, getAllOrders } = require("../Controller/adminOrderCon
 //Restaurant routes
 adminRouter.post(
   "/restaurant",
-  restaurantUpload.fields([
-    { name: "banner", maxCount: 1 },
-    { name: "gallery", maxCount: 10 }
-  ]),
+  restaurantUpload.any(),
   addRestaurant
 );
+
 adminRouter.get("/restaurants", getRestaurants)
 adminRouter.get("/restaurants/:id", getRestaurantById)
 
 adminRouter.delete("/restaurants/:id", deleteRestaurant)
 
-adminRouter.put("/restaurants/:id",
-    restaurantUpload.fields([
-        {name : "banner", maxCount : 1},
-        {name : "gallery" , maxCount : 10}
-    ]
-),updateRestaurant)
+adminRouter.put(
+  "/restaurants/:id",
+  restaurantUpload.any(),
+  updateRestaurant
+);
 
 
 

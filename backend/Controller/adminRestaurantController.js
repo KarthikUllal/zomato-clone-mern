@@ -17,13 +17,20 @@ exports.addRestaurant = async (req, res) => {
             contact
         } = req.body;
 
-        const banner = req.files["banner"]
-            ? req.files["banner"][0].path
-            : "";
+        // const banner = req.files["banner"]
+        //     ? req.files["banner"][0].path
+        //     : "";
 
-        const gallery = req.files["gallery"]
-            ? req.files["gallery"].map(file => file.path)
-            : [];
+        // const gallery = req.files["gallery"]
+        //     ? req.files["gallery"].map(file => file.path)
+        //     : [];
+
+        const bannerFile = req.files.find(file => file.fieldname === "banner");
+        const galleryFiles = req.files.filter(file => file.fieldname === "gallery");
+
+        const banner = bannerFile ? bannerFile.path : "";
+        const gallery = galleryFiles.map(file => file.path);
+
 
         const newRestaurant = new restaurantModel({
             name,
@@ -172,22 +179,40 @@ exports.updateRestaurant = async (req, res) => {
             })
         }
 
-        //handling banner image separately since it is a file 
-        if (req.files && req.files["banner"]) {
-            req.body.banner = req.files["banner"][0].path
+        // //handling banner image separately since it is a file 
+        // if (req.files && req.files["banner"]) {
+        //     req.body.banner = req.files["banner"][0].path
 
+        // } else {
+        //     req.body.banner = restaurant.banner
+        // }
+
+        // //handling gallery images separately ..
+        // if (req.files && req.files["gallery"]) {
+        //     req.body.gallery = req.files["gallery"].map((file) => file.path)
+
+        // }
+        // else {
+        //     req.body.gallery = restaurant.gallery
+        // }
+
+
+        const bannerFile = req.files.find(file => file.fieldname === "banner");
+        const galleryFiles = req.files.filter(file => file.fieldname === "gallery");
+
+        if (bannerFile) {
+            req.body.banner = bannerFile.path;
         } else {
-            req.body.banner = restaurant.banner
+            req.body.banner = restaurant.banner;
         }
 
-        //handling gallery images separately ..
-        if (req.files && req.files["gallery"]) {
-            req.body.gallery = req.files["gallery"].map((file) => file.path)
+        if (galleryFiles.length > 0) {
+            req.body.gallery = galleryFiles.map(file => file.path);
+        } else {
+            req.body.gallery = restaurant.gallery;
+        }
 
-        }
-        else {
-            req.body.gallery = restaurant.gallery
-        }
+        
 
         //update the database 
         const updatedRestaurant = await restaurantModel.findByIdAndUpdate(
