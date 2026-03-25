@@ -4,6 +4,7 @@ require("dotenv").config()
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendMail = async({to, subject, html}) =>{
+  console.log("This function is called");
   try{
     await resend.emails.send({
       from :"onboarding@resend.dev",
@@ -11,6 +12,7 @@ const sendMail = async({to, subject, html}) =>{
       subject,
       html
     })
+    console.log("Email sent to:", to);
   }
   catch(error){
     console.log("Error sending email:", error);
