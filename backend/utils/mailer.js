@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const sendMail = async({to, subject, html}) =>{
   try{
     await resend.emails.send({
-      from : process.env.USER_EMAIL ||  "onboarding@resend.dev",
+      from :"onboarding@resend.dev",
       to,
       subject,
       html
