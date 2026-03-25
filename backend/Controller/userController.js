@@ -64,13 +64,13 @@ const sendOtp = async (req, res) => {
       expiresAt: Date.now() + 10 * 60 * 1000,
     }).save();
 
-    // // send email
-    // await transporter.sendMail({
-    //   from: process.env.USER_EMAIL,
-    //   to: email,
-    //   subject: "Your OTP for Login",
-    //   text: `Your OTP is ${otp}. It expires in 10 minutes`,
-    // });
+    // send email
+    await transporter.sendMail({
+      from: process.env.USER_EMAIL,
+      to: email,
+      subject: "Your OTP for Login",
+      text: `Your OTP is ${otp}. It expires in 10 minutes`,
+    });
     console.log("OTP:", otp);
 
     res.json({
