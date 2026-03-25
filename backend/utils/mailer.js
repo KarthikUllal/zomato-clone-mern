@@ -1,7 +1,7 @@
-const {resend} = require("resend");
+const {Resend} = require("resend");
 require("dotenv").config()
 
-const resend = new resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendMail = async({to, subject, html}) =>{
   try{
