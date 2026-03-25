@@ -8,6 +8,7 @@ const transporter = require("../utils/mailer");
 const restaurantModel = require("../model/restaurantSchema");
 const foodModel = require("../model/foodSchema");
 require("dotenv").config();
+const sendMail = require("../utils/mailer");
 
 // // nodemail object to use email
 // const transporter = nodemailer.createTransport({
@@ -65,13 +66,20 @@ const sendOtp = async (req, res) => {
     }).save();
 
     // send email
-    await transporter.sendMail({
-      from: process.env.USER_EMAIL,
+    // await transporter.sendMail({
+    //   from: process.env.USER_EMAIL,
+    //   to: email,
+    //   subject: "Your OTP for Login",
+    //   text: `Your OTP is ${otp}. It expires in 10 minutes`,
+    // });
+    // console.log("OTP:", otp);
+
+    //send mail using resend
+    await sendMail({
       to: email,
       subject: "Your OTP for Login",
-      text: `Your OTP is ${otp}. It expires in 10 minutes`,
+      html: `<p>Your OTP is <b>${otp}</b>. It expires in 10 minutes</p>`,
     });
-    console.log("OTP:", otp);
 
     res.json({
       status: "PENDING",
