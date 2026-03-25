@@ -4,7 +4,6 @@ const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 // const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
-const transporter = require("../utils/mailer");
 const restaurantModel = require("../model/restaurantSchema");
 const foodModel = require("../model/foodSchema");
 require("dotenv").config();
