@@ -63,10 +63,12 @@ export default function OrderDetails() {
 
             <div className="item" key={item._id}>
 
-              <img
-                src={getImageUrl(item.food.image)}
-                alt={item.food.name}
-              />
+              {item.food.image && (
+                <img
+                  src={getImageUrl(item.food.image)}
+                  alt={item.food.name}
+                />
+              )}
 
               <div className="item-details">
 

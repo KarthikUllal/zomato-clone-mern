@@ -59,15 +59,13 @@ function MyOrders() {
                 {order.items.map((item) => (
 
                   <div key={item._id} className="item-row">
+                    {item.food.image && (
+                <img
+                  src={getImageUrl(item.food.image)}
+                  alt={item.food.name}
+                />
+              )}
 
-                    <img
-                      src={
-                        item.food?.image
-                          ? getImageUrl(item.food.image)
-                          : "/default-food.png"
-                      }
-                      alt={item.food?.name}
-                    />
 
                     <div className="item-info">
                       <p className="item-name">{item.food?.name}</p>
