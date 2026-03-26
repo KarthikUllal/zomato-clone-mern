@@ -1,7 +1,7 @@
 const orderModel = require("../model/orderSchema")
 const foodModel = require("../model/foodSchema")
 const userModel = require("../model/userSchema")
-const transporter = require("../utils/mailer");
+const sendMail = require("../utils/mailer");
 
 const placeOrder = async (req, res) => {
 
@@ -46,8 +46,7 @@ const placeOrder = async (req, res) => {
         const orderRestaurant = await orderModel.findById(order._id).populate("restaurant", "name");
 
         //sending confirmation email to user
-        transporter.sendMail({
-            from: process.env.EMAIL,
+        await sendMail({
             to: user.email,
             subject: "Order Confirmation",
             html: `

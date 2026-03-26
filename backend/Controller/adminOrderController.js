@@ -1,6 +1,7 @@
 const orderModel = require("../model/orderSchema")
 const userModel = require("../model/userSchema")
-const transporter = require("../utils/mailer");
+// const transporter = require("../utils/mailer");
+const sendMail = require("../utils/mailer");
 require("dotenv").config();
 
 
@@ -56,12 +57,11 @@ const updateOrderStatus = async (req, res) => {
             try {
                 const user = await userModel.findById(updatedOrder.user);
                 const mailOptions = {
-                    from: process.env.USER_EMAIL,
                     to: user.email,
                     subject: "Order Status Updated",
-                    text: `Your order status has been updated to "${status}".`
+                    html: `Your order status has been updated to "${status}".`
                 };
-                await transporter.sendMail(mailOptions);
+                await sendMail(mailOptions);
             }
             catch (err) {
                 console.error("Error sending email:", err);
