@@ -1,5 +1,6 @@
 import "./PromoBanner.css";
 
+
 export default function PromoBanner() {
   return (
     <section className="promo-section">

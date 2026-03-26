@@ -20,11 +20,11 @@ export default function SearchBar() {
     <div className="nav-middle">
       <div className="location">
         <i className="fa-solid fa-location-dot" ></i>
-        <select>
+        {/* <select>
           <option>Mangalore</option>
           <option>Udupi</option>
           <option>Bangalore</option>
-        </select>
+        </select> */}
       </div>
 
       <div className="bar"></div>
