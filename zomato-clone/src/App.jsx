@@ -16,7 +16,7 @@ import Footer from "./components/Footer/Footer";
 import AdminLayout from "./admin/components/AdminLayout";
 import AdminAdd from "./admin/pages/AdminAdd";
 import AdminView from "./admin/pages/AdminView";
-import AdminLogin from "./admin/pages/adminLogin";
+import AdminLogin from "./admin/pages/AdminLogin";
 import AdminDashboard from "./admin/pages/AdminDashboard";
 
 import { ToastContainer } from "react-toastify";
