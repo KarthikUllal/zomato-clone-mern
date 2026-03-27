@@ -295,7 +295,7 @@ const getUserProfile = async (req,res) =>{
     }
     try{
       const checkUser = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await userModel.findById(checkUser.userId);
+      const user = await userModel.findById(checkUser.userId).select("-__v");
       if(!user){
         return res.json({
           status: "FAILED",

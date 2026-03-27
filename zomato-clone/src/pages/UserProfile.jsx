@@ -15,20 +15,21 @@ export default function UserProfile() {
         const res = await api.get("/api/user/profile", {
             headers: { Authorization: token },
         });
+        console.log(res.data.user);
         setUser(res.data.user);
       } catch (err) {
         console.log("Error Fetching user profile:", err);
       }
     };
     getUserProfile();
-  }, [user]);
+  }, []);
   return (
     <div className="user-profile">
       <h1>User Profile</h1>
       <p>This is the user profile page.</p>
       <p>Username: {user.fullname}</p>
       <p>Email: {user.email}</p>
-      <p>Created At: {user.createdAt}</p>
+      <p>Created At: {new Date(user.createdAt).toLocaleDateString()}</p>
     </div>
   );
 }
