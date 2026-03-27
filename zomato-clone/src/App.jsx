@@ -29,6 +29,7 @@ import AdminManageUser from "./admin/pages/AdminManageUser";
 import OrderDetails from "./pages/OrderDetails";
 import MyOrders from "./pages/MyOrders";
 import SearchResults from "./pages/SearchResults";
+import UserProfile from "./pages/UserProfile";
 
 
 
@@ -62,6 +63,9 @@ function App() {
         <Route path ="/order/:id" element = {<OrderDetails /> }/>
 
         <Route path="/search" element={<SearchResults />} />
+
+        {/**User Profile Route */}
+        <Route path="/user-profile" element={<UserProfile />} />
 
         {/**My Orders Route */}
         <Route path="/my-orders" element={<MyOrders/>} />

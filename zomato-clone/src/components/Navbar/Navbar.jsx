@@ -41,7 +41,7 @@ export default function Navbar() {
               <div className="profile-circle">{profileLetter}</div>
 
               <span className="my-order" onClick={() => navigate("/my-orders")}>My Orders</span>
-
+              <span className="user-profile" onClick={() => navigate("/user-profile")}>User Profile</span>  
               <button className="logout-btn" onClick={handleLogout}>
                 Logout
               </button>

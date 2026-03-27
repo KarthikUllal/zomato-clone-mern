@@ -248,7 +248,7 @@ const searchRestaurantsAndFoods = async (req, res) => {
 
 const getRestaurantByBrandName = async (req, res) => {
   try {
-    const name = req.params.name;
+    let name = req.params.name;
 
     if (!name || typeof name !== "string") {
       return res.json({
@@ -280,5 +280,42 @@ const getRestaurantByBrandName = async (req, res) => {
 }
 
 
+//get user profile details 
 
-module.exports = { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName };
+const getUserProfile = async (req,res) =>{
+
+
+    const token = req.headers.authorization;
+
+    if(!token){
+      return res.json({
+        status: "FAILED",
+        message: "No token provided"
+      })
+    }
+    try{
+      const checkUser = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await userModel.findById(checkUser.userId);
+      if(!user){
+        return res.json({
+          status: "FAILED",
+          message: "User not found"
+        })
+      }
+      res.json({
+        status: "SUCCESS",
+        message: "User Profile Found",
+        user: user
+      })
+
+    }
+  catch(err){
+    res.json({
+      status: "FAILED",
+      message: err.message
+    })
+  }
+}
+
+
+module.exports = { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName, getUserProfile };
