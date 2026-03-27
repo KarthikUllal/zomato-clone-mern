@@ -1,6 +1,8 @@
 import "./DeliveryCarousel.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
+import api from "../../api";
+import { useNavigate } from "react-router-dom";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -53,6 +55,26 @@ const brands = [
 
 ];
 export default function BrandSlider() {
+  const navigate = useNavigate();
+  
+  const handleBrandClick = (brandName) => {
+    try{
+      const res = api.get(`/api/user/restaurant/brand/${brandName}`);
+
+      const restaurants = res.data.restaurant;
+      if(restaurants){
+        navigate(`/restaurants/${restaurants._id}`); 
+      }else{
+          alert("No restaurant found for this brand");
+      }
+
+    }
+    catch(err){
+        console.log("Error Fetching restaurant:", err);
+    }
+      
+    }
+    
   return (
     <div className="delivery-slider">
       <h2>Top brands for you</h2>
@@ -69,7 +91,7 @@ export default function BrandSlider() {
         }}
       >
         {brands.map((item, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={index} onClick={() => handleBrandClick(item.name)}>
             <div className="brand-card">
               <img src={item.img} alt={item.name} />
               <h4>{item.name}</h4>

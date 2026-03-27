@@ -244,5 +244,31 @@ const searchRestaurantsAndFoods = async (req, res) => {
   }
 }
 
-module.exports = { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods };
+//get restaurant by brandname like KFC etc
 
+const getRestaurantByBrandName = async (req, res) => {
+  try{
+    const { brandName } = req.params;
+
+    const restaurants = await restaurantModel.find({
+      name: { $regex: brandName, $options: "i" }
+    })
+
+    res.json({
+      status: "SUCCESS",
+      message: "Restaurants Found",
+      restaurant : restaurants
+    })
+
+  }
+  catch(err){
+    res.json({
+      status: "FAILED",
+      message: err.message
+    })  
+  }
+}
+
+
+
+module.exports = { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName };
