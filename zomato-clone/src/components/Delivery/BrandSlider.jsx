@@ -52,29 +52,25 @@ const brands = [
     name: "Polar Bear Ice Cream Sundes",
     time: "20 min",
   },
-
 ];
 export default function BrandSlider() {
   const navigate = useNavigate();
-  
-  const handleBrandClick = (brandName) => {
-    try{
-      const res = api.get(`/api/user/restaurant/brand/${brandName}`);
 
-      const restaurants = res.data.restaurant;
-      if(restaurants){
-        navigate(`/restaurants/${restaurants._id}`); 
-      }else{
-          alert("No restaurant found for this brand");
+  const handleBrandClick = async (brandName) => {
+    try {
+      const res = await api.get(`/api/user/restaurant/brand/${brandName}`);
+
+      const restaurant = res.data.restaurant;
+      if (restaurant) {
+        navigate(`/restaurent/${restaurant._id}`);
+      } else {
+        alert("No restaurant found for this brand");
       }
+    } catch (err) {
+      console.log("Error Fetching restaurant:", err);
+    }
+  };
 
-    }
-    catch(err){
-        console.log("Error Fetching restaurant:", err);
-    }
-      
-    }
-    
   return (
     <div className="delivery-slider">
       <h2>Top brands for you</h2>

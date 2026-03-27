@@ -247,25 +247,35 @@ const searchRestaurantsAndFoods = async (req, res) => {
 //get restaurant by brandname like KFC etc
 
 const getRestaurantByBrandName = async (req, res) => {
-  try{
-    const { brandName } = req.params;
+  try {
+    const name = req.params.name;
 
-    const restaurants = await restaurantModel.find({
-      name: { $regex: brandName, $options: "i" }
+    if (!name || typeof name !== "string") {
+      return res.json({
+        status: "FAILED",
+        message: "Invalid brand name"
+      });
+    }
+
+
+    name = name.trim()
+
+    const restaurants = await restaurantModel.findOne({
+      name: { $regex: name, $options: "i" }
     })
 
     res.json({
       status: "SUCCESS",
       message: "Restaurants Found",
-      restaurant : restaurants
+      restaurant: restaurants
     })
 
   }
-  catch(err){
+  catch (err) {
     res.json({
       status: "FAILED",
       message: err.message
-    })  
+    })
   }
 }
 
