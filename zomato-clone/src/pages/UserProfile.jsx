@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../api.js";
+import "./UserProfile.css";
 
 export default function UserProfile() {
   const [user, setUser] = useState({});
@@ -22,10 +23,10 @@ export default function UserProfile() {
     getUserProfile();
   }, [user]);
   return (
-    <div>
+    <div className="user-profile">
       <h1>User Profile</h1>
       <p>This is the user profile page.</p>
-      <p>Username: {user.username}</p>
+      <p>Username: {user.fullname}</p>
       <p>Email: {user.email}</p>
       <p>Created At: {user.createdAt}</p>
     </div>
