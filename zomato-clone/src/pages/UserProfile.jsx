@@ -1,12 +1,19 @@
 import { useState, useEffect } from "react";
 import api from "../api.js";
+
 export default function UserProfile() {
   const [user, setUser] = useState({});
 
   useEffect(() => {
     const getUserProfile = async () => {
+        const token = localStorage.getItem("token");
+        if(!token){
+            return;
+        }
       try {
-        const res = await api.get("/api/user/profile");
+        const res = await api.get("/api/user/profile", {
+            headers: { Authorization: token },
+        });
         setUser(res.data.user);
       } catch (err) {
         console.log("Error Fetching user profile:", err);
