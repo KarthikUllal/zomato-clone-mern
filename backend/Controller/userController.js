@@ -160,6 +160,7 @@ const verifyOtp = async (req, res) => {
       status: "SUCCESS",
       message: "Login Successful",
       token,
+      user,
     });
   } catch (error) {
     res.json({

@@ -26,7 +26,7 @@ export default function VerifyOtp() {
 
     if (response.data.status === "SUCCESS") {
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("userName", fullname);
+      localStorage.setItem("userName", response.data.user.fullname);
       toast.success("Login Successful!");
       console.log(fullname);
       navigate("/");
