@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { CartContext } from "../context/CartContext.jsx";
 import { toast } from "react-toastify";
 import "./Checkout.css";
@@ -8,13 +8,35 @@ import api from "../api.js";
 export default function Checkout() {
   const { cart, setCart } = useContext(CartContext);
 
-  const [address, setAddress] = useState("");
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("COD");
-  const Navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  //fetch address from user profile
+  useEffect(() => {
+    const fetchAddress = async () => {
+      try {
+        const res = await api.get("/api/user/address", {
+          headers: { Authorization: token },
+        });
+
+        setAddresses(res.data.addresses);
+      } catch (err) {
+        console.log(err);
+        toast.error("Failed to load addresses");
+      }
+    };
+
+    fetchAddress();
+  }, []);
+
+  //place order 
   const placeOrder = async () => {
-    if (!address.trim()) {
-      toast.error("Please enter delivery address");
+    if (!selectedAddress) {
+      toast.error("Please select address");
       return;
     }
 
@@ -26,46 +48,42 @@ export default function Checkout() {
         quantity: cart.items[foodId],
       });
     }
-    console.log(items);     
 
     try {
-      const token = localStorage.getItem("token");
+      const selectedAddrObj = addresses.find(
+        (addr) => addr._id === selectedAddress
+      );
 
-    const res = await api.post(
+      const res = await api.post(
         "/api/orders",
         {
           restaurantId: cart.restaurantId,
           items,
-          address,
+          address: `${selectedAddrObj.street}, ${selectedAddrObj.city}, ${selectedAddrObj.pincode}`,
           paymentMethod,
         },
         {
-          headers: {
-            Authorization: token,
-          },
-        },
+          headers: { Authorization: token },
+        }
       );
 
       toast.success("Order Placed Successfully");
 
-      setAddress("");
-      setPaymentMethod("COD");
-
+      // clear cart
       setCart({
         restaurantId: null,
         items: {},
       });
-      
-      //after successfully placing order, remove cart from localStorage and navigate to order details page
+
       localStorage.removeItem("cart");
 
-      //navigate to order details page
-      const orderId = res.data.order._id
-      Navigate(`/order/${orderId}`)
-
+      // redirect to order page
+      const orderId = res.data.order._id;
+      navigate(`/order/${orderId}`);
 
     } catch (err) {
-      toast.error("Order failed", err);
+      console.log(err);
+      toast.error("Order failed");
     }
   };
 
@@ -74,13 +92,20 @@ export default function Checkout() {
       <h2>Checkout</h2>
 
       <div className="checkout-box">
-        <h3>Enter Address</h3>
+        <h3>Select Address</h3>
 
-        <textarea
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          placeholder="Enter Delivery Address"
-        />
+        <select
+          value={selectedAddress}
+          onChange={(e) => setSelectedAddress(e.target.value)}
+        >
+          <option value="">Select Address</option>
+
+          {addresses.map((addr) => (
+            <option key={addr._id} value={addr._id}>
+              {addr.street}, {addr.city}, {addr.pincode}
+            </option>
+          ))}
+        </select>
 
         <h3>Select Payment Method</h3>
 

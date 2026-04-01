@@ -52,16 +52,20 @@ export default function UserAddress() {
   //handle edit address
   const handleEditAddress = async () => {
     try {
-      await api.put("/api/user/address/edit",{
-        id: form._id,
-        street: form.street,
-        city: form.city,
-        pincode: form.pincode,
-      }, {
-        headers: {
-          Authorization: token,
+      await api.put(
+        "/api/user/address/edit",
+        {
+          id: form._id,
+          street: form.street,
+          city: form.city,
+          pincode: form.pincode,
         },
-      });
+        {
+          headers: {
+            Authorization: token,
+          },
+        },
+      );
       toast.success("Address edited successfully");
       setForm({
         street: "",
@@ -78,46 +82,61 @@ export default function UserAddress() {
     <>
       <div className="user-address-section">
         <h2>User Address</h2>
-        <input
-          type="text"
-          placeholder="Enter street"
-          value={form.street}
-          onChange={(e) => setForm({ ...form, street: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Enter city"
-          value={form.city}
-          onChange={(e) => setForm({ ...form, city: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Enter pincode"
-          value={form.pincode}
-          onChange={(e) => setForm({ ...form, pincode: e.target.value })}
-        />
-        <div className="btns">
-          <button onClick={() => form._id ? handleEditAddress() : handleAddAddress()}>{form._id ? "Edit Address" : "Add Address"}</button>
-        </div>
+        <form action="">
+          <input
+            type="text"
+            placeholder="Enter street"
+            value={form.street}
+            onChange={(e) => setForm({ ...form, street: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="Enter city"
+            value={form.city}
+            onChange={(e) => setForm({ ...form, city: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="Enter pincode"
+            value={form.pincode}
+            onChange={(e) => setForm({ ...form, pincode: e.target.value })}
+          />
+          <div className="btns">
+            <button
+              onClick={() =>
+                form._id ? handleEditAddress() : handleAddAddress()
+              }
+            >
+              {form._id ? "Edit Address" : "Add Address"}
+            </button>
+          </div>
+        </form>
+
         <div className="divider"></div>
         <h1>My Addresses</h1>
-        {address.map((addr) =>(
-            <>
-            <div key = {addr._id}>
-                <p>Street : {addr.street}</p>
-                <p>City : {addr.city}</p>
-                <p>Pincode : {addr.pincode}</p>
+        {address.map((addr) => (
+          <>
+            <div className="address-card" key={addr._id}>
+
+              <p>Street : {addr.street}</p>
+              <p>City : {addr.city}</p>
+              <p>Pincode : {addr.pincode}</p>
             </div>
             <div>
-                 <button onClick={() => setForm({
+              <button className="edit-btn"
+                onClick={() =>
+                  setForm({
                     _id: addr._id,
                     street: addr.street,
                     city: addr.city,
                     pincode: addr.pincode,
-                 })}>Edit</button>
+                  })
+                }
+              >
+                Edit
+              </button>
             </div>
-            </>
-           
+          </>
         ))}
       </div>
     </>

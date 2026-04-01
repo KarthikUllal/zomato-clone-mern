@@ -1,0 +1,64 @@
+.user-address-section {
+    padding: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btns {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.btns button {
+    padding: 15px;
+    border: 1px solid rgb(117, 91, 5);
+    border-radius: 5px;
+    cursor: pointer;
+    width: 25%;
+    background: transparent;
+    color: rgb(117, 91, 5);
+    font-weight: bold;
+
+}
+
+.btns button:hover {
+    background-color: #f0f0f0;
+}
+
+.edit-btn {
+    background-color: rgb(117, 91, 5);
+    width: 25%;
+}
+.edit-btn:hover {
+    background-color: rgb(117, 91, 5);
+    opacity: 0.8;
+}
+
+.address-card {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+   }
+   
+   .address-card p {
+    margin-bottom: 5px;
+    font-weight: bold;
+   }
+
