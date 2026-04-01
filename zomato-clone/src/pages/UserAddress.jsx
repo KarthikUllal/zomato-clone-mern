@@ -52,7 +52,7 @@ export default function UserAddress() {
   //handle edit address
   const handleEditAddress = async () => {
     try {
-      await api.put("/api/user/address",{
+      await api.put("/api/user/address/edit",{
         id: form._id,
         street: form.street,
         city: form.city,
@@ -70,7 +70,7 @@ export default function UserAddress() {
       });
       fetchAddress();
     } catch (err) {
-      toast.error("Error editing address:", err);
+      toast.error("Error editing address", err);
     }
   };
 

@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 export default function UserProfile() {
   const [user, setUser] = useState(null);
-  const [activeTab, setActiveTab] = useState("user-profile")
+  const [activeTab, setActiveTab] = useState("user-profile");
   const token = localStorage.getItem("token");
   useEffect(() => {
     const getUserProfile = async () => {
@@ -21,13 +21,14 @@ export default function UserProfile() {
         console.log(res.data.user);
         setUser(res.data.user);
       } catch (err) {
-        toast.error(err.response?.data?.message || "Error Fetching user profile");
+        toast.error(
+          err.response?.data?.message || "Error Fetching user profile",
+        );
       }
     };
     getUserProfile();
   }, []);
 
-  
   if (!user) return <div>Loading...</div>;
 
   return (
