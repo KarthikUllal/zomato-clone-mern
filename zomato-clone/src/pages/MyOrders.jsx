@@ -64,7 +64,7 @@ function MyOrders() {
               </div>
 
               <div className="order-footer">
-                <span>₹{order.totalAmount}</span>
+                <span>Price : ₹{order.totalAmount}</span>
               </div>
             </div>
           ))}

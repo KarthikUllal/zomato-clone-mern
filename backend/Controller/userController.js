@@ -283,34 +283,34 @@ const getRestaurantByBrandName = async (req, res) => {
 
 //get user profile details 
 
-const getUserProfile = async (req,res) =>{
+const getUserProfile = async (req, res) => {
 
 
-    const token = req.headers.authorization;
+  const token = req.headers.authorization;
 
-    if(!token){
+  if (!token) {
+    return res.json({
+      status: "FAILED",
+      message: "No token provided"
+    })
+  }
+  try {
+    const checkUser = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await userModel.findById(checkUser.userId).select("-__v");
+    if (!user) {
       return res.json({
         status: "FAILED",
-        message: "No token provided"
+        message: "User not found"
       })
     }
-    try{
-      const checkUser = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await userModel.findById(checkUser.userId).select("-__v");
-      if(!user){
-        return res.json({
-          status: "FAILED",
-          message: "User not found"
-        })
-      }
-      res.json({
-        status: "SUCCESS",
-        message: "User Profile Found",
-        user: user
-      })
+    res.json({
+      status: "SUCCESS",
+      message: "User Profile Found",
+      user: user
+    })
 
-    }
-  catch(err){
+  }
+  catch (err) {
     res.json({
       status: "FAILED",
       message: err.message
@@ -319,4 +319,79 @@ const getUserProfile = async (req,res) =>{
 }
 
 
-module.exports = { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName, getUserProfile };
+//add address to user profile
+const addAddress = async (req, res) => {
+  const token = req.headers.authorization;
+  try {
+    const checkUser = jwt.verify(token, process.env.JWT_SECRET);
+    if (!checkUser) {
+      return res.json({
+        status: "FAILED",
+        message: "User not found"
+      })
+    }
+    const { street, city, pincode } = req.body
+    if (!street || !city || !pincode) {
+      return res.json({
+        status: "FAILED",
+        message: "Please provide all the details"
+      })
+    }
+    const user = await userModel.findById(checkUser.userId);
+    user.addresses.push({
+      street,
+      city,
+      pincode
+    })
+    await user.save();
+    res.json({
+      status: "SUCCESS",
+      message: "Address Added",
+      addresses: user.addresses
+    })
+
+  }
+  catch (err) {
+    res.json({
+      status: "FAILED",
+      message: err.message
+    })
+  }
+}
+
+//get address from user profile
+const getAddress = async (req, res) => {
+  const token = req.headers.authorization;
+
+  try{
+    const checkUser = jwt.verify(token, process.env.JWT_SECRET);
+    if(!checkUser){
+      return res.json({ 
+        status: "FAILED",
+        message: "User not found"
+      })
+    }
+    const user = await userModel.findById(checkUser.userId);
+    if(!user){
+      return res.json({
+        status: "FAILED",
+        message: "Address found",
+      })
+    }
+    res.json({
+      status: "SUCCESS",
+      message: "Address Found",
+      addresses: user.addresses
+    })
+
+  }
+  catch(err){
+    res.json({
+      status: "FAILED",
+      message: err.message
+    })
+  }
+
+}
+
+module.exports = { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName, getUserProfile, addAddress, getAddress };

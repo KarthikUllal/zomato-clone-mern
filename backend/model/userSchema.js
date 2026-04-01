@@ -18,6 +18,13 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  addresses: [
+    {
+      street: String,
+      city: String,
+      pincode: String,
+    }
+  ]
 });
 
 const userModel = mongoose.model("user", userSchema);

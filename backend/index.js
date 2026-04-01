@@ -18,7 +18,7 @@ const orderRouter = require("./router/orderRouter")
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin: "*"}));
 app.use("/uploads", express.static("uploads"));
 
 const dburl = process.env.MONGODB_URI || "mongodb://localhost:27017/zomato-db";

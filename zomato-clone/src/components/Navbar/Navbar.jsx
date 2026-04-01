@@ -8,6 +8,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const isDetailsPage = location.pathname.startsWith("/restaurent/");
+  const isUserProfilePage = location.pathname.startsWith("/user-profile");
 
   const token = localStorage.getItem("token");
    const userName = localStorage.getItem("userName");
@@ -38,10 +39,10 @@ export default function Navbar() {
         <div className="nav-right">
           {isLoggedIn ? (
             <div className="profile-section">
-              <div className="profile-circle">{profileLetter}</div>
+              <div className="profile-circle" onClick={() => {navigate("/user-profile")}}>{profileLetter}</div>
 
-              <span className="my-order" onClick={() => navigate("/my-orders")}>My Orders</span>
-              <span className="user-profile" onClick={() => navigate("/user-profile")}>User Profile</span>  
+              {/* <span className="my-order" onClick={() => navigate("/my-orders")}>My Orders</span>
+              <span className="user-profile" onClick={() => navigate("/user-profile")}>User Profile</span>   */}
               <button className="logout-btn" onClick={handleLogout}>
                 Logout
               </button>
@@ -54,7 +55,7 @@ export default function Navbar() {
           )}
         </div>
       </div>
-
+      {!isUserProfilePage && (
       <div className="middle">
         <span>Home</span>
         <span>/</span>
@@ -62,9 +63,11 @@ export default function Navbar() {
         <span>/</span>
         <span id="specific-city">Mangalore Restaurant</span>
       </div>
+      )}
 
       {/*Conditional rendering or category tab to avoid apperence in restaurent details tab */}
-      {!isDetailsPage && <CategoryTabs />}
+      {!isDetailsPage && !isUserProfilePage && <CategoryTabs />}
+      
     </header>
   );
 }

@@ -1,19 +1,22 @@
 import { useState, useEffect } from "react";
 import api from "../api.js";
 import "./UserProfile.css";
+import MyOrders from "./MyOrders.jsx";
+import UserAddress from "./UserAddress.jsx";
 
 export default function UserProfile() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
+  const [activeTab, setActiveTab] = useState("user-profile");
 
   useEffect(() => {
     const getUserProfile = async () => {
-        const token = localStorage.getItem("token");
-        if(!token){
-            return;
-        }
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return;
+      }
       try {
         const res = await api.get("/api/user/profile", {
-            headers: { Authorization: token },
+          headers: { Authorization: token },
         });
         console.log(res.data.user);
         setUser(res.data.user);
@@ -23,13 +26,45 @@ export default function UserProfile() {
     };
     getUserProfile();
   }, []);
+  if (!user) return <div>Loading...</div>;
+
   return (
-    <div className="user-profile">
-      <h1>User Profile</h1>
-      <p>This is the user profile page.</p>
-      <p>Username: {user.fullname}</p>
-      <p>Email: {user.email}</p>
-      <p>Created At: {new Date(user.createdAt).toLocaleDateString()}</p>
+    <div className="user-profile-section">
+      <div className="user-profile-sidebar">
+        <div className="sidebar-header">
+          <div className="profile-letter" style={{ display: "flex" }}>
+            {user.fullname?.charAt(0).toUpperCase()}
+          </div>
+          <div className="profile-name">{user.fullname}</div>
+        </div>
+
+        <div className="divider"></div>
+        <div className="my-info" onClick={() => setActiveTab("user-profile")}>
+          My profile
+        </div>
+        <div className="my-order" onClick={() => setActiveTab("my-orders")}>
+          My Orders
+        </div>
+        <div className="my-address" onClick={() => setActiveTab("my-address")}>
+          My Address
+        </div>
+      </div>
+      <div className="user-profile-content">
+        {activeTab === "user-profile" && (
+          <div className="my-profile">
+            <div className="profile-info">
+              <p>Name: {user.fullname}</p>
+              <p>Email: {user.email}</p>
+              <p>
+                Profile Created:{" "}
+                {user.createdAt ? new Date(user.createdAt).toDateString() : " "}
+              </p>
+            </div>
+          </div>
+        )}
+        {activeTab === "my-orders" && <MyOrders />}
+        {activeTab === "my-address" && <UserAddress />}
+      </div>
     </div>
   );
 }
