@@ -3,14 +3,14 @@ import api from "../api.js";
 import "./UserProfile.css";
 import MyOrders from "./MyOrders.jsx";
 import UserAddress from "./UserAddress.jsx";
+import { toast } from "react-toastify";
 
 export default function UserProfile() {
   const [user, setUser] = useState(null);
-  const [activeTab, setActiveTab] = useState("user-profile");
-
+  const [activeTab, setActiveTab] = useState("user-profile")
+  const token = localStorage.getItem("token");
   useEffect(() => {
     const getUserProfile = async () => {
-      const token = localStorage.getItem("token");
       if (!token) {
         return;
       }
@@ -21,11 +21,13 @@ export default function UserProfile() {
         console.log(res.data.user);
         setUser(res.data.user);
       } catch (err) {
-        console.log("Error Fetching user profile:", err);
+        toast.error(err.response?.data?.message || "Error Fetching user profile");
       }
     };
     getUserProfile();
   }, []);
+
+  
   if (!user) return <div>Loading...</div>;
 
   return (

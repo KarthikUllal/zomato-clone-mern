@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api.js";
 import { toast } from "react-toastify";
+import "./UserAddress.css";
 export default function UserAddress() {
   const [address, setAddress] = useState([]);
   const [form, setForm] = useState({
@@ -29,7 +30,7 @@ export default function UserAddress() {
   };
 
   //handle add address
-  const handleAddress = async () => {
+  const handleAddAddress = async () => {
     try {
       await api.post("/api/user/address", form, {
         headers: {
@@ -47,6 +48,32 @@ export default function UserAddress() {
       toast.error("Error adding address:", err);
     }
   };
+
+  //handle edit address
+  const handleEditAddress = async () => {
+    try {
+      await api.put("/api/user/address",{
+        id: form._id,
+        street: form.street,
+        city: form.city,
+        pincode: form.pincode,
+      }, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      toast.success("Address edited successfully");
+      setForm({
+        street: "",
+        city: "",
+        pincode: "",
+      });
+      fetchAddress();
+    } catch (err) {
+      toast.error("Error editing address:", err);
+    }
+  };
+
   return (
     <>
       <div className="user-address-section">
@@ -69,12 +96,28 @@ export default function UserAddress() {
           value={form.pincode}
           onChange={(e) => setForm({ ...form, pincode: e.target.value })}
         />
-        <button onClick={handleAddress}>Add Address</button>
-
-        {address.map((addr, i) =>(
-            <div key = {i}>
-                {addr.street}, {addr.city}, {addr.pincode}
+        <div className="btns">
+          <button onClick={() => form._id ? handleEditAddress() : handleAddAddress()}>{form._id ? "Edit Address" : "Add Address"}</button>
+        </div>
+        <div className="divider"></div>
+        <h1>My Addresses</h1>
+        {address.map((addr) =>(
+            <>
+            <div key = {addr._id}>
+                <p>Street : {addr.street}</p>
+                <p>City : {addr.city}</p>
+                <p>Pincode : {addr.pincode}</p>
             </div>
+            <div>
+                 <button onClick={() => setForm({
+                    _id: addr._id,
+                    street: addr.street,
+                    city: addr.city,
+                    pincode: addr.pincode,
+                 })}>Edit</button>
+            </div>
+            </>
+           
         ))}
       </div>
     </>

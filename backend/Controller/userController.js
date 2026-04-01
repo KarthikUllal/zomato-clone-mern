@@ -394,4 +394,62 @@ const getAddress = async (req, res) => {
 
 }
 
-module.exports = { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName, getUserProfile, addAddress, getAddress };
+
+//edit address from user profile
+
+const editAddress = async (req,res) =>{
+  const token = req.headers.authorization;
+  try{
+    const checkUser = jwt.verify(token, process.env.JWT_SECRET);
+    if(!checkUser){
+      return res.json({
+        status: "FAILED",
+        message: "User not found"
+      })
+    }
+    const { id, street, city, pincode } = req.body
+    if(!id || !street || !city || !pincode){
+      return res.json({
+        status: "FAILED",
+        message: "Please provide all the details"
+      })
+    }
+    const user = await userModel.findById(checkUser.userId);
+    if(!user){
+      return res.json({
+        status: "FAILED",
+        message: "Address not found",
+      })
+    }
+
+    //find address by id
+    const address = user.addresses.id(id)
+    if(!address){
+      return res.json({
+        status: "FAILED",
+        message: "Address not found",
+      })
+    }
+    
+    //update address
+    address.street = street
+    address.city = city
+    address.pincode = pincode
+   
+    await user.save();
+    
+    res.json({
+      status: "SUCCESS",
+      message: "Address Edited",
+      addresses: user.addresses
+    })
+
+  }
+  catch(err){
+    res.json({
+      status: "FAILED",
+      message: err.message
+    })
+  }
+}
+module.exports = { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName, getUserProfile, addAddress, getAddress, editAddress };

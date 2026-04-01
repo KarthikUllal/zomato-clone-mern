@@ -1,7 +1,7 @@
 //userRouter.js
 const express = require("express");
 const router = express.Router();
-const { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName, getUserProfile, addAddress, getAddress } = require("../Controller/userController");
+const { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName, getUserProfile, addAddress, getAddress, editAddress } = require("../Controller/userController");
 
 
 // router.post("/signin", registerUser);
@@ -25,5 +25,6 @@ router.post("/address", addAddress)
 //get address route
 router.get("/address", getAddress)
 
-
+//edit address route
+router.put("/address/edit",editAddress)
 module.exports = router;
