@@ -97,6 +97,7 @@ export default function Checkout() {
         <select
           value={selectedAddress}
           onChange={(e) => setSelectedAddress(e.target.value)}
+          className="address-select"
         >
           <option value="">Select Address</option>
 
