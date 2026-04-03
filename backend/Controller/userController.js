@@ -1,6 +1,6 @@
 const userModel = require("../model/userSchema");
 const userOtpVerificationModel = require("../model/userOtpVerificationSchema");
-const otpGenerator = require("otp -generator");
+const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 // const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
