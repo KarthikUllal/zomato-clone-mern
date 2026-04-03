@@ -483,7 +483,7 @@ const addRestaurantReview = async (req, res) => {
     }
 
     //check if user already reviewed the restaurant
-    const checkReviewAlreadyExist = await reviewModel.find({
+    const checkReviewAlreadyExist = await reviewModel.findOne({
       user: checkUser.userId,
       restaurant: restaurantId
     })
@@ -495,7 +495,7 @@ const addRestaurantReview = async (req, res) => {
     }
 
     //find user 
-    const user = await userModel.find(checkUser.userId)
+    const user = await userModel.findById(checkUser.userId)
 
     //add user review to reviewModel
     const review = new reviewModel({
