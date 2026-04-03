@@ -40,22 +40,27 @@ export default function OrderDetails() {
       return;
     }
 
-    try{
-        await api.post("api/user/review", {
-        restaurantId: order.restaurant._id,
-        rating,
-        comment
-      },{
-        headers : {
-          Authorization : token
-        }
+    try {
+     const res =  await api.post(
+        "api/user/review",
+        {
+          restaurantId: order.restaurant._id,
+          rating,
+          comment,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        },
+      );
+      if(res){
+         toast.success("Review submitted successfully");
       }
-    )
-      toast.success("Review submitted successfully")
+     
       setShowReview(false);
       setRating(5);
       setComment("");
-      
     } catch (err) {
       toast.error(err.message);
     }
