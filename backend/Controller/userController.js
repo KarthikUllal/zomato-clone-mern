@@ -500,7 +500,7 @@ const addRestaurantReview = async (req, res) => {
     //add user review to reviewModel
     const review = new reviewModel({
       user: checkUser.userId,
-      username: user.username,
+      username: user.fullname,
       rating,
       comment,
       restaurant: restaurantId
