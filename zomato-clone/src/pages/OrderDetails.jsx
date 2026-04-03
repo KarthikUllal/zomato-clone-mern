@@ -57,6 +57,9 @@ export default function OrderDetails() {
       if(res){
          toast.success("Review submitted successfully");
       }
+      else{
+        toast.error("Error submitting review", res.message);
+      }
      
       setShowReview(false);
       setRating(5);
