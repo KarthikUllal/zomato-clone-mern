@@ -1,7 +1,7 @@
 //userRouter.js
 const express = require("express");
 const router = express.Router();
-const { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName, getUserProfile, addAddress, getAddress, editAddress } = require("../Controller/userController");
+const { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName, getUserProfile, addAddress, getAddress, editAddress, addRestaurantReview } = require("../Controller/userController");
 
 
 // router.post("/signin", registerUser);
@@ -27,4 +27,7 @@ router.get("/address", getAddress)
 
 //edit address route
 router.put("/address/edit",editAddress)
+
+//review route
+router.post("/review", addRestaurantReview)
 module.exports = router;

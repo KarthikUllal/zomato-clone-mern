@@ -1,6 +1,6 @@
 const userModel = require("../model/userSchema");
 const userOtpVerificationModel = require("../model/userOtpVerificationSchema");
-const otpGenerator = require("otp-generator");
+const otpGenerator = require("otp -generator");
 const bcrypt = require("bcrypt");
 // const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
@@ -8,6 +8,8 @@ const restaurantModel = require("../model/restaurantSchema");
 const foodModel = require("../model/foodSchema");
 require("dotenv").config();
 const sendMail = require("../utils/mailer");
+const reviewModel = require("../model/reviewSchema");
+
 
 // // nodemail object to use email
 // const transporter = nodemailer.createTransport({
@@ -363,16 +365,16 @@ const addAddress = async (req, res) => {
 const getAddress = async (req, res) => {
   const token = req.headers.authorization;
 
-  try{
+  try {
     const checkUser = jwt.verify(token, process.env.JWT_SECRET);
-    if(!checkUser){
-      return res.json({ 
+    if (!checkUser) {
+      return res.json({
         status: "FAILED",
         message: "User not found"
       })
     }
     const user = await userModel.findById(checkUser.userId);
-    if(!user){
+    if (!user) {
       return res.json({
         status: "FAILED",
         message: "Address found",
@@ -385,7 +387,7 @@ const getAddress = async (req, res) => {
     })
 
   }
-  catch(err){
+  catch (err) {
     res.json({
       status: "FAILED",
       message: err.message
@@ -397,25 +399,25 @@ const getAddress = async (req, res) => {
 
 //edit address from user profile
 
-const editAddress = async (req,res) =>{
+const editAddress = async (req, res) => {
   const token = req.headers.authorization;
-  try{
+  try {
     const checkUser = jwt.verify(token, process.env.JWT_SECRET);
-    if(!checkUser){
+    if (!checkUser) {
       return res.json({
         status: "FAILED",
         message: "User not found"
       })
     }
     const { id, street, city, pincode } = req.body
-    if(!id || !street || !city || !pincode){
+    if (!id || !street || !city || !pincode) {
       return res.json({
         status: "FAILED",
         message: "Please provide all the details"
       })
     }
     const user = await userModel.findById(checkUser.userId);
-    if(!user){
+    if (!user) {
       return res.json({
         status: "FAILED",
         message: "Address not found",
@@ -424,20 +426,20 @@ const editAddress = async (req,res) =>{
 
     //find address by id
     const address = user.addresses.id(id)
-    if(!address){
+    if (!address) {
       return res.json({
         status: "FAILED",
         message: "Address not found",
       })
     }
-    
+
     //update address
     address.street = street
     address.city = city
     address.pincode = pincode
-   
+
     await user.save();
-    
+
     res.json({
       status: "SUCCESS",
       message: "Address Edited",
@@ -445,11 +447,79 @@ const editAddress = async (req,res) =>{
     })
 
   }
-  catch(err){
+  catch (err) {
     res.json({
       status: "FAILED",
       message: err.message
     })
   }
 }
-module.exports = { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName, getUserProfile, addAddress, getAddress, editAddress };
+
+//add review functionality
+const addRestaurantReview = async (req, res) => {
+  const token = req.headers.authorization
+  if (!token) {
+    return res.json({
+      status: "FAILED",
+      message: "No token provided"
+    })
+  }
+  try {
+    const checkUser = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!checkUser) {
+      return res.json({
+        status: "FAILED",
+        message: "User not found"
+      })
+    }
+
+    const { rating, comment, restaurantId } = req.body
+    if (!rating || !comment || !restaurantId) {
+      return res.json({
+        status: "FAILED",
+        message: "Please provide all the details"
+      })
+    }
+
+    //check if user already reviewed the restaurant
+    const checkReviewAlreadyExist = await reviewModel.find({
+      user: checkUser.userId,
+      restaurant: restaurantId
+    })
+    if (checkReviewAlreadyExist) {
+      return res.json({
+        status: "FAILED",
+        message: "You have already reviewed this restuarant"
+      })
+    }
+
+    //find user 
+    const user = await userModel.find(checkUser.userId)
+
+    //add user review to reviewModel
+    const review = new reviewModel({
+      user: checkUser.userId,
+      username: user.username,
+      rating,
+      comment,
+      restaurant: restaurantId
+    })
+    await review.save();
+    res.json({
+      status: "SUCCESS",
+      message: "Review Added",
+      review
+    })
+
+  }
+  catch (err) {
+    res.json({
+      status: "FAILED",
+      message: err.message
+    })
+  }
+}
+module.exports = { sendOtp,
+   verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName,
+  getUserProfile, addAddress, getAddress, editAddress, addRestaurantReview, };

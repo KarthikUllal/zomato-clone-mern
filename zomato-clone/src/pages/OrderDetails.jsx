@@ -32,7 +32,7 @@ export default function OrderDetails() {
     fetchOrder();
   }, [id]);
 
-  const submitReview = async () => {}
+  const submitReview = async () => {};
   if (!order) return <h3 className="loading">Loading Order...</h3>;
 
   return (
@@ -52,17 +52,19 @@ export default function OrderDetails() {
           </p>
         </div>
         {order.status === "delivered" && (
-          <button
-            className="show-review-btn"
-            onClick={() => setShowReview(true)}
-          >
-            Write a Review
-          </button>
+          <div className="review-btn-container">
+            <button
+              className="show-review-btn"
+              onClick={() => setShowReview(true)}
+            >
+              Write a Review
+            </button>
+          </div>
         )}
         {showReview && (
           <div className="review-form">
             <h3>Write a Review for {order.restaurant.name}</h3>
-            
+            <div className="rating-container">
             <label>Rating:</label>
             <select
               value={rating}
@@ -74,13 +76,18 @@ export default function OrderDetails() {
               <option value={4}>4</option>
               <option value={5}>5</option>
             </select>
+            </div>
+            <div className="comment-container">
             <label>Comment:</label>
             <textarea
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               rows={4}
             ></textarea>
-            <button className="submit-btn" onClick={submitReview}>Submit Review</button>
+            </div>
+            <button className="submit-btn" onClick={submitReview}>
+              Submit Review
+            </button>
           </div>
         )}
 

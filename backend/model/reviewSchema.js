@@ -6,6 +6,10 @@ const reviewSchema = mongoose.Schema({
         ref: "user",
         required: true
     },
+    username :{
+        type: String,
+        required: true
+    },
     rating: {
         type: Number,
         required: true,
