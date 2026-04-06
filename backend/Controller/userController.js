@@ -520,6 +520,30 @@ const addRestaurantReview = async (req, res) => {
     })
   }
 }
-module.exports = { sendOtp,
-   verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName,
-  getUserProfile, addAddress, getAddress, editAddress, addRestaurantReview, };
+
+//get reviews for a restaurant
+const getRestaurantReviews = async (req, res) => {
+  const restaurantId = req.params.restaurantId;
+  try{
+    const reviews = await reviewModel.find({ restaurant: restaurantId }).sort({ createdAt: -1 })
+    res.json({
+      status: "SUCCESS",
+      message: "Reviews Found",
+      reviews
+    })
+  }
+  catch(err){
+    res.json({
+      status: "FAILED",
+      message: err.message
+    })
+  }
+}
+
+
+module.exports = {
+  sendOtp,
+  verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName,
+  getUserProfile, addAddress, getAddress, editAddress, addRestaurantReview,
+  getRestaurantReviews,
+};
