@@ -1,16 +1,15 @@
 import "./Sections.css";
-import React from "react";
 import { useEffect, useState } from "react";
-import api from "../api.js";
-import { useParams } from "react-router-dom";
 
-export default function Reviews() {
+import api from "../../../api"
+
+
+export default function Reviews({restaurantId}) {
   const [reviews, setReviews] = useState([]);
-  const { id } = useParams();
   useEffect(() => {
     const getReviews = async () => {
       try {
-        const response = await api.get(`/api/user/review/${id}`);
+        const response = await api.get(`/api/user/review/${restaurantId}`);
         if (response.data.status === "SUCCESS") {
           setReviews(response.data.reviews);
         }

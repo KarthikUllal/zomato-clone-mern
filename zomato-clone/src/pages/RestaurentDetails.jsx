@@ -56,7 +56,7 @@ export default function RestaurentDetails({ cart, setCart }) {
           />
         )}
 
-        {activeTab === "reviews" && <Reviews />}
+        {activeTab === "reviews" && <Reviews  restaurantId = {id}/>}
 
         {activeTab === "photos" && <Photos restaurent={restaurent} />}
 
