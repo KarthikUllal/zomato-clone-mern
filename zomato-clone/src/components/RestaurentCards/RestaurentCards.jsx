@@ -18,7 +18,7 @@ export default function RestaurentCard({ restaurent }) {
       <div className="restaurent-content">
         <div className="top">
           <h3>{restaurent.name}</h3>
-          <span className="rating">{restaurent.rating} ★</span>
+          <span className="rating">{restaurent.averageRating} ⭐</span>
         </div>
 
         <div className="bottom">
