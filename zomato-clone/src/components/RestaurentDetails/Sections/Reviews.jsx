@@ -1,10 +1,9 @@
 import "./Sections.css";
 import { useEffect, useState } from "react";
 
-import api from "../../../api"
+import api from "../../../api";
 
-
-export default function Reviews({restaurantId}) {
+export default function Reviews({ restaurantId }) {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
     const getReviews = async () => {
@@ -28,11 +27,21 @@ export default function Reviews({restaurantId}) {
           <p>No reviews yet. Be the first to review!</p>
         ) : (
           reviews.map((review) => (
-            <div key={review._id} className="review-item">
-              <h4>{review.username} ★{review.rating}</h4>
-              <p>{review.date}</p>
-              <p>{review.comment}</p>
-            </div>
+            <>
+              <div key={review._id} className="review-item">
+                <div className="left-section-username">
+                  <h3>{review.username}</h3>
+                </div>
+                <div className="rigt-section-ratings">★{review.rating}
+                  <div className="rating-date">
+                    {new Date(review.date).toLocaleDateString()}
+                  </div>
+                </div>
+                <div className="review-comment">
+                  <p>{review.comment}</p>
+                </div>
+              </div>
+            </>
           ))
         )}
       </div>
