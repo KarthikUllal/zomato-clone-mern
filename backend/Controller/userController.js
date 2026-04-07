@@ -506,11 +506,22 @@ const addRestaurantReview = async (req, res) => {
       restaurant: restaurantId
     })
     await review.save();
+
+    //update restaurant rating
+    const restaurant  = await restaurantModel.findById(restaurantId);
+    const totalRating = restaurant.averageRating * restaurant.reviewCount + rating;
+    restaurant.reviewCount += 1;
+    restaurant.averageRating = totalRating / restaurant.reviewCount;
+    await restaurant.save();
+
+
     res.json({
       status: "SUCCESS",
       message: "Review Added",
       review
     })
+
+    
 
   }
   catch (err) {
