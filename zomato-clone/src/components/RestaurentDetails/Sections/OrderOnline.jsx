@@ -5,18 +5,21 @@ import { toast } from "react-toastify";
 import { CartContext } from "../../../context/CartContext";
 import api from "../../../api"
 import { getImageUrl } from "../../../utils/imageHelper";
+import Loader from "../../../utils/Loder";
 
 
 export default function OrderOnline({ restaurent }) {
   const { cart, setCart } = useContext(CartContext);
   const navigate = useNavigate();
   const [foods, setFoods] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const restaurantId = restaurent._id;
 
   useEffect(() => {
     const fetchFoods = async () => {
       try {
+        setLoading(true);
         const res = await api.get(
           `/api/admin/foods/restaurant/${restaurantId}`,
         );
@@ -26,6 +29,9 @@ export default function OrderOnline({ restaurent }) {
         toast.error("Error fetching dishes", err);
       }
     };
+    setTimeout(() => setLoading(false), 1000);
+
+
 
     if (restaurantId) {
       fetchFoods();
@@ -61,6 +67,10 @@ export default function OrderOnline({ restaurent }) {
   }
 
   const totalItems = Object.values(cart.items || {}).reduce((a, b) => a + b, 0);
+
+  if (loading) {
+    return <Loader loading={loading} />;
+  }
 
   return (
     <div className="section-container">

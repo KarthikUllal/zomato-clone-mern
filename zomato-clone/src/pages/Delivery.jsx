@@ -12,7 +12,8 @@ import api from "../api";
 import "./Delivery.css";
 
 export default function Delivery() {
-  const [restaurants, setRestaurants] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);3
+  const [loading, setLoading] = useState(true);
 
   const { category } = useParams();
   console.log("Category:", category);
@@ -23,6 +24,7 @@ export default function Delivery() {
         let url = "/api/admin/restaurants";
 
         if (category) {
+          setLoading(true);
           url = `/api/restaurants/food-category/${category}`;
         }
 
@@ -32,6 +34,7 @@ export default function Delivery() {
       } catch (err) {
         toast.error("Error fetching restaurant data", err);
       }
+      setTimeout(() => setLoading(false), 1000);
     };
 
     fetchDeliveryRestaurant();
@@ -54,6 +57,7 @@ export default function Delivery() {
       <RestaurentSection
         title="Food Delivery Restaurants in Mangalore"
         data={deliveryRestaurents}
+        loading={loading}
       />
     </div>
   );

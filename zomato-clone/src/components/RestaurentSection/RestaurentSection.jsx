@@ -1,7 +1,11 @@
 import "./RestaurentSection.css";
 import RestaurentCard from "../RestaurentCards/RestaurentCards";
+import Loader from "../../utils/Loder";
 
-export default function RestaurentSection({ title, data }) {
+export default function RestaurentSection({ title, data, loading  }) {
+  if (loading) {
+    return <Loader loading={loading} />;
+  }
   return (
     <section className="restaurent-section">
 

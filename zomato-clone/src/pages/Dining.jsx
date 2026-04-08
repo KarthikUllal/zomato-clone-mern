@@ -12,11 +12,13 @@ export default function Dining() {
 
   //Managing state for restuarant data coming from backend
   const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   //fetching restaurant data when page loads
   useEffect(() =>{
     const fetchDinningRestaurant =async () =>{
       try{
+        setLoading(true);
         const res = await api.get("/api/admin/restaurants")
         setRestaurants(res.data.restaurants)
 
@@ -24,6 +26,7 @@ export default function Dining() {
       catch(err){
         toast.error("Error fetching restaurant data", err)
       }
+      setTimeout(() => setLoading(false), 1000);
     } 
     fetchDinningRestaurant()
   },[])
@@ -43,6 +46,7 @@ export default function Dining() {
       <RestaurentSection
         title="Restaurants in Mangalore"
         data={diningRestaurants}
+        loading={loading}
       />
     </>
   );

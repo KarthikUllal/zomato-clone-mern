@@ -12,16 +12,19 @@ import Reviews from "../components/RestaurentDetails/Sections/Reviews";
 import Photos from "../components/RestaurentDetails/Sections/Photos";
 import Menu from "../components/RestaurentDetails/Sections/Menu";
 import BookTable from "../components/RestaurentDetails/Sections/BookTable";
+import Loader from "../utils/Loder";
 
 export default function RestaurentDetails({ cart, setCart }) {
   const { id } = useParams();
 
   const [restaurent, setRestaurent] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchRestaurant = async () => {
       try {
+        setLoading(true);
         const res = await api.get(
           `/api/admin/restaurants/${id}`
         );
@@ -30,13 +33,14 @@ export default function RestaurentDetails({ cart, setCart }) {
       } catch (err) {
         console.error("Error fetching restaurant", err);
       }
+      setTimeout(() => setLoading(false), 1000);
     };
 
     fetchRestaurant();
   }, [id]);
 
-  if (!restaurent) {
-    return <p>Loading restaurant...</p>;
+  if (!restaurent || loading) {
+    return <Loader loading={loading} />;
   }
 
   return (

@@ -19,14 +19,14 @@ export default function DetailsHeader({ setActiveTab, restaurent }) {
 
           <div className="rating-section">
             <div className="rating-box">
-              <span>{restaurent.rating} ★</span>
+              <span>{restaurent.averageRating} ⭐</span>
               <small>Dining</small>
             </div>
 
-            <div className="rating-box">
+            {/* <div className="rating-box">
               <span>4.0 ★</span>
               <small>Delivery</small>
-            </div>
+            </div> */}
           </div>
         </div>
 
