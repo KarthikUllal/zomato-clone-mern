@@ -116,7 +116,7 @@ export default function AdminView() {
                 <td>{restaurant.description}</td>
                 <td>{restaurant.hours}</td>
                 <td>{restaurant.contact}</td>
-                <td>{restaurant.rating}</td>
+                <td>{restaurant.averageRating || 0}</td>
                 <td>
                   <div className="action-btn">
                     <button
@@ -190,12 +190,12 @@ export default function AdminView() {
                       <button className="edit-btn" onClick={() => navigate(`/admin/food/${food._id}`)} >
                         Edit
                       </button>
-                      <button
+                      {/* <button
                         className="view-btn"
                         onClick={() => navigate(`/admin/food/${food._id}`)}
                       >
                         View
-                      </button>
+                      </button> */}
                       <button
                         className="delete-btn"
                         onClick={() => handleDeleteFood(food._id)}
