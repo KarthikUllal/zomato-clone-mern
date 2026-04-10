@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "../styles/AdminView.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import api from "../../api"
+import api from "../../api";
 import { getImageUrl } from "../../utils/imageHelper";
 export default function AdminView() {
   const [activeTab, setActiveTab] = useState("restaurant");
@@ -64,7 +64,6 @@ export default function AdminView() {
     }
   };
 
-
   return (
     <div className="admin-view-wrapper">
       <h1 className="admin-view-title">Admin View</h1>
@@ -123,19 +122,11 @@ export default function AdminView() {
                       className="edit-btn"
                       onClick={() =>
                         navigate(`/admin/restaurant/${restaurant._id}`)
-              
                       }
                     >
                       Edit
                     </button>
-                    <button
-                      className="view-btn"
-                      onClick={() =>
-                        navigate(`/admin/restaurant/${restaurant._id}`)
-                      }
-                    >
-                      View
-                    </button>
+
                     <button
                       className="delete-btn"
                       onClick={() => handleDeleteRestaurant(restaurant._id)}
@@ -187,7 +178,10 @@ export default function AdminView() {
                   <td>{food.restaurant?.name}</td>
                   <td>
                     <div className="action-btn">
-                      <button className="edit-btn" onClick={() => navigate(`/admin/food/${food._id}`)} >
+                      <button
+                        className="edit-btn"
+                        onClick={() => navigate(`/admin/food/${food._id}`)}
+                      >
                         Edit
                       </button>
                       {/* <button

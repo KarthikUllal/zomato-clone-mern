@@ -284,3 +284,35 @@ exports.getRestaurantByFoodCategory = async (req, res) => {
         })
     }
 }
+
+
+//admin restuarant search functionality
+exports.adminSearchRestaurants = async (req, res) => {
+    const { query = ""  } = req.query;
+
+    try{
+
+        const restaurant = await restaurantModel.find({
+            $or : [
+                {name : { $regex : query, $options : "i"}},
+                {cuisine : { $regex : query, $options : "i"}},
+                {category : { $regex : query, $options : "i"}},
+                {location : { $regex : query, $options : "i"}}
+            ]
+        })
+
+        res.status(200).json({
+            status : "SUCCESS",
+            message : "Restaurants fetched successfully",
+            restaurant : restaurant
+        })
+
+    }
+    catch(err){
+        res.json({
+            status : "FAILED",
+            message : "Error searching restaurants",
+            error : err.message
+        })
+    }
+}

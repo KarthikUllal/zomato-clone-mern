@@ -6,8 +6,8 @@ const adminRouter = express.Router();
 
 const {foodUpload, restaurantUpload} = require("../middleware/upload");
 
-const {addRestaurant,getRestaurants, deleteRestaurant, updateRestaurant, getRestaurantById} = require("../Controller/adminRestaurantController");
-const {addFood, getFoods, deleteFoods, updateFood, getFoodById, getFoodsByRestaurant} = require("../Controller/adminFoodController");
+const {addRestaurant,getRestaurants, deleteRestaurant, updateRestaurant, getRestaurantById, adminSearchRestaurants} = require("../Controller/adminRestaurantController");
+const {addFood, getFoods, deleteFoods, updateFood, getFoodById, getFoodsByRestaurant, adminSearchFood} = require("../Controller/adminFoodController");
 
 const {getAllUsers, deleteUser, getUserById} = require("../Controller/adminUserController");
 const { updateOrderStatus, getAllOrders } = require("../Controller/adminOrderController");
@@ -58,6 +58,14 @@ adminRouter.delete("/users/:id", deleteUser)
 
 //Order Routes
 adminRouter.put("/orders/:orderId", updateOrderStatus) //example : http://localhost:8000/api/admin/orders/123456789
-adminRouter.get("/orders", getAllOrders)            //example : http://localhost:8000/api/admin/orders  
+adminRouter.get("/orders", getAllOrders) //example : http://localhost:8000/api/admin/orders  
+
+
+//admin search route for restuarant
+adminRouter.get("/restaurant/search", adminSearchRestaurants)
+
+//admin search route for food
+adminRouter.get("/food/search", adminSearchFood)
+
 
 module.exports = adminRouter;

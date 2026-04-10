@@ -204,3 +204,32 @@ exports.getFoodByIds = async (req, res) => {
         })
     }
 }
+
+
+//admin search food by name or category or restaurant name
+exports.adminSearchFood = async (req, res) =>{
+    const { query = "" } = req.query;
+
+    try{
+        const food = await foodModel.find({
+            $or : [
+                {name : { $regex : query, $options : "i"}},
+                {foodCategory : { $regex : query, $options : "i"}},
+            ]
+        }).populate("restaurant", "name")
+
+        res.json({
+            status : "SUCCESS",
+            message : "Foods fetched successfully",
+            food : food
+        })
+    }
+    catch(err){
+        res.json({
+            status : "FAILED",
+            message : "Error searching foods",
+            error : err.message
+        })
+    }
+
+}
