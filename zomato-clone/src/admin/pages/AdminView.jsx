@@ -4,20 +4,23 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../../api";
 import { getImageUrl } from "../../utils/imageHelper";
+import Loader from "../../utils/Loder";
+
 export default function AdminView() {
   const [activeTab, setActiveTab] = useState("restaurant");
   const navigate = useNavigate();
 
-  //state to contain restaurant and food data which will be fetched from backend
   const [restaurants, setRestaurants] = useState([]);
   const [foods, setFoods] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  //search
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
+
         if (activeTab === "restaurant") {
           const url = searchTerm
             ? `/api/admin/restaurants/search?query=${searchTerm}`
@@ -37,43 +40,16 @@ export default function AdminView() {
         }
       } catch (err) {
         toast.error(err.response?.data?.message || "Error fetching data");
+      } finally {
+        setTimeout(() => {
+          setLoading(false);
+        }, 300);
       }
     };
 
     fetchData();
   }, [activeTab, searchTerm]);
 
-  // //to fetch restaurant and food data when page loads
-  // useEffect(() => {
-  //   if (activeTab === "restaurant") {
-  //     const fetchRestaurants = async () => {
-  //       try {
-  //         const res = await api.get("/api/admin/restaurants");
-  //         setRestaurants(res.data.restaurants);
-  //       } catch (err) {
-  //         toast.error(
-  //           err.response?.data?.message || "Error fetching restaurants",
-  //         );
-  //       }
-  //     };
-
-  //     fetchRestaurants();
-  //   }
-
-  //   if (activeTab === "food") {
-  //     const fetchFoods = async () => {
-  //       try {
-  //         const res = await api.get("/api/admin/foods");
-  //         setFoods(res.data.foods);
-  //       } catch (err) {
-  //         toast.error(err.response?.data?.message || "Error fetching foods");
-  //       }
-  //     };
-
-  //     fetchFoods();
-  //   }
-  // }, [activeTab]);
-  //function to delete a restaurant
   const handleDeleteRestaurant = async (id) => {
     try {
       await api.delete(`/api/admin/restaurants/${id}`);
@@ -84,7 +60,6 @@ export default function AdminView() {
     }
   };
 
-  //function to delete food
   const handleDeleteFood = async (id) => {
     try {
       await api.delete(`/api/admin/foods/${id}`);
@@ -120,7 +95,9 @@ export default function AdminView() {
           <input
             type="text"
             placeholder={
-              activeTab === "restaurant" ? "Search Restaurants" : "Search Foods"
+              activeTab === "restaurant"
+                ? "Search Restaurants"
+                : "Search Foods"
             }
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -129,7 +106,7 @@ export default function AdminView() {
         </div>
       </div>
 
-      {/* restaurent table */}
+      {/* Restaurant Table */}
       {activeTab === "restaurant" && (
         <table className="admin-table">
           <thead>
@@ -149,44 +126,60 @@ export default function AdminView() {
           </thead>
 
           <tbody>
-            {restaurants.map((restaurant) => (
-              <tr key={restaurant._id}>
-                <td>{restaurant._id}</td>
-                <td>{restaurant.name}</td>
-                <td>{restaurant.category}</td>
-                <td>{restaurant.cuisine}</td>
-                <td>{restaurant.location}</td>
-                <td>{restaurant.averageCostForTwo}</td>
-                <td>{restaurant.description}</td>
-                <td>{restaurant.hours}</td>
-                <td>{restaurant.contact}</td>
-                <td>{restaurant.averageRating || 0}</td>
-                <td>
-                  <div className="action-btn">
-                    <button
-                      className="edit-btn"
-                      onClick={() =>
-                        navigate(`/admin/restaurant/${restaurant._id}`)
-                      }
-                    >
-                      Edit
-                    </button>
-
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDeleteRestaurant(restaurant._id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
+            {loading ? (
+              <tr>
+                <td colSpan="11" style={{ textAlign: "center", padding: "20px" }}>
+                  <Loader loading={loading} />
                 </td>
               </tr>
-            ))}
+            ) : restaurants.length === 0 ? (
+              <tr>
+                <td colSpan="11" style={{ textAlign: "center", padding: "20px" }}>
+                  No restaurants found
+                </td>
+              </tr>
+            ) : (
+              restaurants.map((restaurant) => (
+                <tr key={restaurant._id}>
+                  <td>{restaurant._id}</td>
+                  <td>{restaurant.name}</td>
+                  <td>{restaurant.category}</td>
+                  <td>{restaurant.cuisine}</td>
+                  <td>{restaurant.location}</td>
+                  <td>{restaurant.averageCostForTwo}</td>
+                  <td>{restaurant.description}</td>
+                  <td>{restaurant.hours}</td>
+                  <td>{restaurant.contact}</td>
+                  <td>{restaurant.averageRating || 0}</td>
+                  <td>
+                    <div className="action-btn">
+                      <button
+                        className="edit-btn"
+                        onClick={() =>
+                          navigate(`/admin/restaurant/${restaurant._id}`)
+                        }
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        className="delete-btn"
+                        onClick={() =>
+                          handleDeleteRestaurant(restaurant._id)
+                        }
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       )}
 
-      {/* food table*/}
+     {/**Food Table */}
       {activeTab === "food" && (
         <table className="admin-table">
           <thead>
@@ -203,8 +196,20 @@ export default function AdminView() {
           </thead>
 
           <tbody>
-            {foods.map((food) => {
-              return (
+            {loading ? (
+              <tr>
+                <td colSpan="8" style={{ textAlign: "center", padding: "20px" }}>
+                  <Loader loading={loading} />
+                </td>
+              </tr>
+            ) : foods.length === 0 ? (
+              <tr>
+                <td colSpan="8" style={{ textAlign: "center", padding: "20px" }}>
+                  No food found
+                </td>
+              </tr>
+            ) : (
+              foods.map((food) => (
                 <tr key={food._id}>
                   <td>{food.name}</td>
                   <td>₹{food.price}</td>
@@ -225,16 +230,13 @@ export default function AdminView() {
                     <div className="action-btn">
                       <button
                         className="edit-btn"
-                        onClick={() => navigate(`/admin/food/${food._id}`)}
+                        onClick={() =>
+                          navigate(`/admin/food/${food._id}`)
+                        }
                       >
                         Edit
                       </button>
-                      {/* <button
-                        className="view-btn"
-                        onClick={() => navigate(`/admin/food/${food._id}`)}
-                      >
-                        View
-                      </button> */}
+
                       <button
                         className="delete-btn"
                         onClick={() => handleDeleteFood(food._id)}
@@ -244,8 +246,8 @@ export default function AdminView() {
                     </div>
                   </td>
                 </tr>
-              );
-            })}
+              ))
+            )}
           </tbody>
         </table>
       )}
