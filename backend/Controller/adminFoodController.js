@@ -221,7 +221,7 @@ exports.adminSearchFood = async (req, res) =>{
         res.json({
             status : "SUCCESS",
             message : "Foods fetched successfully",
-            food : food
+            foods : food
         })
     }
     catch(err){

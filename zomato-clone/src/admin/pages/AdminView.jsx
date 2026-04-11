@@ -12,36 +12,67 @@ export default function AdminView() {
   const [restaurants, setRestaurants] = useState([]);
   const [foods, setFoods] = useState([]);
 
-  //to fetch restaurant and food data when page loads
+  //search
+  const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
-    if (activeTab === "restaurant") {
-      const fetchRestaurants = async () => {
-        try {
-          const res = await api.get("/api/admin/restaurants");
+    const fetchData = async () => {
+      try {
+        if (activeTab === "restaurant") {
+          const url = searchTerm
+            ? `/api/admin/restaurants/search?query=${searchTerm}`
+            : `/api/admin/restaurants`;
+
+          const res = await api.get(url);
           setRestaurants(res.data.restaurants);
-        } catch (err) {
-          toast.error(
-            err.response?.data?.message || "Error fetching restaurants",
-          );
         }
-      };
 
-      fetchRestaurants();
-    }
+        if (activeTab === "food") {
+          const url = searchTerm
+            ? `/api/admin/foods/search?query=${searchTerm}`
+            : `/api/admin/foods`;
 
-    if (activeTab === "food") {
-      const fetchFoods = async () => {
-        try {
-          const res = await api.get("/api/admin/foods");
+          const res = await api.get(url);
           setFoods(res.data.foods);
-        } catch (err) {
-          toast.error(err.response?.data?.message || "Error fetching foods");
         }
-      };
+      } catch (err) {
+        toast.error(err.response?.data?.message || "Error fetching data");
+      }
+    };
 
-      fetchFoods();
-    }
-  }, [activeTab]);
+    fetchData();
+  }, [activeTab, searchTerm]);
+
+  // //to fetch restaurant and food data when page loads
+  // useEffect(() => {
+  //   if (activeTab === "restaurant") {
+  //     const fetchRestaurants = async () => {
+  //       try {
+  //         const res = await api.get("/api/admin/restaurants");
+  //         setRestaurants(res.data.restaurants);
+  //       } catch (err) {
+  //         toast.error(
+  //           err.response?.data?.message || "Error fetching restaurants",
+  //         );
+  //       }
+  //     };
+
+  //     fetchRestaurants();
+  //   }
+
+  //   if (activeTab === "food") {
+  //     const fetchFoods = async () => {
+  //       try {
+  //         const res = await api.get("/api/admin/foods");
+  //         setFoods(res.data.foods);
+  //       } catch (err) {
+  //         toast.error(err.response?.data?.message || "Error fetching foods");
+  //       }
+  //     };
+
+  //     fetchFoods();
+  //   }
+  // }, [activeTab]);
   //function to delete a restaurant
   const handleDeleteRestaurant = async (id) => {
     try {
@@ -69,19 +100,33 @@ export default function AdminView() {
       <h1 className="admin-view-title">Admin View</h1>
 
       <div className="view-tabs">
-        <button
-          className={activeTab === "restaurant" ? "active" : ""}
-          onClick={() => setActiveTab("restaurant")}
-        >
-          View Restaurant
-        </button>
+        <div className="action-btns">
+          <button
+            className={activeTab === "restaurant" ? "active" : ""}
+            onClick={() => setActiveTab("restaurant")}
+          >
+            View Restaurant
+          </button>
 
-        <button
-          className={activeTab === "food" ? "active" : ""}
-          onClick={() => setActiveTab("food")}
-        >
-          View Food Items
-        </button>
+          <button
+            className={activeTab === "food" ? "active" : ""}
+            onClick={() => setActiveTab("food")}
+          >
+            View Food Items
+          </button>
+        </div>
+
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder={
+              activeTab === "restaurant" ? "Search Restaurants" : "Search Foods"
+            }
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-field"
+          />
+        </div>
       </div>
 
       {/* restaurent table */}

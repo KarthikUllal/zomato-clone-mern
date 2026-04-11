@@ -304,7 +304,7 @@ exports.adminSearchRestaurants = async (req, res) => {
         res.status(200).json({
             status : "SUCCESS",
             message : "Restaurants fetched successfully",
-            restaurant : restaurant
+            restaurants : restaurant
         })
 
     }

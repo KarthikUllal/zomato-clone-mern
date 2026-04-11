@@ -4,12 +4,12 @@ const express = require("express");
 const adminRouter = express.Router();
 
 
-const {foodUpload, restaurantUpload} = require("../middleware/upload");
+const { foodUpload, restaurantUpload } = require("../middleware/upload");
 
-const {addRestaurant,getRestaurants, deleteRestaurant, updateRestaurant, getRestaurantById, adminSearchRestaurants} = require("../Controller/adminRestaurantController");
-const {addFood, getFoods, deleteFoods, updateFood, getFoodById, getFoodsByRestaurant, adminSearchFood} = require("../Controller/adminFoodController");
+const { addRestaurant, getRestaurants, deleteRestaurant, updateRestaurant, getRestaurantById, adminSearchRestaurants } = require("../Controller/adminRestaurantController");
+const { addFood, getFoods, deleteFoods, updateFood, getFoodById, getFoodsByRestaurant, adminSearchFood } = require("../Controller/adminFoodController");
 
-const {getAllUsers, deleteUser, getUserById} = require("../Controller/adminUserController");
+const { getAllUsers, deleteUser, getUserById } = require("../Controller/adminUserController");
 const { updateOrderStatus, getAllOrders } = require("../Controller/adminOrderController");
 
 
@@ -21,6 +21,10 @@ adminRouter.post(
 );
 
 adminRouter.get("/restaurants", getRestaurants)
+
+//admin search route for restuarant
+adminRouter.get("/restaurants/search", adminSearchRestaurants)
+
 adminRouter.get("/restaurants/:id", getRestaurantById)
 
 adminRouter.delete("/restaurants/:id", deleteRestaurant)
@@ -41,10 +45,16 @@ adminRouter.post(
   addFood
 );
 adminRouter.get("/foods", getFoods)
+
+//admin search route for food
+adminRouter.get("/foods/search", adminSearchFood)
+
+adminRouter.get("/foods/restaurant/:restaurantId", getFoodsByRestaurant)
+
 adminRouter.get("/foods/:id", getFoodById)
 adminRouter.delete("/foods/:id", deleteFoods)
-adminRouter.put("/foods/:id",foodUpload.single("image"), updateFood)
-adminRouter.get("/foods/restaurant/:restaurantId", getFoodsByRestaurant)
+adminRouter.put("/foods/:id", foodUpload.single("image"), updateFood)
+
 
 
 
@@ -61,11 +71,9 @@ adminRouter.put("/orders/:orderId", updateOrderStatus) //example : http://localh
 adminRouter.get("/orders", getAllOrders) //example : http://localhost:8000/api/admin/orders  
 
 
-//admin search route for restuarant
-adminRouter.get("/restaurant/search", adminSearchRestaurants)
 
-//admin search route for food
-adminRouter.get("/food/search", adminSearchFood)
+
+
 
 
 module.exports = adminRouter;
