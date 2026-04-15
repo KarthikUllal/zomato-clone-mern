@@ -1,57 +1,98 @@
 .admin-manage-user-wrapper {
-    width: 100%;
-    padding: 30px;
-    background: #f6f7fb;
-    min-height: 100vh;
+  width: 100%;
+  padding: 30px;
+  background: #f6f7fb;
+  min-height: 100vh;
 }
 
-
-.admin-manage-user-table {
-    width: max-content;
-    background: white;
-    border-radius: 0px;
-    overflow: hidden;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
-    
+.users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
-.admin-manage-user-table thead {
-    background: #f2f4f7;
+.users-header h2 {
+  font-size: 34px;
+  font-weight: 600;
+  margin: 0;
 }
 
-.admin-manage-user-table th {
-    text-align: left;
-    padding: 18px 22px;
-    font-size: 18px;
+.users-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
 }
 
-.admin-manage-user-table td {
-    padding: 14px 22px;
-    font-size: 18px;
-    color: #444;
-    border-bottom: 1px solid #f0f0f0;
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
 }
 
-.admin-manage-user-table tr:hover {
-    background: #fafafa;
+table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
 }
 
-/* Action Buttons */
-.admin-manage-user-table .action-btn {
-    display: flex;
-    gap: 10px;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+thead {
+  background: #f2f4f7;
 }
 
-.admin-manage-user-table .action-btn.delete {
-    background: #ff4d4f;
-    color: white;
+th {
+  text-align: left;
+  padding: 18px 22px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 1px solid #e6e6e6;
 }
 
-.admin-manage-user-table .action-btn.delete:hover {
-    background: #e83739;
+td {
+  padding: 18px 22px;
+  font-size: 15px;
+  color: #444;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+tr:hover {
+  background: #fafafa;
+}
+
+.center {
+  text-align: center;
+  padding: 20px;
+}
+
+.user-id {
+  font-weight: 600;
+}
+
+.delete-btn {
+  padding: 8px 14px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: white;
+}
+
+.badge.verified {
+  background: #10b981;
+}
+
+.badge.not-verified {
+  background: gray;
 }

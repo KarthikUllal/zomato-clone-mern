@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import "../styles/AdminManageUser.css";
-
 import { toast } from "react-toastify";
 import api from "../../api";
 import Loader from "../../utils/Loder";
+import AdminBackButton from "../components/AdminBackButton";
 
 export default function AdminManageUser() {
   const [users, setUsers] = useState([]);
@@ -15,7 +15,6 @@ export default function AdminManageUser() {
         setLoading(true);
         const res = await api.get("/api/admin/users");
         setUsers(res.data.data);
-        setLoading(false);
       } catch (error) {
         toast.error(error.response?.data?.message || "Error fetching users");
       } finally {
@@ -30,65 +29,80 @@ export default function AdminManageUser() {
     try {
       await api.delete(`/api/admin/users/${userId}`);
       toast.success("User deleted");
-      //update the users state to remove the deleted user
       setUsers(users.filter((user) => user._id !== userId));
     } catch (error) {
       toast.error(error.response?.data?.message || "Error deleting user");
     }
   };
+
   return (
     <div className="admin-manage-user-wrapper">
-      <h2>Admin Manage User</h2>
-      <div className="admin-manage-user-table">
-        <table>
-          <thead>
-            <tr>
-              <th>User ID</th>
-              <th>Full Name</th>
-              <th>Email</th>
-              <th>Is Verified</th>
-              <th>Created At</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
+      <div className="users-header">
+        <h2>Manage Users</h2>
+        <AdminBackButton />
+      </div>
+
+      <div className="users-card">
+        <div className="table-wrapper">
+          <table>
+            <thead>
               <tr>
-                <td colSpan="6" style={{ textAlign: "center" }}>
-                  <Loader loading={loading} />
-                </td>
+                <th>User ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Verified</th>
+                <th>Created</th>
+                <th>Actions</th>
               </tr>
-            ) : users.length === 0 ? (
-              <tr>
-                <td colSpan="6" style={{ textAlign: "center" }}>
-                  No users found
-                </td>
-              </tr>
-            ) : (
-              users.map((user) => (
-                <tr key={user._id}>
-                  <td>{user._id}</td>
-                  <td>{user.fullname ? user.fullname : "N/A"}</td>
-                  <td>{user.email}</td>
-                  <td>{user.isVerified ? "Yes" : "No"}</td>
-                  <td>
-                    {user.createdAt
-                      ? new Date(user.createdAt).toLocaleString()
-                      : "N/A"}
-                  </td>
-                  <td>
-                    <button
-                      className="action-btn delete"
-                      onClick={() => deleteUser(user._id)}
-                    >
-                      Delete
-                    </button>
+            </thead>
+
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan="6" className="center">
+                    <Loader loading={loading} />
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : users.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="center">
+                    No users found
+                  </td>
+                </tr>
+              ) : (
+                users.map((user) => (
+                  <tr key={user._id}>
+                    <td className="user-id">{user._id}</td>
+                    <td>{user.fullname || "N/A"}</td>
+                    <td>{user.email}</td>
+                    <td>
+                      <span
+                        className={`badge ${
+                          user.isVerified ? "verified" : "not-verified"
+                        }`}
+                      >
+                        {user.isVerified ? "Yes" : "No"}
+                      </span>
+                    </td>
+                    <td>
+                      {user.createdAt
+                        ? new Date(user.createdAt).toLocaleString()
+                        : "N/A"}
+                    </td>
+                    <td>
+                      <button
+                        className="delete-btn"
+                        onClick={() => deleteUser(user._id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

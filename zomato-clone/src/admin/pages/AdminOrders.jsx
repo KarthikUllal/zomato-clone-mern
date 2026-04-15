@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import "../styles/AdminOrders.css";
 import api from "../../api";
 import Loader from "../../utils/Loder";
+import AdminBackButton from "../components/AdminBackButton";
 
 function AdminOrders() {
   const [orders, setOrders] = useState([]);
@@ -10,14 +11,13 @@ function AdminOrders() {
 
   const fetchOrders = async () => {
     try {
-      setLoading(true); // ✅ start loader
-
+      setLoading(true);
       const res = await api.get("/api/admin/orders");
       setOrders(res.data.orders);
     } catch (err) {
-      toast.error(`${err.response?.data?.message || "Error fetching orders"}`);
+      toast.error(err.response?.data?.message || "Error fetching orders");
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -25,7 +25,6 @@ function AdminOrders() {
     fetchOrders();
   }, []);
 
-  // update status of order
   const handleStatusChange = async (orderId, newStatus) => {
     try {
       setLoading(true);
@@ -34,111 +33,100 @@ function AdminOrders() {
         status: newStatus,
       });
 
-      // update UI
-      setOrders((prevOrders) =>
-        prevOrders.map((order) =>
-          order._id === orderId
-            ? { ...order, status: newStatus }
-            : order
+      setOrders((prev) =>
+        prev.map((o) =>
+          o._id === orderId ? { ...o, status: newStatus } : o
         )
       );
-    } catch (error) {
-      console.error("Error updating order status:", error);
+    } catch {
       toast.error("Failed to update order status");
     } finally {
-      setLoading(false); // ✅ remove setTimeout
+      setLoading(false);
     }
   };
 
   return (
     <div className="admin-orders">
-      <div className="header">
+      <div className="orders-header">
         <h2>Manage Orders</h2>
-
-        <span className="refresh" onClick={fetchOrders}>
-          <i className="fa fa-refresh"></i>
-        </span>
+        <AdminBackButton />
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Delivery Address</th>
-            <th>Restaurant</th>
-            <th>Items</th>
-            <th>Total</th>
-            <th>Payment Method</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {loading ? (
-            <tr>
-              <td
-                colSpan={8}
-                style={{ textAlign: "center", padding: "20px" }}
-              >
-                <Loader loading={loading} />
-              </td>
-            </tr>
-          ) : orders.length === 0 ? (
-            <tr>
-              <td
-                colSpan={8}
-                style={{ textAlign: "center", padding: "20px" }}
-              >
-                No orders found
-              </td>
-            </tr>
-          ) : (
-            orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id}</td>
-                <td>{order.user?.fullname || "N/A"}</td>
-                <td>{order.address || "N/A"}</td>
-                <td>{order.restaurant?.name || "N/A"}</td>
-                <td>
-                  {order.items
-                    ?.map(
-                      (item) =>
-                        `${item.food?.name} x ${item.quantity}`
-                    )
-                    .join(", ") || "N/A"}
-                </td>
-                <td>{order.totalAmount}</td>
-                <td>{order.paymentMethod}</td>
-                <td>
-                  <select
-                    value={order.status}
-                    onChange={(e) =>
-                      handleStatusChange(
-                        order._id,
-                        e.target.value
-                      )
-                    }
-                  >
-                    <option value="placed">Placed</option>
-                    <option value="accepted">Accepted</option>
-                    <option value="preparing">Preparing</option>
-                    <option value="out-for-delivery">
-                      Out for Delivery
-                    </option>
-                    <option value="delivered">Delivered</option>
-                    <option value="cancelled">Cancelled</option>
-                  </select>
-
-                  <span className={`status ${order.status}`}>
-                    {order.status}
-                  </span>
-                </td>
+      <div className="orders-card">
+        <div className="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Restaurant</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Status</th>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            </thead>
+
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan="6" className="center">
+                    <Loader loading={loading} />
+                  </td>
+                </tr>
+              ) : orders.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="center">
+                    No orders found
+                  </td>
+                </tr>
+              ) : (
+                orders.map((order) => (
+                  <tr key={order._id}>
+                    <td className="order-id">{order._id}</td>
+
+                    <td>{order.user?.fullname || "N/A"}</td>
+
+                    <td>{order.restaurant?.name || "N/A"}</td>
+
+                    <td className="items">
+                      {order.items
+                        ?.map(
+                          (item) =>
+                            `${item.food?.name} x${item.quantity}`
+                        )
+                        .join(", ") || "N/A"}
+                    </td>
+
+                    <td className="amount">₹{order.totalAmount}</td>
+
+                    <td className="status-cell">
+                      <select
+                        value={order.status}
+                        onChange={(e) =>
+                          handleStatusChange(order._id, e.target.value)
+                        }
+                      >
+                        <option value="placed">Placed</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="preparing">Preparing</option>
+                        <option value="out-for-delivery">
+                          Out for Delivery
+                        </option>
+                        <option value="delivered">Delivered</option>
+                        <option value="cancelled">Cancelled</option>
+                      </select>
+
+                      <span className={`status ${order.status}`}>
+                        {order.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }

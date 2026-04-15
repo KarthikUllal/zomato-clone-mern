@@ -31,8 +31,6 @@ import MyOrders from "./pages/MyOrders";
 import SearchResults from "./pages/SearchResults";
 import UserProfile from "./pages/UserProfile";
 
-
-
 function App() {
   const location = useLocation();
 
@@ -59,20 +57,17 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/restaurent/:id" element={<RestaurentDetails />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path = "/checkout" element = {<Checkout />} />
-        <Route path ="/order/:id" element = {<OrderDetails /> }/>
-
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order/:id" element={<OrderDetails />} />
         <Route path="/search" element={<SearchResults />} />
-
         {/**User Profile Route */}
         <Route path="/user-profile" element={<UserProfile />} />
-
         {/**My Orders Route */}
-        <Route path="/my-orders" element={<MyOrders/>} />
-        
+        <Route path="/my-orders" element={<MyOrders />} />
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="add" element={<AdminAdd />} />
 

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import api from "../../api";
 import { getImageUrl } from "../../utils/imageHelper";
 import Loader from "../../utils/Loder";
+import AdminBackButton from "../components/AdminBackButton";
 
 export default function AdminView() {
   const [activeTab, setActiveTab] = useState("restaurant");
@@ -72,7 +73,10 @@ export default function AdminView() {
 
   return (
     <div className="admin-view-wrapper">
-      <h1 className="admin-view-title">Admin View</h1>
+      <div className="header" style={{ marginBottom: "20px" , display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <h1 className="admin-view-title">Admin View</h1>
+        <AdminBackButton />
+      </div>
 
       <div className="view-tabs">
         <div className="action-btns">
@@ -95,9 +99,7 @@ export default function AdminView() {
           <input
             type="text"
             placeholder={
-              activeTab === "restaurant"
-                ? "Search Restaurants"
-                : "Search Foods"
+              activeTab === "restaurant" ? "Search Restaurants" : "Search Foods"
             }
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -128,13 +130,19 @@ export default function AdminView() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan="11" style={{ textAlign: "center", padding: "20px" }}>
+                <td
+                  colSpan="11"
+                  style={{ textAlign: "center", padding: "20px" }}
+                >
                   <Loader loading={loading} />
                 </td>
               </tr>
             ) : restaurants.length === 0 ? (
               <tr>
-                <td colSpan="11" style={{ textAlign: "center", padding: "20px" }}>
+                <td
+                  colSpan="11"
+                  style={{ textAlign: "center", padding: "20px" }}
+                >
                   No restaurants found
                 </td>
               </tr>
@@ -164,9 +172,7 @@ export default function AdminView() {
 
                       <button
                         className="delete-btn"
-                        onClick={() =>
-                          handleDeleteRestaurant(restaurant._id)
-                        }
+                        onClick={() => handleDeleteRestaurant(restaurant._id)}
                       >
                         Delete
                       </button>
@@ -179,7 +185,7 @@ export default function AdminView() {
         </table>
       )}
 
-     {/**Food Table */}
+      {/**Food Table */}
       {activeTab === "food" && (
         <table className="admin-table">
           <thead>
@@ -198,13 +204,19 @@ export default function AdminView() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan="8" style={{ textAlign: "center", padding: "20px" }}>
+                <td
+                  colSpan="8"
+                  style={{ textAlign: "center", padding: "20px" }}
+                >
                   <Loader loading={loading} />
                 </td>
               </tr>
             ) : foods.length === 0 ? (
               <tr>
-                <td colSpan="8" style={{ textAlign: "center", padding: "20px" }}>
+                <td
+                  colSpan="8"
+                  style={{ textAlign: "center", padding: "20px" }}
+                >
                   No food found
                 </td>
               </tr>
@@ -230,9 +242,7 @@ export default function AdminView() {
                     <div className="action-btn">
                       <button
                         className="edit-btn"
-                        onClick={() =>
-                          navigate(`/admin/food/${food._id}`)
-                        }
+                        onClick={() => navigate(`/admin/food/${food._id}`)}
                       >
                         Edit
                       </button>
