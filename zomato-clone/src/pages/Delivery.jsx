@@ -12,7 +12,7 @@ import api from "../api";
 import "./Delivery.css";
 
 export default function Delivery() {
-  const [restaurants, setRestaurants] = useState([]);3
+  const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const { category } = useParams();
@@ -34,7 +34,9 @@ export default function Delivery() {
       } catch (err) {
         toast.error("Error fetching restaurant data", err);
       }
-      setTimeout(() => setLoading(false), 1000);
+      finally {
+        setLoading(false);
+      }
     };
 
     fetchDeliveryRestaurant();
