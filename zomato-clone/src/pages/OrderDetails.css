@@ -1,142 +1,166 @@
-.order-container {
-    display: flex;
-    justify-content: center;
-    padding: 40px;
-    background: #d8d8d8;
+.order-page {
+  background: #f8f8f8;
+  min-height: 100vh;
+  padding: 40px 20px;
 }
 
+.order-wrapper {
+  max-width: 800px;
+  margin: auto;
+}
+
+/* MAIN CARD */
 .order-card {
-    width: 700px;
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  padding: 25px;
+  border-radius: 14px;
+  border: 1px solid #eee;
 }
 
-.success {
-    color: #28a745;
-    margin-bottom: 20px;
+/* HEADER */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
+.order-header h2 {
+  color: #28a745;
+  font-size: 20px;
+}
+
+/* STATUS */
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.status.placed {
+  background: #fff3cd;
+}
+
+.status.delivered {
+  background: #d4edda;
+}
+
+/* INFO */
 .order-info p {
-    margin: 5px 0;
-    color: #444;
+  margin: 5px 0;
+  color: #444;
 }
 
+/* ITEMS */
 .items-title {
-    margin-top: 25px;
-    margin-bottom: 15px;
+  margin: 20px 0 10px;
 }
 
 .items-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
+.item-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 10px;
 }
 
-.item img {
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 6px;
+.item-card img {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 .item-details {
-    flex: 1;
-    margin-left: 15px;
+  flex: 1;
 }
 
 .item-details h4 {
-    margin: 0;
+  margin: 0;
+}
+
+.item-details p {
+  margin: 3px 0;
+  color: #666;
+}
+
+.item-details span {
+  font-size: 13px;
+  color: #999;
 }
 
 .item-total {
-    font-weight: bold;
+  font-weight: 600;
 }
 
+/* TOTAL */
 .total-box {
-    margin-top: 20px;
-    padding: 15px;
-    background: #f1f1f1;
-    font-weight: bold;
-    text-align: right;
-    border-radius: 6px;
+  margin-top: 20px;
+  padding: 15px;
+  background: #fff5f6;
+  border-radius: 10px;
+  text-align: right;
+  font-weight: bold;
+  color: #ef4f5f;
 }
 
-.loading {
-    text-align: center;
-    margin-top: 100px;
+/* REVIEW */
+.review-btn {
+  background: #ef4f5f;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.review-btn:hover {
+  background: #d84352;
 }
 
 .review-form {
-    margin-top: 30px;
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 10px;
 }
 
-.review-btn-container {
-    margin-top: 20px;
+.rating-container,
+.comment-container {
+  margin-bottom: 15px;
 }
 
-.review-btn-container button {
-    margin-right: 10px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    background: #28a745;
-    color: white;
-    width: 25%;
-}
-
-.review-btn-container button:hover {
-    background: #28a745;
-    color: white;
-}
-
-.rating-container {
-    margin-bottom: 20px;
-}
-.rating-container label {
-    display: block;
-    margin-bottom: 5px;
-    color: #444;
-    font-weight: bold;
-}
-.rating-container select {
-    margin-bottom: 5px;
-    padding: 8px;
-}
-.comment-container label {
-    display: block;
-    margin-bottom: 5px;
-    color: #444;
-    font-weight: bold;
-}   
-.comment-container textarea {   
-        width: 100%;
-        height: 100px;
-        padding: 10px;
-    margin-bottom: 20px;
+.rating-container select,
+.comment-container textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
 .submit-btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    background: #28a745;
-    width: 25%;
-    margin: 0;
-
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
 }
+
 .submit-btn:hover {
-    background: #28a745;
-    color: white;
+  background: #218838;
+}
+
+/* LOADING */
+.loading {
+  text-align: center;
+  margin-top: 100px;
 }
