@@ -6,7 +6,7 @@ const createCheckoutSession = async (req, res) => {
   try {
     const { items } = req.body;
 
-    const line_items = items.map(item => ({
+    const line_items = items.map((item) => ({
       price_data: {
         currency: "inr",
         product_data: {
@@ -29,7 +29,6 @@ const createCheckoutSession = async (req, res) => {
       status: "SUCCESS",
       url: session.url,
     });
-
   } catch (error) {
     res.status(500).json({
       status: "FAILED",

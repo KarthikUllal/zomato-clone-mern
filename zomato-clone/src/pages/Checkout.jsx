@@ -16,7 +16,6 @@ export default function Checkout() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  // Fetch address + foods
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,6 +45,12 @@ export default function Checkout() {
       return;
     }
 
+    const selectedAddrObj = addresses.find(
+      (addr) => addr._id === selectedAddress
+    );
+
+    const fullAddress = `${selectedAddrObj.street}, ${selectedAddrObj.city}, ${selectedAddrObj.pincode}`;
+
     const items = [];
 
     for (let foodId in cart.items) {
@@ -56,16 +61,12 @@ export default function Checkout() {
     }
 
     try {
-      const selectedAddrObj = addresses.find(
-        (addr) => addr._id === selectedAddress
-      );
-
       const res = await api.post(
         "/api/orders",
         {
           restaurantId: cart.restaurantId,
           items,
-          address: `${selectedAddrObj.street}, ${selectedAddrObj.city}, ${selectedAddrObj.pincode}`,
+          address: fullAddress,
           paymentMethod: "COD",
         },
         {
@@ -85,14 +86,21 @@ export default function Checkout() {
     }
   };
 
-  // STRIPE PAYMENT
+  // ONLINE PAYMENT
   const handleOnlinePayment = async () => {
     if (!selectedAddress) {
       toast.error("Please select address");
       return;
     }
 
-    localStorage.setItem("selectedAddress", selectedAddress);
+    const selectedAddrObj = addresses.find(
+      (addr) => addr._id === selectedAddress
+    );
+
+    const fullAddress = `${selectedAddrObj.street}, ${selectedAddrObj.city}, ${selectedAddrObj.pincode}`;
+
+    // 🔥 IMPORTANT FIX
+    localStorage.setItem("selectedAddress", fullAddress);
 
     const items = [];
 

@@ -35,6 +35,7 @@ export default function PaymentSuccess() {
       );
 
       setCart({ restaurantId: null, items: {} });
+
       localStorage.removeItem("cart");
       localStorage.removeItem("selectedAddress");
 
