@@ -16,6 +16,7 @@ export default function Checkout() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
+  // fetch addresses and food details
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,21 +39,25 @@ export default function Checkout() {
     fetchData();
   }, []);
 
-  // COD ORDER
+  // convert selected address id to full address string
+  const getFullAddress = () => {
+    const selectedAddrObj = addresses.find(
+      (addr) => addr._id === selectedAddress
+    );
+
+    return `${selectedAddrObj.street}, ${selectedAddrObj.city}, ${selectedAddrObj.pincode}`;
+  };
+
+  // place order for COD
   const placeOrder = async () => {
     if (!selectedAddress) {
       toast.error("Please select address");
       return;
     }
 
-    const selectedAddrObj = addresses.find(
-      (addr) => addr._id === selectedAddress
-    );
-
-    const fullAddress = `${selectedAddrObj.street}, ${selectedAddrObj.city}, ${selectedAddrObj.pincode}`;
+    const fullAddress = getFullAddress();
 
     const items = [];
-
     for (let foodId in cart.items) {
       items.push({
         food: foodId,
@@ -74,8 +79,6 @@ export default function Checkout() {
         }
       );
 
-      toast.success("Order Placed Successfully");
-
       setCart({ restaurantId: null, items: {} });
       localStorage.removeItem("cart");
 
@@ -86,24 +89,19 @@ export default function Checkout() {
     }
   };
 
-  // ONLINE PAYMENT
+  // handle stripe payment
   const handleOnlinePayment = async () => {
     if (!selectedAddress) {
       toast.error("Please select address");
       return;
     }
 
-    const selectedAddrObj = addresses.find(
-      (addr) => addr._id === selectedAddress
-    );
+    const fullAddress = getFullAddress();
 
-    const fullAddress = `${selectedAddrObj.street}, ${selectedAddrObj.city}, ${selectedAddrObj.pincode}`;
-
-    // 🔥 IMPORTANT FIX
+    // store full address before redirect
     localStorage.setItem("selectedAddress", fullAddress);
 
     const items = [];
-
     for (let foodId in cart.items) {
       const food = foods.find((f) => f._id === foodId);
 

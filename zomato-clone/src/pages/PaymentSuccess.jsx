@@ -13,7 +13,6 @@ export default function PaymentSuccess() {
       const selectedAddress = localStorage.getItem("selectedAddress");
 
       const items = [];
-
       for (let foodId in cart.items) {
         items.push({
           food: foodId,
@@ -45,5 +44,5 @@ export default function PaymentSuccess() {
     placeOrder();
   }, []);
 
-  return <h1>Payment Successful 🎉</h1>;
+  return <h1>Payment Successful</h1>;
 }
