@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const router = require("./router/userRouter");
 const adminRouter = require("./router/adminRouter");
+const paymentRouter = require("./router/paymentRouter");
 
 //food router to send list of foods to server
 const foodRouter = require("./router/foodRouter");
@@ -43,6 +44,11 @@ app.use("/api", foodRouter); //example : http://localhost:8000/api/foods/by-ids
 
 
 app.use("/api", orderRouter) //example : http://localhost:8000/api/order
+
+//payment router
+
+app.use("/api", paymentRouter); //example : http://localhost:8000/api/payment/create-checkout-session
+
 
 
 const PORT = process.env.PORT || 8000;

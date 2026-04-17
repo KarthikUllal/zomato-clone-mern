@@ -11,29 +11,35 @@ export default function Checkout() {
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("COD");
+  const [foods, setFoods] = useState([]);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  //fetch address from user profile
+  // Fetch address + foods
   useEffect(() => {
-    const fetchAddress = async () => {
+    const fetchData = async () => {
       try {
-        const res = await api.get("/api/user/address", {
+        const addr = await api.get("/api/user/address", {
           headers: { Authorization: token },
         });
+        setAddresses(addr.data.addresses);
 
-        setAddresses(res.data.addresses);
+        const ids = Object.keys(cart.items || {});
+        if (ids.length > 0) {
+          const res = await api.post("/api/foods/by-ids", { ids });
+          setFoods(res.data.foods);
+        }
       } catch (err) {
         console.log(err);
-        toast.error("Failed to load addresses");
+        toast.error("Failed to load data");
       }
     };
 
-    fetchAddress();
+    fetchData();
   }, []);
 
-  //place order 
+  // COD ORDER
   const placeOrder = async () => {
     if (!selectedAddress) {
       toast.error("Please select address");
@@ -60,7 +66,7 @@ export default function Checkout() {
           restaurantId: cart.restaurantId,
           items,
           address: `${selectedAddrObj.street}, ${selectedAddrObj.city}, ${selectedAddrObj.pincode}`,
-          paymentMethod,
+          paymentMethod: "COD",
         },
         {
           headers: { Authorization: token },
@@ -69,21 +75,46 @@ export default function Checkout() {
 
       toast.success("Order Placed Successfully");
 
-      // clear cart
-      setCart({
-        restaurantId: null,
-        items: {},
-      });
-
+      setCart({ restaurantId: null, items: {} });
       localStorage.removeItem("cart");
 
-      // redirect to order page
-      const orderId = res.data.order._id;
-      navigate(`/order/${orderId}`);
-
+      navigate(`/order/${res.data.order._id}`);
     } catch (err) {
       console.log(err);
       toast.error("Order failed");
+    }
+  };
+
+  // STRIPE PAYMENT
+  const handleOnlinePayment = async () => {
+    if (!selectedAddress) {
+      toast.error("Please select address");
+      return;
+    }
+
+    localStorage.setItem("selectedAddress", selectedAddress);
+
+    const items = [];
+
+    for (let foodId in cart.items) {
+      const food = foods.find((f) => f._id === foodId);
+
+      items.push({
+        food: food,
+        quantity: cart.items[foodId],
+      });
+    }
+
+    try {
+      const res = await api.post(
+        "/api/payment/create-checkout-session",
+        { items }
+      );
+
+      window.location.href = res.data.url;
+    } catch (err) {
+      console.log(err);
+      toast.error("Payment failed");
     }
   };
 
@@ -124,16 +155,25 @@ export default function Checkout() {
           <label>
             <input
               type="radio"
-              value="UPI"
-              checked={paymentMethod === "UPI"}
+              value="ONLINE"
+              checked={paymentMethod === "ONLINE"}
               onChange={(e) => setPaymentMethod(e.target.value)}
             />
-            UPI Payment
+            Online Payment
           </label>
         </div>
 
-        <button className="place-order-btn" onClick={placeOrder}>
-          Place Order
+        <button
+          className="place-order-btn"
+          onClick={() => {
+            if (paymentMethod === "COD") {
+              placeOrder();
+            } else {
+              handleOnlinePayment();
+            }
+          }}
+        >
+          {paymentMethod === "COD" ? "Place Order" : "Pay & Order"}
         </button>
       </div>
     </div>

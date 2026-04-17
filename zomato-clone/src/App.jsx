@@ -30,6 +30,8 @@ import OrderDetails from "./pages/OrderDetails";
 import MyOrders from "./pages/MyOrders";
 import SearchResults from "./pages/SearchResults";
 import UserProfile from "./pages/UserProfile";
+import Payment from "./pages/Payment";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 function App() {
   const location = useLocation();
@@ -64,6 +66,13 @@ function App() {
         <Route path="/user-profile" element={<UserProfile />} />
         {/**My Orders Route */}
         <Route path="/my-orders" element={<MyOrders />} />
+
+        {/**Payment Route */}
+          <Route path="/payment" element={<Payment />} />
+
+        {/**Payment Success Route */}
+        <Route path="/payment/success" element={<PaymentSuccess />} />
+
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<AdminLayout />}>
@@ -71,6 +80,7 @@ function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="add" element={<AdminAdd />} />
 
+        
           {/**Edit Routes */}
           <Route path="restaurant/:id" element={<AdminAdd />} />
           <Route path="food/:id" element={<AdminAdd />} />
