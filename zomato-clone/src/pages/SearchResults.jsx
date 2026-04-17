@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import api from "../api";
 import { toast } from "react-toastify";
 
@@ -8,29 +8,24 @@ import "../components/RestaurentCards/RestaurentCards.css";
 
 export default function SearchResults() {
   const [restaurants, setRestaurants] = useState([]);
-  const location = useLocation();
+  const [searchParams] = useSearchParams();
+
+  const query = searchParams.get("query");
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const query = params.get("query");
-
     const fetchSearchResults = async () => {
       try {
-        const res = await api.get(
-          `/api/user/search?query=${query}`,
-        );
-
+        const res = await api.get(`/api/user/search?query=${query}`);
         setRestaurants(res.data.restaurants || []);
       } catch (err) {
-        toast.error("Error fetching search results");
-        console.log(err);
+        toast.error("Error fetching search results", err);
       }
     };
 
     if (query) {
       fetchSearchResults();
     }
-  }, [location.search]);
+  }, [query]);
 
   return (
     <div style={{ padding: "20px" }}>

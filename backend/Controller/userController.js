@@ -214,38 +214,43 @@ const verifyToken = async (req, res) => {
 //Search Restaurant Api
 const searchRestaurantsAndFoods = async (req, res) => {
   try {
-    const { query } = req.query || " "
-    const restaurant = await restaurantModel.find({
-      name: { $regex: query, $options: "i" }
-    })
+    const { query = "" } = req.query;
+
+    const restaurants = await restaurantModel.find({
+      $or: [
+        { name: { $regex: query, $options: "i" } },
+        { cuisine: { $regex: query, $options: "i" } }
+      ]
+    });
 
     const foods = await foodModel.find({
-      name: { $regex: query, $options: "i" }
-    }).populate("restaurant")
+      $or: [
+        { name: { $regex: query, $options: "i" } },
+        { foodCategory: { $regex: query, $options: "i" } }
+      ]
+    }).populate("restaurant");
 
-    //extract restaurant from foods
-    const foodRestaurants = foods.map(food => food.restaurant)
+    const foodRestaurants = foods.map(food => food.restaurant);
 
-    const allRestaurants = [...restaurant, ...foodRestaurants];
+    const allRestaurants = [...restaurants, ...foodRestaurants];
 
-    //remove duplicates properly
     const uniqueRestaurants = Array.from(
       new Map(allRestaurants.map(r => [r._id.toString(), r])).values()
     );
 
     res.json({
       status: "SUCCESS",
-      message: "Restaurant Found",
       restaurants: uniqueRestaurants,
-    })
-  }
-  catch (err) {
+    });
+
+  } catch (err) {
     res.json({
       status: "FAILED",
       message: err.message
-    })
+    });
   }
-}
+};
+
 
 //get restaurant by brandname like KFC etc
 
