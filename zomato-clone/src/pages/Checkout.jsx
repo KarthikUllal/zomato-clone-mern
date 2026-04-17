@@ -16,7 +16,6 @@ export default function Checkout() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  // fetch addresses and food details
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,24 +30,23 @@ export default function Checkout() {
           setFoods(res.data.foods);
         }
       } catch (err) {
-        console.log(err);
-        toast.error("Failed to load data");
+        toast.error("Failed to load data", err.message);
       }
     };
 
     fetchData();
   }, []);
 
-  // convert selected address id to full address string
   const getFullAddress = () => {
     const selectedAddrObj = addresses.find(
-      (addr) => addr._id === selectedAddress
+      (addr) => addr._id.toString() === selectedAddress
     );
+
+    if (!selectedAddrObj) return "";
 
     return `${selectedAddrObj.street}, ${selectedAddrObj.city}, ${selectedAddrObj.pincode}`;
   };
 
-  // place order for COD
   const placeOrder = async () => {
     if (!selectedAddress) {
       toast.error("Please select address");
@@ -57,7 +55,13 @@ export default function Checkout() {
 
     const fullAddress = getFullAddress();
 
+    if (!fullAddress) {
+      toast.error("Invalid address");
+      return;
+    }
+
     const items = [];
+
     for (let foodId in cart.items) {
       items.push({
         food: foodId,
@@ -83,13 +87,11 @@ export default function Checkout() {
       localStorage.removeItem("cart");
 
       navigate(`/order/${res.data.order._id}`);
-    } catch (err) {
-      console.log(err);
+    } catch {
       toast.error("Order failed");
     }
   };
 
-  // handle stripe payment
   const handleOnlinePayment = async () => {
     if (!selectedAddress) {
       toast.error("Please select address");
@@ -98,10 +100,15 @@ export default function Checkout() {
 
     const fullAddress = getFullAddress();
 
-    // store full address before redirect
+    if (!fullAddress) {
+      toast.error("Invalid address");
+      return;
+    }
+
     localStorage.setItem("selectedAddress", fullAddress);
 
     const items = [];
+
     for (let foodId in cart.items) {
       const food = foods.find((f) => f._id === foodId);
 
@@ -118,69 +125,101 @@ export default function Checkout() {
       );
 
       window.location.href = res.data.url;
-    } catch (err) {
-      console.log(err);
+    } catch {
       toast.error("Payment failed");
     }
   };
 
+  const totalItems = Object.values(cart.items || {}).reduce(
+    (a, b) => a + b,
+    0
+  );
+
+  const totalPrice = foods.reduce((total, food) => {
+    return total + food.price * (cart.items?.[food._id] || 0);
+  }, 0);
+
   return (
-    <div className="checkout-container">
-      <h2>Checkout</h2>
+    <div className="checkout-page">
+      <div className="checkout-wrapper">
 
-      <div className="checkout-box">
-        <h3>Select Address</h3>
+        <div className="checkout-left">
+          <h2>Checkout</h2>
 
-        <select
-          value={selectedAddress}
-          onChange={(e) => setSelectedAddress(e.target.value)}
-          className="address-select"
-        >
-          <option value="">Select Address</option>
+          <div className="section">
+            <h3>Delivery Address</h3>
 
-          {addresses.map((addr) => (
-            <option key={addr._id} value={addr._id}>
-              {addr.street}, {addr.city}, {addr.pincode}
-            </option>
-          ))}
-        </select>
+            <select
+              value={selectedAddress}
+              onChange={(e) => setSelectedAddress(e.target.value)}
+              className="address-select"
+            >
+              <option value="">Select Address</option>
 
-        <h3>Select Payment Method</h3>
+              {addresses.map((addr) => (
+                <option key={addr._id} value={addr._id.toString()}>
+                  {addr.street}, {addr.city}, {addr.pincode}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="payment-options">
-          <label>
-            <input
-              type="radio"
-              value="COD"
-              checked={paymentMethod === "COD"}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            />
-            Cash On Delivery
-          </label>
+          <div className="section">
+            <h3>Payment Method</h3>
 
-          <label>
-            <input
-              type="radio"
-              value="ONLINE"
-              checked={paymentMethod === "ONLINE"}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            />
-            Online Payment
-          </label>
+            <div className="payment-options">
+              <label className="radio-card">
+                <input
+                  type="radio"
+                  value="COD"
+                  checked={paymentMethod === "COD"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                />
+                Cash On Delivery
+              </label>
+
+              <label className="radio-card">
+                <input
+                  type="radio"
+                  value="ONLINE"
+                  checked={paymentMethod === "ONLINE"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                />
+                Online Payment
+              </label>
+            </div>
+          </div>
         </div>
 
-        <button
-          className="place-order-btn"
-          onClick={() => {
-            if (paymentMethod === "COD") {
-              placeOrder();
-            } else {
-              handleOnlinePayment();
-            }
-          }}
-        >
-          {paymentMethod === "COD" ? "Place Order" : "Pay & Order"}
-        </button>
+        <div className="checkout-right">
+          <h3>Order Summary</h3>
+
+          <div className="summary-box">
+            <div className="summary-row">
+              <span>Total Items</span>
+              <span>{totalItems}</span>
+            </div>
+
+            <div className="summary-row">
+              <span>Total Price</span>
+              <span>₹{totalPrice}</span>
+            </div>
+
+            <button
+              className="checkout-btn"
+              onClick={() => {
+                if (paymentMethod === "COD") {
+                  placeOrder();
+                } else {
+                  handleOnlinePayment();
+                }
+              }}
+            >
+              {paymentMethod === "COD" ? "Place Order" : "Pay & Order"}
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
   );
