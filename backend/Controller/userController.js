@@ -508,7 +508,7 @@ const addRestaurantReview = async (req, res) => {
     await review.save();
 
     //update restaurant rating
-    const restaurant  = await restaurantModel.findById(restaurantId);
+    const restaurant = await restaurantModel.findById(restaurantId);
     const totalRating = restaurant.averageRating * restaurant.reviewCount + rating;
     restaurant.reviewCount += 1;
     restaurant.averageRating = totalRating / restaurant.reviewCount;
@@ -521,7 +521,7 @@ const addRestaurantReview = async (req, res) => {
       review
     })
 
-    
+
 
   }
   catch (err) {
@@ -535,7 +535,7 @@ const addRestaurantReview = async (req, res) => {
 //get reviews for a restaurant
 const getRestaurantReviews = async (req, res) => {
   const restaurantId = req.params.restaurantId;
-  try{
+  try {
     const reviews = await reviewModel.find({ restaurant: restaurantId }).sort({ createdAt: -1 })
     res.json({
       status: "SUCCESS",
@@ -543,13 +543,16 @@ const getRestaurantReviews = async (req, res) => {
       reviews
     })
   }
-  catch(err){
+  catch (err) {
     res.json({
       status: "FAILED",
       message: err.message
     })
   }
 }
+
+
+
 
 
 module.exports = {

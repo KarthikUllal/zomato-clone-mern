@@ -7,4 +7,5 @@ const restaurantRouter = express.Router()
 
 restaurantRouter.get("/restaurants/food-category/:category",getRestaurantByFoodCategory)
 
+
 module.exports = restaurantRouter

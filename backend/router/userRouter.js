@@ -1,7 +1,7 @@
 //userRouter.js
 const express = require("express");
 const router = express.Router();
-const { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName, getUserProfile, addAddress, getAddress, editAddress, addRestaurantReview, getRestaurantReviews } = require("../Controller/userController");
+const { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName, getUserProfile, addAddress, getAddress, editAddress, addRestaurantReview, getRestaurantReviews,  } = require("../Controller/userController");
 
 
 // router.post("/signin", registerUser);
@@ -33,4 +33,6 @@ router.post("/review", addRestaurantReview)
 
 //get reviews for a restaurant route
 router.get("/review/:restaurantId", getRestaurantReviews)
+
+
 module.exports = router;
