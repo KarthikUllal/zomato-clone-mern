@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api.js";
 import { toast } from "react-toastify";
 import "./UserAddress.css";
+
 export default function UserAddress() {
   const [address, setAddress] = useState([]);
   const [form, setForm] = useState({
@@ -11,6 +12,7 @@ export default function UserAddress() {
   });
 
   const token = localStorage.getItem("token");
+
   useEffect(() => {
     fetchAddress();
   }, []);
@@ -79,66 +81,65 @@ export default function UserAddress() {
   };
 
   return (
-    <>
-      <div className="user-address-section">
-        <h2>User Address</h2>
-        <form action="">
-          <input
-            type="text"
-            placeholder="Enter street"
-            value={form.street}
-            onChange={(e) => setForm({ ...form, street: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Enter city"
-            value={form.city}
-            onChange={(e) => setForm({ ...form, city: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Enter pincode"
-            value={form.pincode}
-            onChange={(e) => setForm({ ...form, pincode: e.target.value })}
-          />
-          <div className="btns">
+    <div className="user-address-section">
+      <h2>User Address</h2>
+      <form>
+        <input
+          type="text"
+          placeholder="Enter street"
+          value={form.street}
+          onChange={(e) => setForm({ ...form, street: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="Enter city"
+          value={form.city}
+          onChange={(e) => setForm({ ...form, city: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="Enter pincode"
+          value={form.pincode}
+          onChange={(e) => setForm({ ...form, pincode: e.target.value })}
+        />
+        <div className="btns">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              form._id ? handleEditAddress() : handleAddAddress();
+            }}
+          >
+            {form._id ? "Edit Address" : "Add Address"}
+          </button>
+        </div>
+      </form>
+
+      <div className="divider"></div>
+      <h1>My Addresses</h1>
+      {address.map((addr) => (
+        <div key={addr._id}>
+          <div className="address-card">
+            <p>Street : {addr.street}</p>
+            <p>City : {addr.city}</p>
+            <p>Pincode : {addr.pincode}</p>
+          </div>
+          <div>
             <button
+              className="edit-btn"
               onClick={() =>
-                form._id ? handleEditAddress() : handleAddAddress()
+                setForm({
+                  _id: addr._id,
+                  street: addr.street,
+                  city: addr.city,
+                  pincode: addr.pincode,
+                })
               }
             >
-              {form._id ? "Edit Address" : "Add Address"}
+              Edit
             </button>
           </div>
-        </form>
-
-        <div className="divider"></div>
-        <h1>My Addresses</h1>
-        {address.map((addr) => (
-          <>
-            <div className="address-card" key={addr._id}>
-
-              <p>Street : {addr.street}</p>
-              <p>City : {addr.city}</p>
-              <p>Pincode : {addr.pincode}</p>
-            </div>
-            <div>
-              <button className="edit-btn"
-                onClick={() =>
-                  setForm({
-                    _id: addr._id,
-                    street: addr.street,
-                    city: addr.city,
-                    pincode: addr.pincode,
-                  })
-                }
-              >
-                Edit
-              </button>
-            </div>
-          </>
-        ))}
-      </div>
-    </>
+        </div>
+      ))}
+    </div>
   );
 }

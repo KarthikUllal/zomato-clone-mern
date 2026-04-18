@@ -9,6 +9,7 @@ export default function UserProfile() {
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState("user-profile");
   const token = localStorage.getItem("token");
+  
   useEffect(() => {
     const getUserProfile = async () => {
       if (!token) {
@@ -35,23 +36,27 @@ export default function UserProfile() {
     <div className="user-profile-section">
       <div className="user-profile-sidebar">
         <div className="sidebar-header">
-          <div className="profile-letter" style={{ display: "flex" }}>
+          <div className="profile-letter">
             {user.fullname?.charAt(0).toUpperCase()}
           </div>
           <div className="profile-name">{user.fullname}</div>
         </div>
 
         <div className="divider"></div>
-        <div className="my-info" onClick={() => setActiveTab("user-profile")}>
+        <div className={`my-info ${activeTab === "user-profile" ? "active" : ""}`} 
+             onClick={() => setActiveTab("user-profile")}>
           My profile
         </div>
-        <div className="my-order" onClick={() => setActiveTab("my-orders")}>
+        <div className={`my-order ${activeTab === "my-orders" ? "active" : ""}`} 
+             onClick={() => setActiveTab("my-orders")}>
           My Orders
         </div>
-        <div className="my-address" onClick={() => setActiveTab("my-address")}>
+        <div className={`my-address ${activeTab === "my-address" ? "active" : ""}`} 
+             onClick={() => setActiveTab("my-address")}>
           My Address
         </div>
       </div>
+      
       <div className="user-profile-content">
         {activeTab === "user-profile" && (
           <div className="my-profile">

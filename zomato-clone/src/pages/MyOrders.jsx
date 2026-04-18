@@ -1,10 +1,15 @@
+// MyOrders.jsx
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MyOrders.css";
 import api from "../api";
 import { getImageUrl } from "../utils/imageHelper";
+import Loader from "../utils/Loder";
+
 function MyOrders() {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,6 +18,7 @@ function MyOrders() {
       if (!token) return;
 
       try {
+        setLoading(true);
         const res = await api.get("/api/orders/myorders", {
           headers: { Authorization: token },
         });
@@ -20,6 +26,8 @@ function MyOrders() {
         setOrders(res.data.orders);
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -30,7 +38,11 @@ function MyOrders() {
     <div className="my-orders">
       <h1>My Orders</h1>
 
-      {orders.length === 0 ? (
+      {loading ? (
+        <div className="loader-container">
+          <Loader loading={loading} />
+        </div>
+      ) : orders.length === 0 ? (
         <p className="empty">No orders placed yet.</p>
       ) : (
         <div className="orders-list">
