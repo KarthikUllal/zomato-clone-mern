@@ -1,7 +1,7 @@
 const PDFDocument = require("pdfkit");
 const cloudinary = require("../utils/cloudinary");
 
-const generatInvoice = (order, user, restaurantName) => {
+const generateInvoice = (order, user, restaurantName) => {
     return new Promise((resolve, reject) => {
 
         const doc = new PDFDocument();
@@ -63,4 +63,4 @@ const generatInvoice = (order, user, restaurantName) => {
     })
 }
 
-module.exports = generatInvoice;
+module.exports = generateInvoice;
