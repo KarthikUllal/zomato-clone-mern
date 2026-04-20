@@ -27,7 +27,13 @@ const orderSchema = new mongoose.Schema({
             }
         }
     ],
-    totalAmount: Number,
+    subtotal: Number,
+    gst : Number,
+    deliveryCharge: Number,
+    totalAmount: {
+        type : Number,
+        default: 0
+    },
     address: {
         type: String,
         required: true

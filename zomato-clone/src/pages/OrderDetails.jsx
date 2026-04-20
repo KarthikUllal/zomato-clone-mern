@@ -160,9 +160,31 @@ export default function OrderDetails() {
             ))}
           </div>
 
-          {/* TOTAL */}
-          <div className="total-box">
-            Total Amount: ₹{order.totalAmount}
+          {/*BILL BREAKDOWN */}
+          <div className="bill-box">
+
+            <div className="bill-row">
+              <span>Subtotal</span>
+              <span>₹{order.subtotal || order.totalAmount}</span>
+            </div>
+
+            <div className="bill-row">
+              <span>GST (5%)</span>
+              <span>₹{order.gst || 0}</span>
+            </div>
+
+            <div className="bill-row">
+              <span>Delivery Charge</span>
+              <span>₹{order.deliveryCharge || 0}</span>
+            </div>
+
+            <hr />
+
+            <div className="bill-row total">
+              <strong>Total Amount</strong>
+              <strong>₹{order.totalAmount}</strong>
+            </div>
+
           </div>
 
         </div>

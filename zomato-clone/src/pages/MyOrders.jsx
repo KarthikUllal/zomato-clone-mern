@@ -76,7 +76,11 @@ function MyOrders() {
               </div>
 
               <div className="order-footer">
-                <span>Price : ₹{order.totalAmount}</span>
+                <span>Subtotal: ₹{order.subtotal || order.totalAmount}</span>
+                <span>GST: ₹{order.gst || 0}</span>
+                <span>Delivery: ₹{order.deliveryCharge || 0}</span>
+
+                <strong>Total: ₹{order.totalAmount}</strong>
               </div>
             </div>
           ))}

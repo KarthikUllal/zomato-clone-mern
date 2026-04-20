@@ -30,7 +30,7 @@ export default function Checkout() {
           setFoods(res.data.foods);
         }
       } catch (err) {
-        toast.error("Failed to load data", err.message);
+        toast.error(err.message);
       }
     };
 
@@ -76,7 +76,7 @@ export default function Checkout() {
           restaurantId: cart.restaurantId,
           items,
           address: fullAddress,
-          paymentMethod: "COD",
+          paymentMethod,
         },
         {
           headers: { Authorization: token },
@@ -138,6 +138,12 @@ export default function Checkout() {
   const totalPrice = foods.reduce((total, food) => {
     return total + food.price * (cart.items?.[food._id] || 0);
   }, 0);
+
+ 
+  const subtotal = totalPrice;
+  const gst = subtotal * 0.05;
+  const deliveryCharge = subtotal > 0 ? 40 : 0;
+  const finalTotal = subtotal + gst + deliveryCharge;
 
   return (
     <div className="checkout-page">
@@ -201,8 +207,25 @@ export default function Checkout() {
             </div>
 
             <div className="summary-row">
-              <span>Total Price</span>
-              <span>₹{totalPrice}</span>
+              <span>Subtotal</span>
+              <span>₹{subtotal}</span>
+            </div>
+
+            <div className="summary-row">
+              <span>GST (5%)</span>
+              <span>₹{gst.toFixed(2)}</span>
+            </div>
+
+            <div className="summary-row">
+              <span>Delivery Charge</span>
+              <span>₹{deliveryCharge}</span>
+            </div>
+
+            <hr />
+
+            <div className="summary-row total">
+              <strong>Total</strong>
+              <strong>₹{finalTotal.toFixed(2)}</strong>
             </div>
 
             <button
