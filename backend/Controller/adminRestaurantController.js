@@ -257,33 +257,33 @@ exports.updateRestaurant = async (req, res) => {
 
 exports.getRestaurantByFoodCategory = async (req, res) => {
     try {
-        const category = req.params.category.toLowerCase().trim()
+        const category = req.params.category.toLowerCase().trim();
 
-        const restaurantIds = await foodModel.distinct("restaurant", {
-            foodCategory: category
+        // 1. Find foods (case-insensitive)
+        const foods = await foodModel.find({
+            foodCategory: { $regex: category, $options: "i" }
         });
 
-        // const foods = await foodModel.find({ foodCategory: category }).populate("restaurant")
-        // const restaurants = foods.map(food => food.restaurant)
+        const restaurantIds = foods.map(f => f.restaurant);
 
+        // 2. Find restaurants
         const restaurants = await restaurantModel.find({
             _id: { $in: restaurantIds }
         });
 
-
         res.json({
             status: "SUCCESS",
-            restaurants: restaurants
-        })
+            restaurants
+        });
     }
     catch (err) {
         res.json({
             status: "FAILED",
             message: "Error fetching restaurants by food category",
             error: err.message
-        })
+        });
     }
-}
+};
 
 
 //admin restuarant search functionality

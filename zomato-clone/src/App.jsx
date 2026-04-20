@@ -32,6 +32,8 @@ import SearchResults from "./pages/SearchResults";
 import UserProfile from "./pages/UserProfile";
 import Payment from "./pages/Payment";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import Collections from "./pages/Collections";
+import CollectionDetails from "./pages/CollectionDetails";
 
 function App() {
   const location = useLocation();
@@ -69,6 +71,12 @@ function App() {
 
         {/**Payment Route */}
           <Route path="/payment" element={<Payment />} />
+
+          {/**Collections Route */}
+          <Route path="/collections" element={<Collections />} />
+
+          {/**Collection Details Route */}
+          <Route path="/collections/:category" element={<CollectionDetails />} />
 
         {/**Payment Success Route */}
         <Route path="/payment/success" element={<PaymentSuccess />} />

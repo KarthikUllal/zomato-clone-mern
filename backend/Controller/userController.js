@@ -556,6 +556,28 @@ const getRestaurantReviews = async (req, res) => {
   }
 }
 
+//this controller is used in carousel to fetch restaurants by cuisine
+const getRestaurantByCuisine = async (req, res) => {
+  try {
+    const category = req.params.category.toLowerCase().trim();
+
+    const restaurants = await restaurantModel.find({
+      cuisine: { $regex: category, $options: "i" }
+    });
+
+    res.json({
+      status: "SUCCESS",
+      restaurants
+    });
+  } catch (err) {
+    res.json({
+      status: "FAILED",
+      message: "Error fetching restaurants by cuisine",
+      error: err.message
+    });
+  }
+};
+
 
 
 
@@ -564,5 +586,5 @@ module.exports = {
   sendOtp,
   verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName,
   getUserProfile, addAddress, getAddress, editAddress, addRestaurantReview,
-  getRestaurantReviews,
+  getRestaurantReviews, getRestaurantByCuisine
 };
