@@ -7,13 +7,14 @@ import { toast } from "react-toastify";
 
 export default function CollectionDetails() {
   const { category } = useParams();
+  const decodedCategory = decodeURIComponent(category);
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const res = await api.get(`/api/restaurants/cuisine/${category}`);
+        const res = await api.get(`/api/restaurants/cuisine/${decodedCategory}`);
 
         setRestaurants(res.data.restaurants);
       } catch (err) {
@@ -25,7 +26,7 @@ export default function CollectionDetails() {
 
     fetchRestaurants();
   }, [category]);
-  console.log("Restaurants:", restaurants);
+
   return (
     <div className="collection-details">
       <h1>{category} places in Mangalore</h1>
