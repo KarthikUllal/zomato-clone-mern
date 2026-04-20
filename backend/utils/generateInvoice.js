@@ -1,17 +1,36 @@
 const PDFDocument = require("pdfkit");
-const fs = require("fs");
-const path = require("path")
-const claudinary = require("../utils/cloudinary")
-
+const cloudinary = require("../utils/cloudinary");
 
 const generatInvoice = (order, user, restaurantName) => {
     return new Promise((resolve, reject) => {
-        const filePath = path.join(__dirname, `../temp/${order._id}.pdf`)
 
         const doc = new PDFDocument();
-        const stream = fs.createWriteStream(filePath);
 
-        doc.pipe(stream);
+        const buffers = [];
+
+        doc.on("data", buffers.push.bind(buffers));
+
+        doc.on("end", async () => {
+            try {
+                const pdfBuffer = Buffer.concat(buffers);
+
+                const stream = cloudinary.uploader.upload_stream(
+                    {
+                        resource_type: "raw",
+                        folder: "invoices"
+                    },
+                    (error, result) => {
+                        if (error) return reject(error);
+                        resolve(result.secure_url);
+                    }
+                );
+
+                stream.end(pdfBuffer);
+
+            } catch (err) {
+                reject(err);
+            }
+        });
 
         doc.fontSize(20).text("Invoice", { align: "center" })
         doc.moveDown()
@@ -41,19 +60,7 @@ const generatInvoice = (order, user, restaurantName) => {
 
         doc.end()
 
-        stream.on("finish", async () => {
-            const result = await claudinary.uploader.upload(filePath, {
-                resource_type: "raw",
-                folder: "invoices"
-            })
-
-            fs.unlinkSync(filePath)
-            resolve(result.secure_url)
-        })
-
-        stream.on("error", reject)
-
     })
 }
 
-module.exports = generatInvoice
+module.exports = generatInvoice;
