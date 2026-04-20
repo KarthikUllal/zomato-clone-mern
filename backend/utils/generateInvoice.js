@@ -42,7 +42,7 @@ const generatInvoice = (order, user, restaurantName) => {
         doc.end()
 
         stream.on("finish", async () => {
-            const result = await cloudinary.uploader.upload(filePath, {
+            const result = await claudinary.uploader.upload(filePath, {
                 resource_type: "raw",
                 folder: "invoices"
             })

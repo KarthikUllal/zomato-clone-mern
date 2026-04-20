@@ -2,6 +2,7 @@ const orderModel = require("../model/orderSchema")
 const foodModel = require("../model/foodSchema")
 const userModel = require("../model/userSchema")
 const sendMail = require("../utils/mailer");
+const generateInvoice = require("../utils/generateInvoice");
 
 const placeOrder = async (req, res) => {
 
