@@ -5,16 +5,17 @@
 }
 
 .order-wrapper {
-  max-width: 800px;
+  max-width: 850px;
   margin: auto;
 }
 
 /* MAIN CARD */
 .order-card {
   background: #fff;
-  padding: 25px;
-  border-radius: 14px;
+  padding: 28px;
+  border-radius: 16px;
   border: 1px solid #eee;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
 }
 
 /* HEADER */
@@ -22,39 +23,55 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .order-header h2 {
   color: #28a745;
-  font-size: 20px;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
 /* STATUS */
 .status {
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 20px;
   font-size: 12px;
   text-transform: capitalize;
+  font-weight: 500;
 }
 
 .status.placed {
   background: #fff3cd;
+  color: #856404;
 }
 
 .status.delivered {
   background: #d4edda;
+  color: #155724;
 }
 
 /* INFO */
+.order-info {
+  background: #fafafa;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  margin-bottom: 20px;
+}
+
 .order-info p {
-  margin: 5px 0;
+  margin: 6px 0;
   color: #444;
+  font-size: 14px;
 }
 
 /* ITEMS */
 .items-title {
-  margin: 20px 0 10px;
+  margin: 25px 0 10px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .items-list {
@@ -69,13 +86,18 @@
   gap: 15px;
   padding: 12px;
   border: 1px solid #eee;
-  border-radius: 10px;
+  border-radius: 12px;
+  transition: 0.2s;
+}
+
+.item-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 .item-card img {
   width: 70px;
   height: 70px;
-  border-radius: 8px;
+  border-radius: 10px;
   object-fit: cover;
 }
 
@@ -85,34 +107,58 @@
 
 .item-details h4 {
   margin: 0;
+  font-size: 15px;
 }
 
 .item-details p {
   margin: 3px 0;
   color: #666;
+  font-size: 13px;
 }
 
 .item-details span {
-  font-size: 13px;
+  font-size: 12px;
   color: #999;
 }
 
 .item-total {
   font-weight: 600;
+  font-size: 14px;
 }
 
-/* TOTAL */
-.total-box {
-  margin-top: 20px;
-  padding: 15px;
-  background: #fff5f6;
-  border-radius: 10px;
-  text-align: right;
-  font-weight: bold;
+/* BILL SECTION */
+.bill-box {
+  margin-top: 25px;
+  padding: 18px;
+  border-radius: 12px;
+  background: #fafafa;
+  border: 1px solid #eee;
+}
+
+.bill-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.bill-row.total {
+  font-size: 16px;
   color: #ef4f5f;
 }
 
+.bill-box hr {
+  margin: 10px 0;
+  border: none;
+  border-top: 1px solid #eee;
+}
+
 /* REVIEW */
+.review-btn-container {
+  margin-top: 15px;
+}
+
 .review-btn {
   background: #ef4f5f;
   color: white;
@@ -120,6 +166,7 @@
   padding: 10px 16px;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .review-btn:hover {
@@ -130,7 +177,8 @@
   margin-top: 20px;
   padding: 15px;
   border: 1px solid #eee;
-  border-radius: 10px;
+  border-radius: 12px;
+  background: #fafafa;
 }
 
 .rating-container,
