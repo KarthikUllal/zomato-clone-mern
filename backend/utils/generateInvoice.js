@@ -20,9 +20,12 @@ const generateInvoice = (order, user, restaurantName) => {
 
         const logoPath = path.join(__dirname, "../assets/logo.jpg");
         
-        // Helper function for currency formatting
+        // Helper function for currency formatting - FIXED
         const formatCurrency = (amount) => {
-            return `₹${amount.toFixed(2)}`;
+            // Ensure amount is a number and properly formatted
+            const numAmount = typeof amount === 'number' ? amount : parseFloat(amount);
+            if (isNaN(numAmount)) return `₹0.00`;
+            return `₹${numAmount.toFixed(2)}`;
         };
 
         
@@ -31,23 +34,22 @@ const generateInvoice = (order, user, restaurantName) => {
         // Top border line
         doc.moveTo(40, yPos).lineTo(560, yPos).lineWidth(2).stroke("#ef4f5f");
         
-        // Logo and Company Info
+        // Logo and Company Info - Removed ZOMATO text
         try {
-            doc.image(logoPath, 50, yPos + 10, { width: 50 });
+            doc.image(logoPath, 50, yPos + 10, { width: 60 });
         } catch(e) {
-            // Fallback if logo doesn't exist
-            doc.fontSize(20).fillColor("#ef4f5f").text("ZOMATO", 50, yPos + 15);
+            // Fallback if logo doesn't exist - using a simple box instead of text
+            doc.rect(50, yPos + 10, 60, 50).fill("#ef4f5f");
+            doc.fillColor("#ffffff")
+               .fontSize(12)
+               .text("LOGO", 65, yPos + 32, { align: "center" });
         }
-        
-        doc.fontSize(24)
-            .fillColor("#ef4f5f")
-            .text("ZOMATO", 110, yPos + 15, { bold: true });
         
         doc.fontSize(9)
             .fillColor("#666666")
-            .text("Zomato Private Limited", 110, yPos + 40)
-            .text("GSTIN: 29ABCDE1234F1Z5", 110, yPos + 53)
-            .text("FSSAI License: 11520034000982", 110, yPos + 66);
+            .text("Zomato Private Limited", 120, yPos + 25)
+            .text("GSTIN: 29ABCDE1234F1Z5", 120, yPos + 40)
+            .text("FSSAI License: 11520034000982", 120, yPos + 55);
         
         // Invoice Title Box
         doc.rect(400, yPos + 10, 180, 70)
@@ -62,7 +64,7 @@ const generateInvoice = (order, user, restaurantName) => {
         
         yPos += 100;
         
-       
+        // Invoice Details Box
         doc.rect(40, yPos, 520, 55)
             .fill("#f9f9f9")
             .stroke("#e0e0e0");
@@ -93,7 +95,6 @@ const generateInvoice = (order, user, restaurantName) => {
         
         yPos += 75;
         
-       
         // Bill To Section
         doc.rect(40, yPos, 250, 90)
             .fill("#ffffff")
@@ -132,7 +133,6 @@ const generateInvoice = (order, user, restaurantName) => {
         
         yPos += 110;
         
-        
         // Table Header
         const tableTop = yPos;
         
@@ -149,7 +149,6 @@ const generateInvoice = (order, user, restaurantName) => {
         yPos = tableTop + 30;
         
         // Table Rows
-        let rowCount = 0;
         order.items.forEach((item, index) => {
             const total = item.quantity * item.price;
             const rowHeight = 25;
@@ -168,7 +167,6 @@ const generateInvoice = (order, user, restaurantName) => {
                 .text(formatCurrency(total), 495, yPos + 6, { align: "center" });
             
             yPos += rowHeight;
-            rowCount++;
         });
         
         // Table Bottom Border
@@ -176,7 +174,7 @@ const generateInvoice = (order, user, restaurantName) => {
         
         yPos += 15;
         
-       
+        // Bill Summary Box
         const summaryTop = yPos;
         
         // Summary Box
@@ -220,19 +218,22 @@ const generateInvoice = (order, user, restaurantName) => {
         
         yPos = summaryTop + 150;
         
+        // Payment Status Badge
+        if (order.paymentStatus === 'completed') {
+            doc.rect(40, yPos - 40, 120, 25)
+                .fill("#4caf50");
+            doc.fillColor("#ffffff")
+                .fontSize(9)
+                .text("PAID", 100, yPos - 33, { align: "center" });
+        } else if (order.paymentStatus === 'pending') {
+            doc.rect(40, yPos - 40, 120, 25)
+                .fill("#ff9800");
+            doc.fillColor("#ffffff")
+                .fontSize(9)
+                .text("PENDING", 100, yPos - 33, { align: "center" });
+        }
         
-        const gstTop = yPos;
-        
-        doc.fontSize(8)
-            .fillColor("#888888")
-            .text("GST Breakdown:", 40, gstTop);
-        
-        doc.text(`CGST (2.5%): ${formatCurrency(order.gst / 2)}`, 40, gstTop + 12);
-        doc.text(`SGST (2.5%): ${formatCurrency(order.gst / 2)}`, 40, gstTop + 24);
-        
-        yPos += 50;
-        
-        
+        // Footer
         // Bottom border line
         doc.moveTo(40, 750).lineTo(560, 750).lineWidth(1).stroke("#e0e0e0");
         
@@ -250,21 +251,6 @@ const generateInvoice = (order, user, restaurantName) => {
             .fillColor("#aaaaaa")
             .text("For any queries, please contact support@zomato.com | +91-80-12345678", 
                 40, 800, { align: "center", width: 520 });
-        
-       
-        if (order.paymentStatus === 'completed') {
-            doc.rect(40, 710, 120, 25)
-                .fill("#4caf50");
-            doc.fillColor("#ffffff")
-                .fontSize(9)
-                .text("PAID", 100, 718, { align: "center" });
-        } else if (order.paymentStatus === 'pending') {
-            doc.rect(40, 710, 120, 25)
-                .fill("#ff9800");
-            doc.fillColor("#ffffff")
-                .fontSize(9)
-                .text("PENDING", 100, 718, { align: "center" });
-        }
         
         doc.end();
     });
