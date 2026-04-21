@@ -114,6 +114,44 @@ const placeOrder = async (req, res) => {
 
 };
 
+//to get specificorder details of a perticular user
+const getOrderById = async (req, res) => {
+
+    try {
+
+        const id = req.params.id;
+
+        const order = await orderModel
+            .findById(id)
+            .populate("restaurant", "name")
+            .populate("items.food", "name price image");
+
+        if (!order) {
+            return res.json({
+                status: "FAILED",
+                message: "Order not found"
+            });
+        }
+
+        res.json({
+            status: "SUCCESS",
+            message: "Order Found",
+            order: order
+        });
+
+    }
+    catch (err) {
+
+        res.json({
+            status: "FAILED",
+            message: "Error fetching order",
+            error: err.message
+        });
+
+    }
+
+};
+
 //to get all orders of a user 
 const getMyOrders = async (req, res) => {
     const userId = req.user.userId;
