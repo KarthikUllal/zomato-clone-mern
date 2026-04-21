@@ -9,14 +9,11 @@ const placeOrder = async (req, res) => {
     const { restaurantId, items, address, paymentMethod } = req.body;
     const userId = req.user.userId;
 
-
     let subtotal = 0;
-    const gst_rate = 0.05
-    const delivery = 40
+    const gst_rate = 0.05;
+    const delivery = 40;
 
     const orderItems = [];
-
-    console.log("Request Body:", req.body);
 
     try {
 
@@ -40,7 +37,7 @@ const placeOrder = async (req, res) => {
 
         const gst = subtotal * gst_rate;
         const deliveryCharge = subtotal > 0 ? delivery : 0;
-        const totalAmount = subtotal + gst + delivery;
+        const totalAmount = subtotal + gst + deliveryCharge;
 
         const order = new orderModel({
             user: userId,
@@ -57,36 +54,47 @@ const placeOrder = async (req, res) => {
         await order.save();
 
         const user = await userModel.findById(userId);
-        const orderRestaurant = await orderModel.findById(order._id).populate("restaurant", "name");
 
-        const invoiceUrl = await generateInvoice(order, user, orderRestaurant.restaurant.name);
+        const orderRestaurant = await orderModel
+            .findById(order._id)
+            .populate("restaurant", "name");
 
-        //sending confirmation email to user
+        const populatedOrder = await orderModel
+            .findById(order._id)
+            .populate("items.food", "name");
+
+        const pdfBuffer = await generateInvoice(
+            populatedOrder,
+            user,
+            orderRestaurant.restaurant.name
+        );
+
         await sendMail({
             to: user.email,
             subject: "Order Confirmation",
             html: `
-            <h2>Order Confirmed 🎉</h2>
-            <p>Hello ${user.fullname}</p>
+                <h2>Order Confirmed 🎉</h2>
+                <p>Hello ${user.fullname}</p>
 
-            <p>Your order has been placed successfully.</p>
+                <p>Your order has been placed successfully.</p>
 
-            <h3>Bill Summary</h3>
-            <p>Subtotal: ₹${order.subtotal}</p>
-            <p>GST: ₹${order.gst}</p>
-            <p>Delivery: ₹${order.deliveryCharge}</p>
-            <h3>Total: ₹${order.totalAmount}</h3>
+                <h3>Bill Summary</h3>
+                <p>Subtotal: ₹${subtotal}</p>
+                <p>GST: ₹${gst}</p>
+                <p>Delivery: ₹${deliveryCharge}</p>
+                <h3>Total: ₹${totalAmount}</h3>
 
-            <br/>
+                <p>Your invoice is attached.</p>
 
-            <a href="${invoiceUrl}" download="${orderRestaurant.restaurant.name}-invoice.pdf"   
-            style="padding:10px 20px;background:#ff4d4f;color:white;text-decoration:none;border-radius:5px;">
-                Download Invoice
-            </a>
-
-            <br/><br/>
-            <p>Thank you for ordering ❤️</p>            
-        `
+                <br/>
+                <p>Thank you for ordering ❤️</p>
+            `,
+            attachments: [
+                {
+                    filename: `invoice_${order._id}.pdf`,
+                    content: pdfBuffer
+                }
+            ]
         });
 
         res.json({
@@ -102,44 +110,6 @@ const placeOrder = async (req, res) => {
             message: "Error placing order",
             error: err.message
         });
-    }
-
-}
-
-//to get specificorder details of a perticular user
-const getOrderById = async (req, res) => {
-
-    try {
-
-        const id = req.params.id;
-
-        const order = await orderModel
-            .findById(id)
-            .populate("restaurant", "name")
-            .populate("items.food", "name price image");
-
-        if (!order) {
-            return res.json({
-                status: "FAILED",
-                message: "Order not found"
-            });
-        }
-
-        res.json({
-            status: "SUCCESS",
-            message: "Order Found",
-            order: order
-        });
-
-    }
-    catch (err) {
-
-        res.json({
-            status: "FAILED",
-            message: "Error fetching order",
-            error: err.message
-        });
-
     }
 
 };

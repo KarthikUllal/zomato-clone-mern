@@ -1,5 +1,5 @@
 const PDFDocument = require("pdfkit");
-const cloudinary = require("../utils/cloudinary");
+const path = require("path");
 
 const generateInvoice = (order, user, restaurantName) => {
     return new Promise((resolve, reject) => {
@@ -10,67 +10,46 @@ const generateInvoice = (order, user, restaurantName) => {
 
         doc.on("data", buffers.push.bind(buffers));
 
-        doc.on("end", async () => {
-            try {
-                const pdfBuffer = Buffer.concat(buffers);
-
-                const stream = cloudinary.uploader.upload_stream(
-                    {
-                        resource_type: "raw",
-                        folder: "invoices",
-                        format: "pdf",
-                    },
-                    (error, result) => {
-                        if (error) return reject(error);
-                        resolve(result.secure_url);
-                    }
-                );
-
-                stream.end(pdfBuffer);
-
-            } catch (err) {
-                reject(err);
-            }
+        doc.on("end", () => {
+            const pdfBuffer = Buffer.concat(buffers);
+            resolve(pdfBuffer);
         });
 
-        // HEADER
-        doc
-            .fillColor("#ef4f5f")
-            .fontSize(22)
-            .text("ZOMATO", { align: "left" });
+        const logoPath = path.join(__dirname, "../assets/logo.jpg");
+        doc.image(logoPath, 40, 30, { width: 80 });
 
-        doc
-            .fillColor("#000")
-            .fontSize(12)
-            .text("Food Delivery Invoice", { align: "right" });
+        doc.fontSize(18).fillColor("#ef4f5f").text("ZOMATO", 130, 40);
 
-        doc.moveDown();
+        doc.fillColor("#000").fontSize(10)
+            .text("Zomato Pvt Ltd", 130, 65)
+            .text("GSTIN: 29ABCDE1234F1Z5", 130, 80);
 
-        // ORDER INFO
+        doc.fontSize(12).text("INVOICE", { align: "right" });
+
+        doc.moveDown(2);
+
         doc.fontSize(10);
+        doc.text(`Invoice ID: INV-${order._id.toString().slice(-6)}`);
         doc.text(`Order ID: ${order._id}`);
         doc.text(`Date: ${new Date(order.createdAt).toLocaleString()}`);
 
         doc.moveDown();
 
-        // CUSTOMER DETAILS
-        doc.fontSize(12).text("Customer Details", { underline: true });
+        doc.fontSize(12).text("Bill To", { underline: true });
         doc.fontSize(10);
-        doc.text(`Name: ${user.fullname}`);
-        doc.text(`Email: ${user.email}`);
-        doc.text(`Address: ${order.address}`);
+        doc.text(user.fullname);
+        doc.text(user.email);
+        doc.text(order.address);
 
         doc.moveDown();
 
-        // RESTAURANT
         doc.fontSize(12).text("Restaurant", { underline: true });
         doc.fontSize(10);
         doc.text(restaurantName);
 
         doc.moveDown();
 
-        // ITEMS TABLE HEADER
-        doc.fontSize(12).text("Order Summary", { underline: true });
+        doc.fontSize(12).text("Order Details", { underline: true });
         doc.moveDown(0.5);
 
         const tableTop = doc.y;
@@ -81,30 +60,24 @@ const generateInvoice = (order, user, restaurantName) => {
         doc.text("Price", 350, tableTop);
         doc.text("Total", 450, tableTop);
 
-        doc.moveDown();
-
-        // ITEMS
-        let position = doc.y;
+        let position = tableTop + 20;
 
         order.items.forEach((item) => {
-            const itemTotal = item.quantity * item.price;
+            const total = item.quantity * item.price;
 
             doc.text(item.food?.name || "Item", 40, position);
             doc.text(item.quantity, 300, position);
             doc.text(`₹${item.price}`, 350, position);
-            doc.text(`₹${itemTotal}`, 450, position);
+            doc.text(`₹${total}`, 450, position);
 
             position += 20;
         });
 
         doc.moveTo(40, position).lineTo(550, position).stroke();
 
-        doc.moveDown();
+        doc.moveDown(2);
 
-        // BILL SUMMARY
-        doc.moveDown();
-        doc.fontSize(12).text("Bill Details", { underline: true });
-
+        doc.fontSize(12).text("Bill Summary", { underline: true });
         doc.moveDown(0.5);
 
         doc.fontSize(10);
@@ -125,20 +98,22 @@ const generateInvoice = (order, user, restaurantName) => {
         doc.moveDown();
 
         doc.fontSize(12).fillColor("#ef4f5f");
-        doc.text("Total:", 350, doc.y);
+        doc.text("Grand Total:", 350, doc.y);
         doc.text(`₹${order.totalAmount}`, 450, doc.y);
 
         doc.fillColor("#000");
 
-        doc.moveDown(2);
+        doc.moveDown(3);
 
-        // FOOTER
-        doc.fontSize(10).text("Thank you for ordering with Zomato ❤️", {
+        doc.fontSize(10).text("This is a computer generated invoice.", {
+            align: "center",
+        });
+
+        doc.text("Thank you for ordering ❤️", {
             align: "center",
         });
 
         doc.end();
-
     });
 };
 
