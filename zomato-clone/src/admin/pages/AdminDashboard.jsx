@@ -1,8 +1,31 @@
 import { useNavigate } from "react-router-dom";
 import "../styles/AdminDashboard.css";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import api from "../../api";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
+
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    totalOrders: 0,
+    totalRestaurants: 0,
+    totalFoods: 0,
+    totalRevenue: 0,
+  });
+
+  useEffect(() => {
+    const getDashboardStats = async () => {
+      try {
+        const res = await api.get("/api/admin/dashboard");
+        setStats(res.data);
+      } catch (err) {
+        toast.error("Error fetching dashboard stats", err);
+      }
+    };
+    getDashboardStats();
+  }, []);
 
   const logout = () => {
     localStorage.removeItem("isAdmin");
@@ -19,26 +42,59 @@ export default function AdminDashboard() {
           Logout
         </button>
       </div>
+      {/* STATS CARDS */}
+      <div className="stats-grid">
+        <div className="stat-card">
+          <h3>{stats.totalRestaurants}</h3>
+          <p>Total Restaurants</p>
+        </div>
+
+        <div className="stat-card">
+          <h3>{stats.totalOrders}</h3>
+          <p>Total Orders</p>
+        </div>
+
+        <div className="stat-card">
+          <h3>{stats.totalUsers}</h3>
+          <p>Total Users</p>
+        </div>
+
+        <div className="stat-card">
+          <h3>₹{stats.totalRevenue}</h3>
+          <p>Total Revenue</p>
+        </div>
+      </div>
 
       <div className="dashboard-content">
-
         <div className="dashboard-grid">
-          <div className="dashboard-card red" onClick={() => navigate("/admin/add")}>
+          <div
+            className="dashboard-card red"
+            onClick={() => navigate("/admin/add")}
+          >
             <h2>Add</h2>
             <p>Restaurant & Food</p>
           </div>
 
-          <div className="dashboard-card orange" onClick={() => navigate("/admin/view")}>
+          <div
+            className="dashboard-card orange"
+            onClick={() => navigate("/admin/view")}
+          >
             <h2>Manage</h2>
             <p>Restaurant & Food</p>
           </div>
 
-          <div className="dashboard-card blue" onClick={() => navigate("/admin/orders")}>
+          <div
+            className="dashboard-card blue"
+            onClick={() => navigate("/admin/orders")}
+          >
             <h2>Orders</h2>
             <p>Track Orders</p>
           </div>
 
-          <div className="dashboard-card green" onClick={() => navigate("/admin/users")}>
+          <div
+            className="dashboard-card green"
+            onClick={() => navigate("/admin/users")}
+          >
             <h2>Users</h2>
             <p>Manage Users</p>
           </div>

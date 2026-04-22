@@ -11,6 +11,7 @@ const { addFood, getFoods, deleteFoods, updateFood, getFoodById, getFoodsByResta
 
 const { getAllUsers, deleteUser, getUserById } = require("../Controller/adminUserController");
 const { updateOrderStatus, getAllOrders } = require("../Controller/adminOrderController");
+const { getAdminStats } = require("../Controller/adminStatsController");
 
 
 //Restaurant routes
@@ -57,7 +58,8 @@ adminRouter.put("/foods/:id", foodUpload.single("image"), updateFood)
 
 
 
-
+//Admin Stats routes
+adminRouter.get("/dashboard", getAdminStats)
 
 
 //Admin User manage routes
