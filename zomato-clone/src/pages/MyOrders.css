@@ -122,3 +122,30 @@
   background: white;
   border-radius: 16px;
 }
+
+.order-footer {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #f0f0f0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+
+.order-footer span {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #555;
+}
+
+
+.order-footer strong {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  color: #ef4f5f;
+  margin-top: 6px;
+}
