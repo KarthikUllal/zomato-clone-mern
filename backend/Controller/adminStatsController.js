@@ -4,7 +4,7 @@ const orderModel = require("../model/orderSchema");
 const restaurantModel = require("../model/restaurantSchema");
 
 const getAdminStats = async (req, res) => {
-    try{
+    try {
 
         const totalUsers = await userModel.countDocuments();
         const totalRestaurants = await restaurantModel.countDocuments();
@@ -21,11 +21,11 @@ const getAdminStats = async (req, res) => {
                 }
             }
         ]);
-        const totalRevenueAmount = revenueData[0].totalRevenue;
+        const totalRevenueAmount = revenueData[0]?.totalRevenue || 0;
 
         res.json({
-            status : "SUCCESS",
-            message : "Admin stats fetched successfully",
+            status: "SUCCESS",
+            message: "Admin stats fetched successfully",
             totalUsers,
             totalRestaurants,
             totalFoods,
@@ -33,10 +33,10 @@ const getAdminStats = async (req, res) => {
             totalRevenueAmount,
         })
     }
-    catch(err){
+    catch (err) {
         res.json({
-            status : "SUCCESS",
-            message : err.message,
+            status: "SUCCESS",
+            message: err.message,
         })
     }
 }

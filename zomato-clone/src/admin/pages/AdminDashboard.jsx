@@ -12,14 +12,20 @@ export default function AdminDashboard() {
     totalOrders: 0,
     totalRestaurants: 0,
     totalFoods: 0,
-    totalRevenue: 0,
+    totalRevenueAmount: 0,
   });
 
   useEffect(() => {
     const getDashboardStats = async () => {
       try {
         const res = await api.get("/api/admin/dashboard");
-        setStats(res.data);
+        setStats({
+          totalUsers: res.data.totalUsers,
+          totalOrders: res.data.totalOrders,
+          totalRestaurants: res.data.totalRestaurants,
+          totalFoods: res.data.totalFoods,
+          totalRevenueAmount: res.data.totalRevenueAmount,
+        });
       } catch (err) {
         toast.error("Error fetching dashboard stats", err);
       }
@@ -60,7 +66,7 @@ export default function AdminDashboard() {
         </div>
 
         <div className="stat-card">
-          <h3>₹{stats.totalRevenue}</h3>
+          <h3>₹{stats.totalRevenueAmount}</h3>
           <p>Total Revenue</p>
         </div>
       </div>
