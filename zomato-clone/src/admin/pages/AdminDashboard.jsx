@@ -3,9 +3,12 @@ import "../styles/AdminDashboard.css";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import api from "../../api";
+import OrderCharts from "./OrderCharts";
+import Loader from "../../utils/Loder";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [stats, setStats] = useState({
     totalUsers: 0,
@@ -15,9 +18,12 @@ export default function AdminDashboard() {
     totalRevenueAmount: 0,
   });
 
+  const [orderList, setOrderList] = useState([]);
+
   useEffect(() => {
     const getDashboardStats = async () => {
       try {
+        setLoading(true);
         const res = await api.get("/api/admin/dashboard");
         setStats({
           totalUsers: res.data.totalUsers,
@@ -28,6 +34,8 @@ export default function AdminDashboard() {
         });
       } catch (err) {
         toast.error("Error fetching dashboard stats", err);
+      } finally {
+        setLoading(false);
       }
     };
     getDashboardStats();
@@ -37,6 +45,21 @@ export default function AdminDashboard() {
     localStorage.removeItem("isAdmin");
     navigate("/admin/login");
   };
+
+  useEffect(() => {
+    const getRecentOrders = async () => {
+      try {
+        setLoading(true);
+        const res = await api.get("/api/admin/orders");
+        setOrderList(res.data.orders);
+      } catch (err) {
+        toast.error("Error fetching recent orders", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getRecentOrders();
+  }, []);
 
   return (
     <div className="dashboard-wrapper">
@@ -103,6 +126,67 @@ export default function AdminDashboard() {
           >
             <h2>Users</h2>
             <p>Manage Users</p>
+          </div>
+        </div>
+      </div>
+      <div className="analysis-grid">
+        <div className="analysis-card">
+          <h2>Order Analysis (Last 7 Days)</h2>
+          <OrderCharts orders={orderList} />
+        </div>
+        <div className="recent-orders">
+          <div className="header-section">
+            <h2>Recent Orders</h2>
+            <h2
+              className="view-all-orders pointer"
+              onClick={() => navigate("/admin/orders")}
+            >
+              View All Orders
+              <i className="fas fa-arrow-right" style={{ marginLeft: 5 }}></i>
+            </h2>
+          </div>
+          <div className="order-list">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Restaurant Name</th>
+                  <th>Customer Name</th>
+                  <th>Order Status</th>
+                  <th>Order Amount</th>
+                  <th>Order Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {loading ? (
+                  <tr>
+                    <td colSpan="6" className="center">
+                      <Loader loading={loading} />
+                    </td>
+                  </tr>
+                ) : (
+                  orderList
+                    .sort(
+                      (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+                    )
+                    .slice(0, 5)
+                    .map((orders) => (
+                      <tr key={orders._id}>
+                        <td>{orders._id}</td>
+                        <td>{orders.restaurant?.name}</td>
+                        <td>{orders.user?.fullname}</td>
+                        <td>{orders.status}</td>
+                        <td>₹{orders.totalAmount}</td>
+                        <td>
+                          {new Date(orders.createdAt).toLocaleDateString(
+                            "en-IN",
+                          )}
+                        </td>
+                      </tr>
+                    ))
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

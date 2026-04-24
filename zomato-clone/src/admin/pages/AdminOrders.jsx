@@ -34,9 +34,7 @@ function AdminOrders() {
       });
 
       setOrders((prev) =>
-        prev.map((o) =>
-          o._id === orderId ? { ...o, status: newStatus } : o
-        )
+        prev.map((o) => (o._id === orderId ? { ...o, status: newStatus } : o)),
       );
     } catch {
       toast.error("Failed to update order status");
@@ -62,7 +60,9 @@ function AdminOrders() {
                 <th>Restaurant</th>
                 <th>Items</th>
                 <th>Total</th>
+                <th>Order Date</th>
                 <th>Status</th>
+                
               </tr>
             </thead>
 
@@ -80,7 +80,7 @@ function AdminOrders() {
                   </td>
                 </tr>
               ) : (
-                orders.map((order) => (
+                orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((order) => (
                   <tr key={order._id}>
                     <td className="order-id">{order._id}</td>
 
@@ -90,15 +90,14 @@ function AdminOrders() {
 
                     <td className="items">
                       {order.items
-                        ?.map(
-                          (item) =>
-                            `${item.food?.name} x${item.quantity}`
-                        )
+                        ?.map((item) => `${item.food?.name} x${item.quantity}`)
                         .join(", ") || "N/A"}
                     </td>
 
                     <td className="amount">₹{order.totalAmount}</td>
-
+                     <td>
+                      {new Date(order.createdAt).toLocaleDateString("en-IN")}
+                    </td>
                     <td className="status-cell">
                       <select
                         value={order.status}
@@ -116,10 +115,12 @@ function AdminOrders() {
                         <option value="cancelled">Cancelled</option>
                       </select>
 
+
                       <span className={`status ${order.status}`}>
                         {order.status}
                       </span>
                     </td>
+                   
                   </tr>
                 ))
               )}

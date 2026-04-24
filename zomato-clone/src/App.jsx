@@ -68,19 +68,14 @@ function App() {
         <Route path="/user-profile" element={<UserProfile />} />
         {/**My Orders Route */}
         <Route path="/my-orders" element={<MyOrders />} />
-
         {/**Payment Route */}
-          <Route path="/payment" element={<Payment />} />
-
-          {/**Collections Route */}
-          <Route path="/collections" element={<Collections />} />
-
-          {/**Collection Details Route */}
-          <Route path="/collections/:category" element={<CollectionDetails />} />
-
+        <Route path="/payment" element={<Payment />} />
+        {/**Collections Route */}
+        <Route path="/collections" element={<Collections />} />
+        {/**Collection Details Route */}
+        <Route path="/collections/:category" element={<CollectionDetails />} />
         {/**Payment Success Route */}
         <Route path="/payment/success" element={<PaymentSuccess />} />
-
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<AdminLayout />}>
@@ -88,7 +83,6 @@ function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="add" element={<AdminAdd />} />
 
-        
           {/**Edit Routes */}
           <Route path="restaurant/:id" element={<AdminAdd />} />
           <Route path="food/:id" element={<AdminAdd />} />
