@@ -66,7 +66,7 @@ export default function RestaurentDetails({ cart, setCart }) {
 
         {activeTab === "menu" && <Menu />}
 
-        {activeTab === "book" && <BookTable />}
+        {activeTab === "book" && <BookTable  restaurantId={id} />}
       </div>
     </div>
   );

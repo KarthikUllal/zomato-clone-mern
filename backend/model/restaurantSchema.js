@@ -49,14 +49,20 @@ const restaurantSchema = mongoose.Schema({
     },
 
     averageRating: {
-      type: Number,
-      default: 0,
+        type: Number,
+        default: 0,
     },
 
     reviewCount: {
         type: Number,
         default: 0
-    }
+    },
+    slots: [
+        {
+            time: String,
+            capacity: Number
+        }
+    ]
 },
     { timestamps: true }
 

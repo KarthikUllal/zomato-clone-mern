@@ -12,6 +12,7 @@ const { addFood, getFoods, deleteFoods, updateFood, getFoodById, getFoodsByResta
 const { getAllUsers, deleteUser, getUserById } = require("../Controller/adminUserController");
 const { updateOrderStatus, getAllOrders } = require("../Controller/adminOrderController");
 const { getAdminStats } = require("../Controller/adminStatsController");
+const { getAllBookings, updateSlots } = require("../Controller/adminBookingController");
 
 
 //Restaurant routes
@@ -72,6 +73,10 @@ adminRouter.delete("/users/:id", deleteUser)
 adminRouter.put("/orders/:orderId", updateOrderStatus) //example : http://localhost:8000/api/admin/orders/123456789
 adminRouter.get("/orders", getAllOrders) //example : http://localhost:8000/api/admin/orders  
 
+
+//Booking Routes
+adminRouter.get("/bookings", getAllBookings);
+adminRouter.put("/restaurants/:restaurantId/slots", updateSlots);
 
 
 

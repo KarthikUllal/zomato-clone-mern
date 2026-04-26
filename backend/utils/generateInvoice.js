@@ -34,7 +34,6 @@ const generateInvoice = (order, user, restaurantName) => {
         // Top border line
         doc.moveTo(40, yPos).lineTo(560, yPos).lineWidth(2).stroke("#ef4f5f");
         
-        // Logo and Company Info - Removed ZOMATO text
         try {
             doc.image(logoPath, 50, yPos + 10, { width: 60 });
         } catch(e) {

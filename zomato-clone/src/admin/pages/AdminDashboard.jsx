@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import api from "../../api";
 import OrderCharts from "./OrderCharts";
 import Loader from "../../utils/Loder";
+import OrderStatusPieCharts from "./OrderStatusPieCharts";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -71,6 +72,7 @@ export default function AdminDashboard() {
           Logout
         </button>
       </div>
+
       {/* STATS CARDS */}
       <div className="stats-grid">
         <div className="stat-card">
@@ -102,6 +104,7 @@ export default function AdminDashboard() {
           >
             <h2>Add</h2>
             <p>Restaurant & Food</p>
+            <i className="fas fa-arrow-right" style={{ marginLeft: 5 }}></i>
           </div>
 
           <div
@@ -110,6 +113,7 @@ export default function AdminDashboard() {
           >
             <h2>Manage</h2>
             <p>Restaurant & Food</p>
+            <i className="fas fa-arrow-right" style={{ marginLeft: 5 }}></i>
           </div>
 
           <div
@@ -118,6 +122,7 @@ export default function AdminDashboard() {
           >
             <h2>Orders</h2>
             <p>Track Orders</p>
+            <i className="fas fa-arrow-right" style={{ marginLeft: 5 }}></i>
           </div>
 
           <div
@@ -126,15 +131,42 @@ export default function AdminDashboard() {
           >
             <h2>Users</h2>
             <p>Manage Users</p>
+            <i className="fas fa-arrow-right" style={{ marginLeft: 5 }}></i>
+          </div>
+
+          <div
+            className="dashboard-card purple"
+            onClick={() => navigate("/admin/bookings")}
+          >
+            <h2>Bookings</h2>
+            <p>Table Reservations</p>
+            <i className="fas fa-arrow-right" style={{ marginLeft: 5 }}></i>
+          </div>
+
+          <div
+            className="dashboard-card teal"
+            onClick={() => navigate("/admin/manage-slots")}
+          >
+            <h2>Slots</h2>
+            <p>Manage Table Slots</p>
+            <i className="fas fa-arrow-right" style={{ marginLeft: 5 }}></i>
           </div>
         </div>
       </div>
+
       <div className="analysis-grid">
         <div className="analysis-card">
           <h2>Order Analysis (Last 7 Days)</h2>
-          <OrderCharts orders={orderList} />
+          <div className="line-chart-container">
+            <OrderCharts orders={orderList} />
+          </div>
         </div>
-        <div className="recent-orders">
+        <div className="analysis-card">
+          <h2>Order Status Analysis</h2>
+          <OrderStatusPieCharts orders={orderList} />
+        </div>
+      </div>
+      <div className="recent-orders">
           <div className="header-section">
             <h2>Recent Orders</h2>
             <h2
@@ -145,6 +177,7 @@ export default function AdminDashboard() {
               <i className="fas fa-arrow-right" style={{ marginLeft: 5 }}></i>
             </h2>
           </div>
+
           <div className="order-list">
             <table>
               <thead>
@@ -157,6 +190,7 @@ export default function AdminDashboard() {
                   <th>Order Date</th>
                 </tr>
               </thead>
+
               <tbody>
                 {loading ? (
                   <tr>
@@ -189,7 +223,6 @@ export default function AdminDashboard() {
             </table>
           </div>
         </div>
-      </div>
     </div>
   );
 }

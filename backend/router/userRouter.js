@@ -2,6 +2,8 @@
 const express = require("express");
 const router = express.Router();
 const { sendOtp, verifyOtp, verifyToken, searchRestaurantsAndFoods, getRestaurantByBrandName, getUserProfile, addAddress, getAddress, editAddress, addRestaurantReview, getRestaurantReviews, getRestaurantByCuisine,  } = require("../Controller/userController");
+const { getMyBookings, bookTable, getSlots, cancelBooking } = require("../Controller/bookingController");
+const { verifyUserToken } = require("../middleware/authMiddleware");
 
 
 // router.post("/signin", registerUser);
@@ -35,6 +37,13 @@ router.post("/review", addRestaurantReview)
 router.get("/review/:restaurantId", getRestaurantReviews)
 
 
+//booking route
+router.get("/bookings", verifyUserToken, getMyBookings);
 
+router.post("/book-table", verifyUserToken, bookTable);
+
+router.get("/slots/:restaurantId", getSlots);
+
+router.put("/booking/cancel/:id", verifyUserToken, cancelBooking);
 
 module.exports = router;

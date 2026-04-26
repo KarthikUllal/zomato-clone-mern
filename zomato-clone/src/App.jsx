@@ -34,6 +34,8 @@ import Payment from "./pages/Payment";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import Collections from "./pages/Collections";
 import CollectionDetails from "./pages/CollectionDetails";
+import ManageSlots from "./admin/pages/ManageSlots";
+import AdminBookings from "./admin/pages/AdminBookings";
 
 function App() {
   const location = useLocation();
@@ -92,6 +94,10 @@ function App() {
           <Route path="food/:id" element={<AdminFoodDetails />} />
           <Route path="orders" element={<AdminOrders />} />
           <Route path="users" element={<AdminManageUser />} />
+
+          {/**Bookings Route */}
+          <Route path="/admin/bookings" element={<AdminBookings />} />
+          <Route path="/admin/manage-slots" element={<ManageSlots />} />
         </Route>
       </Routes>
 

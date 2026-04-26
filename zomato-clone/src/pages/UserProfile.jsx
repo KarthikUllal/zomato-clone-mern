@@ -4,12 +4,13 @@ import "./UserProfile.css";
 import MyOrders from "./MyOrders.jsx";
 import UserAddress from "./UserAddress.jsx";
 import { toast } from "react-toastify";
+import MyBookings from "./MyBookings.jsx";
 
 export default function UserProfile() {
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState("user-profile");
   const token = localStorage.getItem("token");
-  
+
   useEffect(() => {
     const getUserProfile = async () => {
       if (!token) {
@@ -43,20 +44,32 @@ export default function UserProfile() {
         </div>
 
         <div className="divider"></div>
-        <div className={`my-info ${activeTab === "user-profile" ? "active" : ""}`} 
-             onClick={() => setActiveTab("user-profile")}>
+        <div
+          className={`my-info ${activeTab === "user-profile" ? "active" : ""}`}
+          onClick={() => setActiveTab("user-profile")}
+        >
           My profile
         </div>
-        <div className={`my-order ${activeTab === "my-orders" ? "active" : ""}`} 
-             onClick={() => setActiveTab("my-orders")}>
+        <div
+          className={`my-order ${activeTab === "my-orders" ? "active" : ""}`}
+          onClick={() => setActiveTab("my-orders")}
+        >
           My Orders
         </div>
-        <div className={`my-address ${activeTab === "my-address" ? "active" : ""}`} 
-             onClick={() => setActiveTab("my-address")}>
+        <div
+          className={`my-address ${activeTab === "my-address" ? "active" : ""}`}
+          onClick={() => setActiveTab("my-address")}
+        >
           My Address
         </div>
+        <div
+          className={`my-bookings ${activeTab === "my-bookings" ? "active" : ""}`}
+          onClick={() => setActiveTab("my-bookings")}
+        >
+          My Table Bookings
+        </div>
       </div>
-      
+
       <div className="user-profile-content">
         {activeTab === "user-profile" && (
           <div className="my-profile">
@@ -72,6 +85,7 @@ export default function UserProfile() {
         )}
         {activeTab === "my-orders" && <MyOrders />}
         {activeTab === "my-address" && <UserAddress />}
+        {activeTab === "my-bookings" && <MyBookings />}
       </div>
     </div>
   );

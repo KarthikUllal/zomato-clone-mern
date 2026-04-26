@@ -405,3 +405,29 @@
     gap: 4px;
 }
 
+
+
+
+.slot-card.active-slot {
+    border-color: #ef4f5f;
+    background: #fff0f1;
+}
+
+.slot-card.disabled-slot {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.slot-card.disabled-slot:hover {
+    transform: none;
+    border-color: #ddd;
+}
+
+.proceed-btn.active-btn {
+    background: #ef4f5f;
+    cursor: pointer;
+}
+
+.proceed-btn.active-btn:hover {
+    background: #d93f50;
+}
