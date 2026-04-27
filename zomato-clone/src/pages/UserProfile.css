@@ -1,3 +1,4 @@
+/* UserProfile.css */
 .user-profile-section {
   display: flex;
   max-width: 1100px;
@@ -5,7 +6,7 @@
   background: #fff;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .user-profile-sidebar {
@@ -118,7 +119,7 @@
 }
 
 .booking-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .booking-row {
