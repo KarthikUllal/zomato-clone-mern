@@ -148,3 +148,17 @@
   color: #ef4f5f;
   margin-top: 6px;
 }
+
+/* cancel btn*/
+.cancel-btn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  align-self: flex-start;
+  width: fit-content;
+}

@@ -1,38 +1,54 @@
-// MyOrders.jsx
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MyOrders.css";
 import api from "../api";
 import { getImageUrl } from "../utils/imageHelper";
 import Loader from "../utils/Loder";
+import { toast } from "react-toastify";
 
 function MyOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("token");
+
+  const fetchMyOrders = async () => {
+    if (!token) return;
+
+    try {
+      setLoading(true);
+      const res = await api.get("/api/orders/myorders", {
+        headers: { Authorization: token },
+      });
+
+      setOrders(res.data.orders);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchMyOrders = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) return;
-
-      try {
-        setLoading(true);
-        const res = await api.get("/api/orders/myorders", {
-          headers: { Authorization: token },
-        });
-
-        setOrders(res.data.orders);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchMyOrders();
   }, []);
+
+  const cancelOrder = async (id) => {
+    try {
+      await api.put(
+        `/api/orders/cancel/${id}`,
+        {},
+        { headers: { Authorization: token } },
+      );
+
+      toast.success("Order cancelled successfully");
+
+      fetchMyOrders(); // refresh list
+    } catch (err) {
+      toast.error("Cancel failed", err);
+    }
+  };
 
   return (
     <div className="my-orders">
@@ -47,41 +63,53 @@ function MyOrders() {
       ) : (
         <div className="orders-list">
           {orders.map((order) => (
-            <div
-              key={order._id}
-              className="order-card"
-              onClick={() => navigate(`/order/${order._id}`)}
-            >
-              <div className="order-header">
-                <h3>{order.restaurant?.name}</h3>
-                <span className={`status ${order.status}`}>{order.status}</span>
-              </div>
+            <div key={order._id} className="order-card">
+              <div
+                className="clickable-area"
+                onClick={() => navigate(`/order/${order._id}`)}
+              >
+                <div className="order-header">
+                  <h3>{order.restaurant?.name}</h3>
+                  <span className={`status ${order.status}`}>
+                    {order.status}
+                  </span>
+                </div>
 
-              <div className="items-list">
-                {order.items.map((item) => (
-                  <div key={item._id} className="item-row">
-                    {item.food.image && (
-                      <img
-                        src={getImageUrl(item.food.image)}
-                        alt={item.food.name}
-                      />
-                    )}
+                <div className="items-list">
+                  {order.items.map((item) => (
+                    <div key={item._id} className="item-row">
+                      {item.food.image && (
+                        <img
+                          src={getImageUrl(item.food.image)}
+                          alt={item.food.name}
+                        />
+                      )}
 
-                    <div className="item-info">
-                      <p className="item-name">{item.food?.name}</p>
-                      <p className="item-qty">x {item.quantity}</p>
+                      <div className="item-info">
+                        <p className="item-name">{item.food?.name}</p>
+                        <p className="item-qty">x {item.quantity}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+
+                <div className="order-footer">
+                  <span>Subtotal: ₹{order.subtotal || order.totalAmount}</span>
+                  <span>GST: ₹{order.gst || 0}</span>
+                  <span>Delivery: ₹{order.deliveryCharge || 0}</span>
+
+                  <strong>Total: ₹{order.totalAmount}</strong>
+                </div>
               </div>
 
-              <div className="order-footer">
-                <span>Subtotal: ₹{order.subtotal || order.totalAmount}</span>
-                <span>GST: ₹{order.gst || 0}</span>
-                <span>Delivery: ₹{order.deliveryCharge || 0}</span>
-
-                <strong>Total: ₹{order.totalAmount}</strong>
-              </div>
+              {order.status === "placed" && (
+                <button
+                  className="cancel-btn"
+                  onClick={() => cancelOrder(order._id)}
+                >
+                  Cancel Order
+                </button>
+              )}
             </div>
           ))}
         </div>

@@ -173,4 +173,42 @@ const getMyOrders = async (req, res) => {
 }
 
 
-module.exports = { placeOrder, getOrderById, getMyOrders }
+//cancel order
+const cancelOrder = async (req, res) => {
+    const orderId = req.params.id;
+    const userId = req.user.userId;
+
+    try{
+        const order = await orderModel.findById(orderId);
+        if(!order){
+            return res.send({
+                status : "FAILED",
+                message : "Order not found"
+            })
+        }
+        if(order.user !== userId){
+            return res.send({
+                status : "FAILED",
+                message : "You do not have permission to cancel this order"
+            })
+        }
+
+
+        await orderModel.findByIdAndUpdate(orderId, {status : "cancelled"}, {new : true});
+        res.send({
+            status : "SUCCESS",
+            message : "Order cancelled successfully"
+        })
+
+    }
+    catch(err){
+        res.send({
+            status : "FAILED",
+            message : "Error cancelling order",
+            error : err.message
+        })
+    }
+}
+
+
+module.exports = { placeOrder, getOrderById, getMyOrders, cancelOrder }
