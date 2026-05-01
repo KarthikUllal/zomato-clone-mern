@@ -37,7 +37,7 @@ function MyOrders() {
   const cancelOrder = async (id) => {
     try {
       await api.put(
-        `/api/orders/cancel/${id}`,
+        `/api/orders/${id}`,
         {},
         { headers: { Authorization: token } },
       );
