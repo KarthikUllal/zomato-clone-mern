@@ -1,24 +1,46 @@
 /* RestaurentSection.css */
-    .restaurent-section {
-    padding: 60px 0;
-    background: #f8f8f8;
-    margin-bottom: 10px;
+.restaurent-section {
+  padding: 60px 0;
+  background: #f8f8f8;
+  margin-bottom: 10px;
 }
-
 
 .restaurent-section-heading,
 .restaurent-cards {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .restaurent-section-heading h1 {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .restaurent-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .restaurent-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .restaurent-section {
+    padding: 40px 0;
+  }
+  
+  .restaurent-section-heading h1 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 600px) {
+  .restaurent-cards {
+    grid-template-columns: 1fr;
+  }
 }

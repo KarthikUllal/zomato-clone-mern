@@ -45,7 +45,6 @@
   padding-right: 6px;
 }
 
-
 .slot-row {
   display: flex;
   gap: 12px;
@@ -77,7 +76,6 @@
   outline: none;
 }
 
-/* Delete button for each slot */
 .delete-slot-btn {
   background: none;
   border: none;
@@ -128,7 +126,6 @@
   background: #d84352;
 }
 
-/* Empty state */
 .empty-slots {
   text-align: center;
   padding: 40px;
@@ -138,7 +135,18 @@
   border: 1px dashed #ddd;
 }
 
-/* Responsive */
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .manage-slots-container {
+    margin: 40px 20px;
+    padding: 20px;
+  }
+  
+  .manage-slots-title {
+    font-size: 20px;
+  }
+}
+
 @media (max-width: 640px) {
   .manage-slots-container {
     margin: 20px;

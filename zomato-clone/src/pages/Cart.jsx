@@ -79,12 +79,16 @@ export default function Cart() {
   return (
     <div className="cart-page">
       <div className="cart-wrapper">
-        <h2>Your Cart</h2>
+        <div className="cart-header">
+          <h2>Your Cart</h2>
+          {totalItems > 0 && <span className="item-count">{totalItems} items</span>}
+        </div>
 
         {restaurant && (
-          <p className="restaurant-name">
-            Ordering from <b>{restaurant.name}</b>
-          </p>
+          <div className="restaurant-info">
+            <span>Ordering from</span>
+            <strong>{restaurant.name}</strong>
+          </div>
         )}
 
         {totalItems === 0 && <p className="empty">Cart is empty</p>}
@@ -104,19 +108,13 @@ export default function Cart() {
 
                   <div className="cart-info">
                     <h4>{food.name}</h4>
-                    <p>₹{food.price}</p>
+                    <p className="food-price">₹{food.price}</p>
 
                     <div className="cart-bottom">
                       <div className="qty-box">
-                        <button onClick={() => decrease(food._id)}>
-                          -
-                        </button>
-
+                        <button onClick={() => decrease(food._id)}>-</button>
                         <span>{cart.items?.[food._id]}</span>
-
-                        <button onClick={() => increase(food._id)}>
-                          +
-                        </button>
+                        <button onClick={() => increase(food._id)}>+</button>
                       </div>
 
                       <div className="item-total">
@@ -136,7 +134,9 @@ export default function Cart() {
               <span>{totalItems}</span>
             </div>
 
-            <div className="summary-row">
+            <div className="summary-divider"></div>
+
+            <div className="summary-row total-row">
               <span>Total Price</span>
               <span>₹{totalPrice}</span>
             </div>

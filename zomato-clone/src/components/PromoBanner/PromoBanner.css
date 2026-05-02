@@ -17,8 +17,6 @@
   overflow: hidden;
 }
 
-
-/* Dark overlay */
 .promo-section::before {
   content: "";
   position: absolute;
@@ -62,4 +60,62 @@
 
 .promo-btn:hover {
   background-color: #d63c4c;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .promo-section {
+    height: 200px;
+    padding-left: 30px;
+    margin: 40px auto;
+  }
+
+  .promo-content h2 {
+    font-size: 16px;
+  }
+
+  .promo-content h1 {
+    font-size: 32px;
+  }
+
+  .promo-content h1 span {
+    font-size: 20px;
+  }
+
+  .promo-content p {
+    font-size: 12px;
+  }
+
+  .promo-btn {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .promo-section {
+    height: 160px;
+    padding-left: 20px;
+  }
+
+  .promo-content h2 {
+    font-size: 12px;
+  }
+
+  .promo-content h1 {
+    font-size: 22px;
+  }
+
+  .promo-content h1 span {
+    font-size: 14px;
+  }
+
+  .promo-content p {
+    display: none;
+  }
+
+  .promo-btn {
+    padding: 5px 12px;
+    font-size: 10px;
+  }
 }

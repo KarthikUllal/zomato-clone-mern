@@ -11,6 +11,15 @@ function MyOrders() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 3;
+
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+  const totalPages = Math.ceil(orders.length / ordersPerPage);
+
   const token = localStorage.getItem("token");
 
   const fetchMyOrders = async () => {
@@ -44,7 +53,12 @@ function MyOrders() {
 
       toast.success("Order cancelled successfully");
 
-      fetchMyOrders(); // refresh list
+      // fetchMyOrders(); // refresh list
+      setOrders((prev) =>
+        prev.map((order) =>
+          order._id === id ? { ...order, status: "cancelled" } : order,
+        ),
+      );
     } catch (err) {
       toast.error("Cancel failed", err);
     }
@@ -62,7 +76,7 @@ function MyOrders() {
         <p className="empty">No orders placed yet.</p>
       ) : (
         <div className="orders-list">
-          {orders.map((order) => (
+          {currentOrders.map((order) => (
             <div key={order._id} className="order-card">
               <div
                 className="clickable-area"
@@ -114,6 +128,15 @@ function MyOrders() {
           ))}
         </div>
       )}
+    <div className="pagination">
+      <button className="prev-btn" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>
+        Previous
+      </button>
+      <span className="page-info">Page {currentPage} of {totalPages}</span>
+      <button className="next-btn" disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>
+        Next
+      </button>
+      </div>  
     </div>
   );
 }

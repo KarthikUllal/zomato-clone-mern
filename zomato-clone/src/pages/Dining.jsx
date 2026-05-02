@@ -7,47 +7,48 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import api from "../api";
 
-
 export default function Dining() {
-
   //Managing state for restuarant data coming from backend
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
 
   //fetching restaurant data when page loads
-  useEffect(() =>{
-    const fetchDinningRestaurant =async () =>{
-      try{
+  useEffect(() => {
+    const fetchDinningRestaurant = async () => {
+      try {
         setLoading(true);
-        const res = await api.get("/api/admin/restaurants")
-        setRestaurants(res.data.restaurants)
-
-      }
-      catch(err){
-        toast.error("Error fetching restaurant data", err)
+        const res = await api.get("/api/admin/restaurants");
+        setRestaurants(res.data.restaurants);
+      } catch (err) {
+        toast.error("Error fetching restaurant data", err);
       }
       setTimeout(() => setLoading(false), 1000);
-    } 
-    fetchDinningRestaurant()
-  },[])
+    };
+    fetchDinningRestaurant();
+  }, []);
 
   const diningRestaurants = restaurants.filter(
-    (item) => item.category === "dining"
+    (item) => item.category === "dining",
   );
 
-  console.log(diningRestaurants)
+  console.log(diningRestaurants);
 
   return (
     <>
       <Carousel />
       {/* <FilterButtons /> */}
-      <PromoBanner />
-
-      <RestaurentSection
-        title="Restaurants in Mangalore"
-        data={diningRestaurants}
-        loading={loading}
+      <PromoBanner 
+        redirectPath="/dining"
+        targetId="restaurant-section"
       />
+
+      <div id="restaurant-section">
+        <RestaurentSection
+          title="Restaurants in Mangalore"
+          data={diningRestaurants}
+          loading={loading}
+        />
+      </div>
     </>
   );
 }

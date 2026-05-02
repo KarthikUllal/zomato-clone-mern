@@ -15,50 +15,57 @@ export default function Delivery() {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [selectedFilter, setSelectedFilter] = useState("all");
+  const [rating, setRating] = useState("");
+
   const { category } = useParams();
-  console.log("Category:", category);
 
   useEffect(() => {
-    const fetchDeliveryRestaurant = async () => {
+    const fetchData = async () => {
       try {
-        let url = "/api/admin/restaurants";
+        setLoading(true);
 
-        if (category) {
-          setLoading(true);
-          url = `/api/restaurants/food-category/${category}`;
+        let url = `/api/restaurants/filter?`;
+
+        if (selectedFilter !== "all") {
+          url += `type=${selectedFilter}&`;
+        } else if (category) {
+          url += `type=${category}&`;
+        }
+
+        if (rating) {
+          url += `rating=${rating}&`;
         }
 
         const res = await api.get(url);
 
-        setRestaurants(res.data.restaurants);
-      } catch (err) {
-        toast.error("Error fetching restaurant data", err);
-      }
-      finally {
+        setRestaurants(res.data.restaurants || []);
+      } catch {
+        toast.error("Error fetching restaurant data");
+      } finally {
         setLoading(false);
       }
     };
 
-    fetchDeliveryRestaurant();
-  }, [category]);
-
-
-  let deliveryRestaurents = restaurants;
-  if (!category) {
-    deliveryRestaurents = restaurants.filter(
-      (item) => item.category === "delivery",
-    );
-  }
+    fetchData();
+  }, [selectedFilter, rating, category]);
 
   return (
     <div className="delivery-page">
-      <Filters />
+
+      <Filters
+        selectedFilter={selectedFilter}
+        setSelectedFilter={setSelectedFilter}
+        rating={rating}
+        setRating={setRating}
+      />
+
       <CategorySlider />
       <BrandSlider />
 
       <RestaurentSection
         title="Food Delivery Restaurants in Mangalore"
-        data={deliveryRestaurents}
+        data={restaurants}
         loading={loading}
       />
     </div>

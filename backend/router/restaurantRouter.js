@@ -4,7 +4,10 @@ const express = require("express")
 const { getRestaurantByFoodCategory } = require("../Controller/adminRestaurantController")
 const { getRestaurantByCuisine } = require("../Controller/userController")
 const restaurantRouter = express.Router()
+const { filterRestaurants } = require("../Controller/restaurantController")
 
+//filter restaurants route(used in delivery page to filter restaurants by type and rating)
+restaurantRouter.get("/restaurants/filter", filterRestaurants)
 
 restaurantRouter.get("/restaurants/food-category/:category",getRestaurantByFoodCategory)
 

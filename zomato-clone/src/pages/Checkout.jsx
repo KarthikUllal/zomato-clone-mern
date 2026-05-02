@@ -39,7 +39,7 @@ export default function Checkout() {
 
   const getFullAddress = () => {
     const selectedAddrObj = addresses.find(
-      (addr) => addr._id.toString() === selectedAddress
+      (addr) => addr._id.toString() === selectedAddress,
     );
 
     if (!selectedAddrObj) return "";
@@ -55,7 +55,7 @@ export default function Checkout() {
 
     const fullAddress = getFullAddress();
 
-    if (!fullAddress) {
+    if (!fullAddress || fullAddress === "") {
       toast.error("Invalid address");
       return;
     }
@@ -80,7 +80,7 @@ export default function Checkout() {
         },
         {
           headers: { Authorization: token },
-        }
+        },
       );
 
       setCart({ restaurantId: null, items: {} });
@@ -100,8 +100,8 @@ export default function Checkout() {
 
     const fullAddress = getFullAddress();
 
-    if (!fullAddress) {
-      toast.error("Invalid address");
+    if (!fullAddress || fullAddress === "") {
+      toast.error("Please select a valid address");
       return;
     }
 
@@ -119,10 +119,9 @@ export default function Checkout() {
     }
 
     try {
-      const res = await api.post(
-        "/api/payment/create-checkout-session",
-        { items }
-      );
+      const res = await api.post("/api/payment/create-checkout-session", {
+        items,
+      });
 
       window.location.href = res.data.url;
     } catch {
@@ -130,16 +129,12 @@ export default function Checkout() {
     }
   };
 
-  const totalItems = Object.values(cart.items || {}).reduce(
-    (a, b) => a + b,
-    0
-  );
+  const totalItems = Object.values(cart.items || {}).reduce((a, b) => a + b, 0);
 
   const totalPrice = foods.reduce((total, food) => {
     return total + food.price * (cart.items?.[food._id] || 0);
   }, 0);
 
- 
   const subtotal = totalPrice;
   const gst = subtotal * 0.05;
   const deliveryCharge = subtotal > 0 ? 40 : 0;
@@ -148,7 +143,6 @@ export default function Checkout() {
   return (
     <div className="checkout-page">
       <div className="checkout-wrapper">
-
         <div className="checkout-left">
           <h2>Checkout</h2>
 
@@ -242,7 +236,6 @@ export default function Checkout() {
             </button>
           </div>
         </div>
-
       </div>
     </div>
   );

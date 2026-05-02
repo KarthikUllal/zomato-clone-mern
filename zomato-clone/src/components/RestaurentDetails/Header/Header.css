@@ -4,7 +4,6 @@
   border-bottom: 1px solid #eee;
 }
 
-
 .header-container {
   max-width: 1400px;
   margin: auto;
@@ -14,7 +13,9 @@
 .header-top {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .rest-name {
@@ -33,10 +34,10 @@
   color: #696969;
 }
 
-
 .rating-section {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .rating-box {
@@ -47,20 +48,21 @@
   text-align: center;
 }
 
-
 .header-info {
   margin-top: 15px;
   display: flex;
   gap: 25px;
   font-size: 14px;
   color: #555;
+  flex-wrap: wrap;
 }
 
 .header-buttons {
   margin-top: 20px;
   display: flex;
   gap: 10px;
-  width: 50%;
+  flex-wrap: nowrap;
+  width: fit-content;
 }
 
 .header-buttons button {
@@ -81,7 +83,6 @@
   color: #ef4f5f;
 }
 
-
 .details-banner {
   max-width: 1400px;
   margin: 20px auto;
@@ -93,4 +94,57 @@
   height: 400px;
   object-fit: cover;
   border-radius: 12px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .rest-name {
+    font-size: 24px;
+  }
+
+  .cuisine,
+  .address {
+    font-size: 13px;
+  }
+
+  .rating-box {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .header-info {
+    gap: 15px;
+    font-size: 12px;
+  }
+
+  .header-buttons button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .details-banner img {
+    height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    padding: 15px;
+  }
+
+  .rest-name {
+    font-size: 20px;
+  }
+
+  .header-buttons {
+    width: 100%;
+  }
+
+  .header-buttons button {
+    flex: 1;
+  }
+
+  .details-banner img {
+    height: 180px;
+  }
 }

@@ -49,8 +49,10 @@ export default function Navbar() {
             </div>
           ) : (
             <>
-              <Link to="/login">Log in</Link>
-              <Link to="/signup">Sign up</Link>
+              <Link to="/login" className="login-link">
+                Log in
+              </Link>
+              {/* <Link to="/signup">Sign up</Link> */}
             </>
           )}
         </div>

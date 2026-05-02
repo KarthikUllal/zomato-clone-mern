@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import api from "../../../api";
 import { toast } from "react-toastify";
+import Loader from "../../../utils/Loder";
 
 export default function BookTable({ restaurantId }) {
   const [slots, setSlots] = useState([]);
   const [selected, setSelected] = useState(null);
   const [guests, setGuests] = useState(2);
   const [date, setDate] = useState("today");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const getFormattedDate = () => {
     const d = new Date();
@@ -16,12 +17,15 @@ export default function BookTable({ restaurantId }) {
   };
 
   const fetchSlots = async () => {
+    setLoading(true);
     try {
       const formattedDate = getFormattedDate();
+
       const res = await api.get(
-        `/api/user/slots/${restaurantId}?date=${formattedDate}`,
+        `/api/user/slots/${restaurantId}?date=${formattedDate}`
       );
-      setSlots(res.data.slots || []);
+
+      setSlots(res.data?.slots || []);
     } catch {
       setSlots([]);
     } finally {
@@ -30,12 +34,14 @@ export default function BookTable({ restaurantId }) {
   };
 
   useEffect(() => {
-    if (restaurantId) fetchSlots();
+    if (!restaurantId) return;
+    fetchSlots();
   }, [restaurantId, date]);
 
   const book = async () => {
     try {
       const token = localStorage.getItem("token");
+
       if (!token) {
         toast.error("Please login first");
         return;
@@ -55,7 +61,7 @@ export default function BookTable({ restaurantId }) {
           headers: {
             Authorization: token,
           },
-        },
+        }
       );
 
       if (res.data.status === "SUCCESS") {
@@ -66,11 +72,9 @@ export default function BookTable({ restaurantId }) {
         toast.error(res.data.message || "Booking failed");
       }
     } catch (err) {
-      toast.error("Something went wrong" + err.message);
+      toast.error("Something went wrong", err.message);
     }
   };
-
-  if (loading) return <p>Loading slots...</p>;
 
   return (
     <div className="section-container booking-container">
@@ -105,7 +109,9 @@ export default function BookTable({ restaurantId }) {
           <h3>Select slot</h3>
         </div>
 
-        {slots.length === 0 ? (
+        {loading ? (
+          <Loader />
+        ) : slots.length === 0 ? (
           <p className="no-review">No booking available</p>
         ) : (
           <div className="slot-grid">

@@ -1,4 +1,3 @@
-/* Navbar.css */
 * {
     box-sizing: border-box;
 }
@@ -18,32 +17,32 @@
     padding: 0 20px;
 }
 
-/* Top section */
 .upper {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
-/* Logo */
 .logo img {
     width: 150px;
     background-blend-mode: luminosity;
 }
 
-/* Search container */
 .nav-middle {
     display: flex;
     align-items: center;
     background: white;
     border-radius: 14px;
     padding: 12px 18px;
-    width: 750px;
+    flex: 1;
+    max-width: 750px;
+    min-width: 200px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     border: 1px solid #eee;
 }
 
-/* Location section */
 .location {
     display: flex;
     align-items: center;
@@ -63,7 +62,6 @@
     cursor: pointer;
 }
 
-/* Divider */
 .bar {
     width: 1px;
     height: 24px;
@@ -71,7 +69,6 @@
     margin: 0 18px;
 }
 
-/* Search section */
 .search {
     display: flex;
     align-items: center;
@@ -87,11 +84,10 @@
 .search input {
     border: none;
     outline: none;
-    width: 80%;
+    width: 100%;
     font-size: 14px;
 }
 
-/* Right links */
 .nav-right {
     display: flex;
     gap: 25px;
@@ -108,45 +104,52 @@
     color: #ef4f5f;
 }
 
-/*profile part*/
-.profile-section{
-  display:flex;
-  align-items:center;
-  gap:10px;
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
 }
 
-.profile-circle{
-  width:90px;
-  height:50px;
-  border-radius:50%;
-  background:#ebeaea;
-  color:rgb(37, 36, 36);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  cursor:pointer;
+.profile-circle {
+    width: 80px;
+    height: 50px;
+    border-radius: 50%;
+    background: #ebeaea;
+    color: rgb(37, 36, 36);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.profile-section .my-order{
+.profile-section .my-order {
     gap: 10px;
     padding: 0px 15px;
 }
-.profile-section .my-order:hover{
+
+.profile-section .my-order:hover {
     color: #ef4f5f;
 }
 
-
-.logout-btn{
-  border:none;
-  background:#111;
-  color:white;
-  padding:10px 10px;
-  border-radius:4px;
-  cursor:pointer;
+.logout-btn {
+    border: none;
+    background: #111;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+}
+.login-link {
+    text-decoration: none;
+    color: rgb(97, 95, 95);
+    font-weight: 600;
+    font-size: larger;
 }
 
-/* Middle breadcrumb */
 .middle {
     margin: 15px 0;
     font-size: 14px;
@@ -157,9 +160,6 @@
     margin-right: 5px;
 }
 
-/* Lower section */
-/* Nav items */
-
 .lower {
     margin-top: 40px;
 }
@@ -169,12 +169,11 @@
     margin: auto;
     display: flex;
     gap: 50px;
-    /* spacing between tabs */
     align-items: center;
     padding: 15px 0;
+    flex-wrap: wrap;
 }
 
-/* Tab Item */
 .nav-item {
     display: flex;
     align-items: center;
@@ -188,19 +187,100 @@
     transition: 0.2s ease;
 }
 
-/* Icon styling */
 .nav-item i {
     font-size: 18px;
 }
 
-/* Hover effect */
 .nav-item:hover {
     color: #ef4f5f;
 }
 
-/* Active tab */
 .nav-item.active {
     color: #ef4f5f;
     font-weight: 600;
 }
 
+@media (max-width: 1024px) {
+    .nav-middle {
+        max-width: 500px;
+    }
+
+    .link-container {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .upper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .logo {
+        text-align: center;
+    }
+
+    .nav-middle {
+        max-width: 100%;
+    }
+
+    .nav-right {
+        justify-content: center;
+    }
+
+    .profile-section {
+        justify-content: center;
+        flex-wrap: nowrap;
+    }
+
+    .profile-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .logout-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .link-container {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .nav-item {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 550px) {
+    .profile-section {
+        gap: 8px;
+    }
+
+    .profile-circle {
+        width: 35px;
+        height: 35px;
+        font-size: 12px;
+    }
+
+    .logout-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .link-container {
+        gap: 12px;
+    }
+
+    .nav-item {
+        font-size: 12px;
+    }
+
+    .nav-item i {
+        font-size: 14px;
+    }
+}

@@ -6,46 +6,41 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import api from "../api";
 
-
 import "./Nightlife.css";
 
 export default function Nightlife() {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
-  useEffect(() =>{
-    const fetchNightlifeRestaurant =async () =>{
-      try{
+  useEffect(() => {
+    const fetchNightlifeRestaurant = async () => {
+      try {
         setLoading(true);
-        const res = await api.get("/api/admin/restaurants")
-        setRestaurants(res.data.restaurants)
-      }
-      catch(err){
-        toast.error("Error fetching restaurant data", err)
+        const res = await api.get("/api/admin/restaurants");
+        setRestaurants(res.data.restaurants);
+      } catch (err) {
+        toast.error("Error fetching restaurant data", err);
       }
       setTimeout(() => setLoading(false), 1000);
-    }
-      fetchNightlifeRestaurant()
-  },[])
+    };
+    fetchNightlifeRestaurant();
+  }, []);
 
   const nightlifeRestaurents = restaurants.filter(
-    (item) => item.category === "nightlife"
+    (item) => item.category === "nightlife",
   );
 
   return (
     <div className="nightlife-page">
-
       <Carousel />
-      <PromoBanner />
+      <PromoBanner redirectPath="/nightlife" targetId="restaurant-section" />
 
       <section className="nightlife-heading">
         <h2>Nightlife: Night clubs, pubs and bar in Mangalore</h2>
       </section>
 
-      <RestaurentSection
-        data={nightlifeRestaurents}
-        loading={loading}
-      />
-
+      <div id="restaurant-section">
+        <RestaurentSection data={nightlifeRestaurents} loading={loading} />
+      </div>
     </div>
   );
 }

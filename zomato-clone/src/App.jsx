@@ -96,8 +96,8 @@ function App() {
           <Route path="users" element={<AdminManageUser />} />
 
           {/**Bookings Route */}
-          <Route path="/admin/bookings" element={<AdminBookings />} />
-          <Route path="/admin/manage-slots" element={<ManageSlots />} />
+          <Route path="bookings" element={<AdminBookings />} />
+          <Route path="manage-slots" element={<ManageSlots />} />
         </Route>
       </Routes>
 

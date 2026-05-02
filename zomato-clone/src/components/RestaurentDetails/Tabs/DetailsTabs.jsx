@@ -32,12 +32,12 @@ export default function DetailsTabs({ activeTab, setActiveTab }) {
           Photos
         </span>
 
-        <span
+        {/* <span
           className={activeTab === "menu" ? "active" : ""}
           onClick={() => setActiveTab("menu")}
         >
           Menu
-        </span>
+        </span> */}
 
         <span
           className={activeTab === "book" ? "active" : ""}

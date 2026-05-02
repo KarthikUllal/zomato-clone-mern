@@ -178,34 +178,41 @@ const cancelOrder = async (req, res) => {
     const orderId = req.params.id;
     const userId = req.user.userId;
 
-    try{
+    try {
         const order = await orderModel.findById(orderId);
-        if(!order){
+        if (!order) {
             return res.send({
-                status : "FAILED",
-                message : "Order not found"
+                status: "FAILED",
+                message: "Order not found"
             })
         }
-        if(order.user !== userId){
+        if (order.user.toString() !== userId) {
             return res.send({
-                status : "FAILED",
-                message : "You do not have permission to cancel this order"
+                status: "FAILED",
+                message: "You do not have permission to cancel this order"
             })
         }
 
 
-        await orderModel.findByIdAndUpdate(orderId, {status : "cancelled"}, {new : true});
+        const updatedOrder = await orderModel.findByIdAndUpdate(
+            orderId,
+            { status: "cancelled" },
+            { new: true }
+        );
+
+
         res.send({
-            status : "SUCCESS",
-            message : "Order cancelled successfully"
+            status: "SUCCESS",
+            message: "Order cancelled successfully",
+            order: updatedOrder
         })
 
     }
-    catch(err){
+    catch (err) {
         res.send({
-            status : "FAILED",
-            message : "Error cancelling order",
-            error : err.message
+            status: "FAILED",
+            message: "Error cancelling order",
+            error: err.message
         })
     }
 }
