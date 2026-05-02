@@ -1,12 +1,19 @@
 const { Resend } = require("resend");
+const sgMail = require('@sendgrid/mail');
+
 require("dotenv").config();
+const from_EMAIL = process.env.from_EMAIL;
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+sgMail.setApiKey(SENDGRID_API_KEY);
+
+
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendMail = async ({ to, subject, html, attachments = [] }) => {
   try {
     const payload = {
-      from: "Zomato Clone <onboarding@resend.dev>",
+      from: from_EMAIL,
       to,
       subject,
       html,
@@ -16,7 +23,7 @@ const sendMail = async ({ to, subject, html, attachments = [] }) => {
       payload.attachments = attachments;
     }
 
-    await resend.emails.send(payload);
+    await sgMail.send(payload);
 
     console.log("Email sent to:", to);
   } catch (error) {

@@ -11,17 +11,6 @@ const sendMail = require("../utils/mailer");
 const reviewModel = require("../model/reviewSchema");
 
 
-// // nodemail object to use email
-// const transporter = nodemailer.createTransport({
-//   secure: true,
-//   host: "smtp.gmail.com",
-//   port: 465,
-//   auth: {
-//     user: process.env.USER_EMAIL,
-//     pass: process.env.USER_PASSWORD,
-//   },
-// });
-
 //send otp
 const sendOtp = async (req, res) => {
   const { email, fullname } = req.body;
@@ -66,15 +55,7 @@ const sendOtp = async (req, res) => {
       expiresAt: Date.now() + 10 * 60 * 1000,
     }).save();
 
-    // send email
-    // await transporter.sendMail({
-    //   from: process.env.USER_EMAIL,
-    //   to: email,
-    //   subject: "Your OTP for Login",
-    //   text: `Your OTP is ${otp}. It expires in 10 minutes`,
-    // });
-    // console.log("OTP:", otp);
-
+   
     //send mail using resend
     await sendMail({
       to: email,

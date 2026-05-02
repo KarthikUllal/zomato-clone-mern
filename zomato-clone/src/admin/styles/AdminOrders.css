@@ -104,28 +104,46 @@ select {
   color: white;
 }
 
-.status.placed { background: gray; }
-.status.accepted { background: #3b82f6; }
-.status.preparing { background: orange; }
-.status.out-for-delivery { background: purple; }
-.status.delivered { background: #10b981; }
-.status.cancelled { background: #ef4444; }
+.status.placed {
+  background: gray;
+}
+
+.status.accepted {
+  background: #3b82f6;
+}
+
+.status.preparing {
+  background: orange;
+}
+
+.status.out-for-delivery {
+  background: purple;
+}
+
+.status.delivered {
+  background: #10b981;
+}
+
+.status.cancelled {
+  background: #ef4444;
+}
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
   .admin-orders {
     padding: 20px;
   }
-  
+
   .orders-header h2 {
     font-size: 28px;
   }
-  
-  th, td {
+
+  th,
+  td {
     padding: 12px 15px;
     font-size: 13px;
   }
-  
+
   .status-cell {
     flex-direction: column;
     align-items: flex-start;

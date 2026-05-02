@@ -24,8 +24,8 @@ const generateInvoice = (order, user, restaurantName) => {
         const formatCurrency = (amount) => {
             // Ensure amount is a number and properly formatted
             const numAmount = typeof amount === 'number' ? amount : parseFloat(amount);
-            if (isNaN(numAmount)) return `₹0.00`;
-            return `₹${numAmount.toFixed(2)}`;
+            if (isNaN(numAmount)) return `Rs 0.00`;
+            return `Rs ${numAmount.toFixed(2)}`;
         };
 
         

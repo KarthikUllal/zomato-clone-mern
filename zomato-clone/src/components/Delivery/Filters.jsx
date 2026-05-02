@@ -8,7 +8,6 @@ export default function Filters({
 }) {
   return (
     <div className="filter-section">
-
       <button
         className={`filter-btn ${selectedFilter === "all" ? "active" : ""}`}
         onClick={() => setSelectedFilter("all")}
@@ -35,7 +34,6 @@ export default function Filters({
         <option value="4">4+ Rating</option>
         <option value="3">3+ Rating</option>
       </select>
-
     </div>
   );
 }

@@ -84,7 +84,7 @@
 }
 
 .sidebar {
-  width: 260px;
+  width: 300px;
   background: #fff;
   border-right: 1px solid #eee;
   padding: 20px;
@@ -93,9 +93,10 @@
 }
 
 .logo {
-  font-size: 20px;
+  font-size: 30px;
   margin-bottom: 30px;
   color: #ef4f5f;
+  font-weight:bolder;
 }
 
 .nav-links p {
@@ -104,6 +105,8 @@
   cursor: pointer;
   border-radius: 8px;
   color: #444;
+  font-size: 15px;
+  font-weight: bolder;
 }
 
 .nav-links p:hover {
@@ -135,7 +138,7 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .admin-sidebar {
+  .sidebar {
     width: 220px;
   }
 
@@ -146,11 +149,17 @@
 }
 
 @media (max-width: 768px) {
-  .admin-sidebar {
-    display: none;
+  .sidebar {
+    width: 30px;
   }
+  .sidebar i{
+    font-size: 25px;
+    color: #ef4f5f;
+    cursor: pointer;
+  }
+  
 
-  .admin-content {
+  .main-content {
     width: 100%;
     padding: 15px;
   }
