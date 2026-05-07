@@ -8,7 +8,6 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 
 
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendMail = async ({ to, subject, html, attachments = [] }) => {
   try {

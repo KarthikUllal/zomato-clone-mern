@@ -54,8 +54,9 @@ const sendOtp = async (req, res) => {
       createdAt: Date.now(),
       expiresAt: Date.now() + 10 * 60 * 1000,
     }).save();
-
-   
+    
+    console.log("OTP generated and saved to DB for email:", email);
+     console.log("Generated OTP:", otp);
     //send mail using resend
     await sendMail({
       to: email,
