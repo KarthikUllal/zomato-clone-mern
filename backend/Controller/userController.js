@@ -47,7 +47,10 @@ const sendOtp = async (req, res) => {
     // remove previous otp's
     await userOtpVerificationModel.deleteMany({ email });
 
+
     // Save new otp
+
+    console.log("Saving OTP to DB for email:", email);
     await new userOtpVerificationModel({
       email,
       otp: hashedOtp,

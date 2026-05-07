@@ -1,4 +1,4 @@
-const { Resend } = require("resend");
+
 const sgMail = require('@sendgrid/mail');
 
 require("dotenv").config();
