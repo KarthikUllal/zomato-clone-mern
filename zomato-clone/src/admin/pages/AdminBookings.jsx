@@ -43,7 +43,7 @@ export default function AdminBookings() {
             </thead>
 
             <tbody>
-              {data.map(b => (
+              {data.sort((a, b) => new Date(b.date) - new Date(a.date)).map(b => (
                 <tr key={b._id}>
                   <td>{b.restaurant?.name}</td>
                   <td>{b.user?.fullname}</td>
