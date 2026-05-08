@@ -180,9 +180,9 @@ export default function OrderDetails() {
 
             <hr />
 
-            <div className="bill-row total">
+            <div className="bill-row total"> 
               <strong>Total Amount</strong>
-              <strong>₹{order.totalAmount}</strong>
+              <strong>₹{order.totalAmount?.toFixed(2) || 0}</strong>
             </div>
 
           </div>
