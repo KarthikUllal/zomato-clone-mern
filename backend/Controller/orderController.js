@@ -89,12 +89,6 @@ const placeOrder = async (req, res) => {
                 <br/>
                 <p>Thank you for ordering ❤️</p>
             `,
-            // attachments: [
-            //     {
-            //         filename: `invoice_${order._id}.pdf`,
-            //         content: pdfBuffer
-            //     }
-            // ]
             attachments: [
                 {
                     filename: `invoice_${order._id}.pdf`,
