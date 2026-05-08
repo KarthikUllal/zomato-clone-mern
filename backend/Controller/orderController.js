@@ -35,7 +35,7 @@ const placeOrder = async (req, res) => {
 
         }
 
-        const gst = subtotal * gst_rate;
+        const gst = (subtotal * gst_rate).toFixed(2);
         const deliveryCharge = subtotal > 0 ? delivery : 0;
         const totalAmount = subtotal + gst + deliveryCharge;
 
@@ -46,7 +46,7 @@ const placeOrder = async (req, res) => {
             subtotal,
             gst,
             deliveryCharge,
-            totalAmount,
+            totalAmount, 
             address,
             paymentMethod,
             paymentStatus: paymentMethod === "ONLINE" ? "completed" : "pending"

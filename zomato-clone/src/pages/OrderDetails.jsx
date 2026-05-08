@@ -170,7 +170,7 @@ export default function OrderDetails() {
 
             <div className="bill-row">
               <span>GST (5%)</span>
-              <span>₹{order.gst || 0}</span>
+              <span>₹{order.gst?.toFixed(2) || 0}</span>
             </div>
 
             <div className="bill-row">
