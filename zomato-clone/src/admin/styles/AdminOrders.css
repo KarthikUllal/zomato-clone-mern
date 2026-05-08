@@ -83,6 +83,23 @@ tr:hover {
   font-weight: 600;
 }
 
+.payment {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.payment.completed {
+  background: #d4f8d4;
+  color: green;
+}
+
+.payment.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
 .status-cell {
   display: flex;
   align-items: center;

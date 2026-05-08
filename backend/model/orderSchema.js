@@ -28,10 +28,10 @@ const orderSchema = new mongoose.Schema({
         }
     ],
     subtotal: Number,
-    gst : Number,
+    gst: Number,
     deliveryCharge: Number,
     totalAmount: {
-        type : Number,
+        type: Number,
         default: 0
     },
     address: {
@@ -42,6 +42,11 @@ const orderSchema = new mongoose.Schema({
         type: String,
         enum: ["COD", "ONLINE"],
         default: "COD"
+    },
+    paymentStatus: {
+        type: String,
+        enum: ["pending", "completed"],
+        default: "pending"
     },
     status: {
         type: String,

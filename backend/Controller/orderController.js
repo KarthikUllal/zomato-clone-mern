@@ -48,7 +48,8 @@ const placeOrder = async (req, res) => {
             deliveryCharge,
             totalAmount,
             address,
-            paymentMethod
+            paymentMethod,
+            paymentStatus: paymentMethod === "ONLINE" ? "completed" : "pending"
         });
 
         await order.save();

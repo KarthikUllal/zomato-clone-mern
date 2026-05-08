@@ -61,8 +61,8 @@ function AdminOrders() {
                 <th>Items</th>
                 <th>Total</th>
                 <th>Order Date</th>
+                <th>Payment Status</th>
                 <th>Status</th>
-                
               </tr>
             </thead>
 
@@ -80,49 +80,56 @@ function AdminOrders() {
                   </td>
                 </tr>
               ) : (
-                orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((order) => (
-                  <tr key={order._id}>
-                    <td className="order-id">{order._id}</td>
+                orders
+                  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                  .map((order) => (
+                    <tr key={order._id}>
+                      <td className="order-id">{order._id}</td>
 
-                    <td>{order.user?.fullname || "N/A"}</td>
+                      <td>{order.user?.fullname || "N/A"}</td>
 
-                    <td>{order.restaurant?.name || "N/A"}</td>
+                      <td>{order.restaurant?.name || "N/A"}</td>
 
-                    <td className="items">
-                      {order.items
-                        ?.map((item) => `${item.food?.name} x${item.quantity}`)
-                        .join(", ") || "N/A"}
-                    </td>
+                      <td className="items">
+                        {order.items
+                          ?.map(
+                            (item) => `${item.food?.name} x${item.quantity}`,
+                          )
+                          .join(", ") || "N/A"}
+                      </td>
 
-                    <td className="amount">₹{order.totalAmount}</td>
-                     <td>
-                      {new Date(order.createdAt).toLocaleDateString("en-IN")}
-                    </td>
-                    <td className="status-cell">
-                      <select
-                        value={order.status}
-                        onChange={(e) =>
-                          handleStatusChange(order._id, e.target.value)
-                        }
-                      >
-                        <option value="placed">Placed</option>
-                        <option value="accepted">Accepted</option>
-                        <option value="preparing">Preparing</option>
-                        <option value="out-for-delivery">
-                          Out for Delivery
-                        </option>
-                        <option value="delivered">Delivered</option>
-                        <option value="cancelled">Cancelled</option>
-                      </select>
+                      <td className="amount">₹{order.totalAmount}</td>
+                      <td>
+                        {new Date(order.createdAt).toLocaleDateString("en-IN")}
+                      </td>
+                      <td>
+                        <span className={`payment ${order.paymentStatus}`}>
+                          {order.paymentStatus}
+                        </span>
+                      </td>
+                      <td className="status-cell">
+                        <select
+                          value={order.status}
+                          onChange={(e) =>
+                            handleStatusChange(order._id, e.target.value)
+                          }
+                        >
+                          <option value="placed">Placed</option>
+                          <option value="accepted">Accepted</option>
+                          <option value="preparing">Preparing</option>
+                          <option value="out-for-delivery">
+                            Out for Delivery
+                          </option>
+                          <option value="delivered">Delivered</option>
+                          <option value="cancelled">Cancelled</option>
+                        </select>
 
-
-                      <span className={`status ${order.status}`}>
-                        {order.status}
-                      </span>
-                    </td>
-                   
-                  </tr>
-                ))
+                        <span className={`status ${order.status}`}>
+                          {order.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
               )}
             </tbody>
           </table>
