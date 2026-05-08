@@ -35,11 +35,26 @@ const updateOrderStatus = async (req, res) => {
         const { orderId } = req.params;
         const { status } = req.body;
 
+        const order = await orderModel.findById(orderId);
+
+        let updateData = {
+            status
+        };
+
+        // if COD order is delivered
+        // mark payment as completed
+        if (
+            status === "delivered" &&
+            order.paymentMethod === "COD"
+        ) {
+            updateData.paymentStatus = "completed";
+        }
+
         const updatedOrder = await orderModel.findByIdAndUpdate(
             orderId,
-            { status },
+            updateData,
             { new: true }
-        )
+        );
 
         if (!updatedOrder) {
             return res.status(404).json({

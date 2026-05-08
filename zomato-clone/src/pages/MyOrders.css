@@ -39,6 +39,30 @@
   margin-bottom: 12px;
 }
 
+.order-statuses{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.payment-status{
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.payment-status.completed{
+  background: #d4f8d4;
+  color: green;
+}
+
+.payment-status.pending{
+  background: #fff3cd;
+  color: #b78103;
+}
+
 .order-header h3 {
   font-size: 16px;
   font-weight: 600;

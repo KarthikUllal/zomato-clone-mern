@@ -83,11 +83,20 @@ function MyOrders() {
                 onClick={() => navigate(`/order/${order._id}`)}
               >
                 <div className="order-header">
-                  <h3>{order.restaurant?.name}</h3>
-                  <span className={`status ${order.status}`}>
-                    {order.status}
-                  </span>
-                </div>
+  <h3>{order.restaurant?.name}</h3>
+
+  <div className="order-statuses">
+    
+    <span className={`payment-status ${order.paymentStatus}`}>
+      {order.paymentStatus}
+    </span>
+
+    <span className={`status ${order.status}`}>
+      {order.status}
+    </span>
+
+  </div>
+</div>
 
                 <div className="items-list">
                   {order.items.map((item) => (
