@@ -41,7 +41,7 @@ const getAdminStats = async (req, res) => {
     }
 }
 
-//controller to get restaurant which has most orders (to display in dashboard using recharts)
+
 
 
 

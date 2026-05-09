@@ -27,8 +27,8 @@ const restaurantStorage = new CloudinaryStorage({
 });
 
 // UPLOAD INSTANCES
-const foodUpload = multer({ storage: foodStorage });
-const restaurantUpload = multer({ storage: restaurantStorage });
+const foodUpload = multer({ storage: foodStorage }); //creates multer middleware for food uploads
+const restaurantUpload = multer({ storage: restaurantStorage }); //creates multer middleware for restaurant uploads
 
 module.exports = {
   foodUpload,

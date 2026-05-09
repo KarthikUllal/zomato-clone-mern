@@ -35,7 +35,7 @@ const placeOrder = async (req, res) => {
 
         }
 
-        const gst = (subtotal * gst_rate).toFixed(2);
+        const gst = Number((subtotal * gst_rate).toFixed(2));
         const deliveryCharge = subtotal > 0 ? delivery : 0;
         const totalAmount = subtotal + gst + deliveryCharge;
 
@@ -68,7 +68,7 @@ const placeOrder = async (req, res) => {
             populatedOrder,
             user,
             orderRestaurant.restaurant.name
-        );
+        ); 
 
         await sendMail({
             to: user.email,

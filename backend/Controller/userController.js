@@ -22,10 +22,8 @@ const sendOtp = async (req, res) => {
         message: "Email is Required",
       });
     }
-
     // checking is user exists
     const existingUser = await userModel.findOne({ email });
-
     // if user is new and fullname not provided
     if (!existingUser && !fullname) {
       return res.json({
@@ -33,7 +31,6 @@ const sendOtp = async (req, res) => {
         message: "Fullname required",
       });
     }
-
     // To Generate otp
     const otp = otpGenerator.generate(4, {
       lowerCaseAlphabets: false,
@@ -41,15 +38,11 @@ const sendOtp = async (req, res) => {
       digits: true,
       specialChars: false,
     });
-
     const hashedOtp = await bcrypt.hash(otp, 10);
-
     // remove previous otp's
     await userOtpVerificationModel.deleteMany({ email });
 
-
     // Save new otp
-
     console.log("Saving OTP to DB for email:", email);
     await new userOtpVerificationModel({
       email,
@@ -68,7 +61,6 @@ const sendOtp = async (req, res) => {
     });
     console.log("OTP:", otp);
     console.log("OTP sent to:", email);
-
 
     res.json({
       status: "PENDING",
@@ -510,9 +502,6 @@ const addRestaurantReview = async (req, res) => {
       message: "Review Added",
       review
     })
-
-
-
   }
   catch (err) {
     res.json({

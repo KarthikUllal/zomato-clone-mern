@@ -14,9 +14,9 @@ const createCheckoutSession = async (req, res) => {
     let subtotal = 0;
     for (const item of items) {
       subtotal += item.food.price * item.quantity;
-    }
+    } 
 
-    const gst = subtotal * GST_RATE;
+    const gst = Number((subtotal * GST_RATE).toFixed(2));
     const deliveryCharge = subtotal > 0 ? DELIVERY_CHARGE : 0;
     const totalAmount = subtotal + gst + deliveryCharge;
 
