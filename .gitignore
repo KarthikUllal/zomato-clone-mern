@@ -8,6 +8,8 @@ zomato-clone/node_modules/
 backend/.env
 zomato-clone/.env
 
+zomato-clone/commands.txt
+
 # Logs
 *.log
 
